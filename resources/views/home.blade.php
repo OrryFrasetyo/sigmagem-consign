@@ -38,11 +38,11 @@
                 @foreach ($listcategories as $listcategory)
                     @foreach ($listcategory->categories as $category)
                         <div x-show="selectedCategory === '{{ $listcategory->list_kategori }}'"
-                            class="relative bg-white rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
+                            class="relative border-transparent rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
 
                             <!-- Gambar Kategori -->
                             <img src="{{ asset($category->gambar) }}" alt="{{ $category->nama_kategori }}"
-                                class="w-full h-48 object-cover">
+                                class="w-full h-48 border-transparent object-cover">
 
                             <!-- Overlay vignette gelap di bagian bawah -->
                             <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent">
