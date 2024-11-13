@@ -41,7 +41,7 @@
                             class="relative border-transparent rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
 
                             <!-- Gambar Kategori -->
-                            <img src="{{ asset($category->gambar) }}" alt="{{ $category->nama_kategori }}"
+                            <img src="{{ Storage::url($category->gambar) }}" alt="{{ $category->nama_kategori }}"
                                 class="w-full h-48 border-transparent object-cover">
 
                             <!-- Overlay vignette gelap di bagian bawah -->
