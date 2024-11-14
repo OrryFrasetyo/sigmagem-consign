@@ -51,7 +51,7 @@ class CategoryResource extends Resource
                 TextColumn::make('nama_kategori')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('list_category_id')
+                TextColumn::make('listCategory.list_kategori')
                     ->sortable()
                     ->searchable(),
                 ImageColumn::make('gambar')
