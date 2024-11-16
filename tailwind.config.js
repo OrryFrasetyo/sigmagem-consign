@@ -8,7 +8,8 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
-        "./node_modules/flowbite/**/*.js"
+        "./node_modules/flowbite/**/*.js",
+        'node_modules/preline/dist/*.js'
     ],
     theme: {
         extend: {
@@ -19,6 +20,7 @@ export default {
     },
     plugins: [
         require('flowbite/plugin'),
-        require("tailgrids/plugin")
+        require("tailgrids/plugin"),
+        require('preline/plugin')
     ],
 };

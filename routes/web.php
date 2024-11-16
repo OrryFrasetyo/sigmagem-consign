@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ListCategoryController;
 
@@ -8,10 +9,16 @@ use App\Http\Controllers\ListCategoryController;
 //     return view('welcome');
 // });
 
+// Route::get('/upload-produk', function () {
+//     return view('uploadproduk'); // Mengarahkan ke file uploadproduk.blade.php
+// });
+
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/', [ListCategoryController::class, 'index'])->name('home');
     Route::get('/profile/edit', [CustomerController::class, 'editProfile'])->name('edit-profile');
     Route::post('/profile/edit', [CustomerController::class, 'updateProfile'])->name('update-profile');
+    Route::post('/upload-produk', [ProdukController::class, 'store'])->name('store');
+    Route::get('/upload-produk', [ProdukController::class, 'index'])->name('upload-produk');
 });
 
 Route::get('/profile', function () {

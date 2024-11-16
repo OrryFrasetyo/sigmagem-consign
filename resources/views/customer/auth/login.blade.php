@@ -12,8 +12,8 @@
     <title>Sign In</title>
 </head>
 
-<body class="h-full ">
-    <section class="flex items-center justify-center px-6 py-8 md:h-screen lg:py-0">
+<body class="h-full min-h-screen">
+    <section class="flex items-center justify-center h-full px-6 py-8 md:h-screen lg:py-0">
         <div class="w-full max-w-md bg-gray-900 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 md:p-8 space-y-6">
                 <div class="flex items-center justify-center mb-6">
@@ -63,7 +63,7 @@
 
             </div>
         </div>
-    </section>
+     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script>

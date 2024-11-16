@@ -12,10 +12,14 @@
         "flowbite": "^2.5.2",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.49",
-        "tailwindcss": "^3.4.14",
+        "tailwindcss": "^3.4.15",
         "vite": "^5.0"
     },
     "dependencies": {
+        "@preline/stepper": "^2.5.1",
+        "pagedone": "^1.2.2",
+        "preline": "^2.5.1",
+        "swiper": "^11.1.14",
         "tailgrids": "^2.2.7"
     }
 }
