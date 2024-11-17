@@ -8,7 +8,8 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Ganti skrip Font Awesome dengan CDN alternatif -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
@@ -22,25 +23,51 @@
 
     <!-- Swiper Carousel -->
     <div class="w-full relative progress-slide-carousel">
-    <div class="swiper swiper-container relative">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <!-- Ganti background dengan gambar -->
-                <img src="img/slider1.png" alt="Slide 1" class="w-full h-full object-cover">
+        <div class="swiper swiper-container relative">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="img/slider1.png" alt="Slide 1" class="w-full h-full object-cover">
+                </div>
+                <div class="swiper-slide">
+                    <img src="img/slider2.png" alt="Slide 2" class="w-full h-full object-cover">
+                </div>
+                <div class="swiper-slide">
+                    <img src="img/slider3.png" alt="Slide 3" class="w-full h-full object-cover">
+                </div>
             </div>
-            <div class="swiper-slide">
-                <!-- Ganti background dengan gambar -->
-                <img src="img/slider2.png" alt="Slide 2" class="w-full h-full object-cover">
-            </div>
-            <div class="swiper-slide">
-                <!-- Ganti background dengan gambar -->
-                <img src="img/slider3.png" alt="Slide 3" class="w-full h-full object-cover">
-            </div>
+            <div class="swiper-pagination !bottom-10 !top-auto !w-[500px] right-0 mx-auto bg-gray-100"></div>
         </div>
-        <div class="swiper-pagination !bottom-10 !top-auto !w-[500px] right-0 mx-auto bg-gray-100"></div>
     </div>
-</div>
 
+    <div class="ml-12 text-white font-sans">
+        <h1 class="text-2xl font-bold">Hai Vnoezz!</h1>
+        <p class="text-gray-400">Selamat datang di SigmaGem Consign.</p>
+    </div>
+
+    <div class="mt-6 bg-gray-800 p-6 rounded-lg mx-12 flex justify-around space-x-4 mb-3">
+        <div class="flex flex-col items-center">
+            <a href="/upload-produk"
+                class="border-2 border-dashed border-gray-500 p-4 rounded-lg flex items-center w-96 justify-center">
+                <i class="fas fa-upload text-2xl text-gray-300"></i>
+                <span class="ml-2 text-sm text-gray-300">Upload Produk</span>
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <i class="fas fa-exchange-alt text-2xl text-gray-300"></i>
+            <span class="mt-2 text-sm text-gray-300">Status Produk</span>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <i class="fas fa-shopping-cart text-2xl text-gray-300"></i>
+            <span class="mt-2 text-sm text-gray-300">Penjualan</span>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <i class="fas fa-shopping-bag text-2xl text-gray-300"></i>
+            <span class="mt-2 text-sm text-gray-300">Pembelian</span>
+        </div>
+    </div>
 
     <!-- Kategori -->
     <div x-data="{ selectedCategory: 'Gaming' }" class="mx-auto p-4">
@@ -86,9 +113,7 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <script>
-
-    </script>
+    <script></script>
 
     <!-- Inisialisasi Swiper -->
     <script>

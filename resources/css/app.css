@@ -7,7 +7,7 @@
                                 /* body {
                                     padding-top: 4rem;
                                 } */
-        
+
                 .swiper-wrapper {
                     width: 100%;
                     height: max-content !important;
@@ -16,11 +16,11 @@
                     transition-timing-function: linear !important;
                     position: relative;
                 }
-        
+
                 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
                     background: #6B21A8 !important;
                 }
-        
+
                                 .x-navbar {
                                     z-index: 100;
                                     /* Pastikan nilai cukup tinggi */
@@ -28,7 +28,7 @@
                                     top: 0;
                                     width: 100%;
                                 }
-        
+
                                 .progress-slide-carousel {
                                     z-index: 1;
                                     position: relative;
@@ -39,12 +39,12 @@
                                     width: 100%;
                                     /* Pastikan carousel mengambil seluruh lebar halaman */
                                 }
-                
+
                                 .swiper-slide {
                                     width: 100%;
                                     /* Pastikan setiap slide menyesuaikan dengan lebar carousel */
                                 }
-                
+
                                 .progress-slide-carousel {
                                     width: 100%;
                                     /* Tambahkan ini jika div luar carousel tidak melebar */
