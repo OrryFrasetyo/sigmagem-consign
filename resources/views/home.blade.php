@@ -47,25 +47,25 @@
     <div class="mt-6 bg-gray-800 p-6 rounded-lg mx-12 flex justify-around space-x-4 mb-3">
         <div class="flex flex-col items-center">
             <a href="/upload-produk"
-                class="border-2 border-dashed border-gray-500 p-4 rounded-lg flex items-center w-96 justify-center">
-                <i class="fas fa-upload text-2xl text-gray-300"></i>
-                <span class="ml-2 text-sm text-gray-300">Upload Produk</span>
+                class="border-2 border-dashed border-gray-500 p-4 rounded-lg flex items-center w-96 justify-center group hover:border-purple-600">
+                <i class="fas fa-upload text-2xl text-gray-300 group-hover:text-purple-600"></i>
+                <span class="ml-2 text-sm text-gray-300 group-hover:text-purple-600">Upload Produk</span>
             </a>
         </div>
 
-        <div class="flex flex-col items-center">
-            <i class="fas fa-exchange-alt text-2xl text-gray-300"></i>
-            <span class="mt-2 text-sm text-gray-300">Status Produk</span>
+        <div class="flex flex-col items-center group hover:text-purple-600">
+            <i class="fas fa-exchange-alt text-2xl text-gray-300 group-hover:text-purple-600"></i>
+            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Status Produk</span>
         </div>
 
-        <div class="flex flex-col items-center">
-            <i class="fas fa-shopping-cart text-2xl text-gray-300"></i>
-            <span class="mt-2 text-sm text-gray-300">Penjualan</span>
+        <div class="flex flex-col items-center group hover:text-purple-600">
+            <i class="fas fa-shopping-cart text-2xl text-gray-300 group-hover:text-purple-600"></i>
+            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Penjualan</span>
         </div>
 
-        <div class="flex flex-col items-center">
-            <i class="fas fa-shopping-bag text-2xl text-gray-300"></i>
-            <span class="mt-2 text-sm text-gray-300">Pembelian</span>
+        <div class="flex flex-col items-center group hover:text-purple-600">
+            <i class="fas fa-shopping-bag text-2xl text-gray-300 group-hover:text-purple-600"></i>
+            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Pembelian</span>
         </div>
     </div>
 
