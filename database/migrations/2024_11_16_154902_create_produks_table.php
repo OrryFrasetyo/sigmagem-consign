@@ -21,7 +21,9 @@ return new class extends Migration
             $table->decimal('dana_diterima', 15, 2)->nullable(); // harga - fee_penjualan
             $table->decimal('berat', 8, 2);
             $table->integer('stok');
-            $table->json('dimensi_barang');
+            $table->integer('panjang');
+            $table->integer('lebar');
+            $table->integer('tinggi');
             $table->boolean('packing_kayu');
             $table->boolean('asuransi');
             // Panjang, lebar, tinggi dalam format JSON
