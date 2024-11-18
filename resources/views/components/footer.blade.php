@@ -61,10 +61,10 @@
                 <p class="mt-2 text-white">Monday - Friday: 9:00-20:00</p>
                 <p class="mt-1 text-white">Saturday: 11:00 - 15:00</p>
                 <div class="mt-4 flex space-x-4">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f text-white"></i></a>
+                    <a href="#"><i class="fab fa-twitter text-white"></i></a>
+                    <a href="#"><i class="fab fa-instagram text-white"></i></a>
+                    <a href="#"><i class="fab fa-linkedin text-white"></i></a>
                 </div>
             </div>
         </div>

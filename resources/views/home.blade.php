@@ -40,11 +40,11 @@
     </div>
 
     <div class="ml-12 text-white font-sans">
-        <h1 class="text-2xl font-bold">Hai Vnoezz!</h1>
+        <h1 class="text-2xl font-bold">Hai {{ auth()->user()->full_name }}!</h1>
         <p class="text-gray-400">Selamat datang di SigmaGem Consign.</p>
     </div>
 
-    <div class="mt-6 bg-gray-800 p-6 rounded-lg mx-12 flex justify-around space-x-4 mb-3">
+    <div class="mt-6 bg-gray-800 p-6 rounded-xl mx-12 flex justify-around space-x-4 mb-3">
         <div class="flex flex-col items-center">
             <a href="/upload-produk"
                 class="border-2 border-dashed border-gray-500 p-4 rounded-lg flex items-center w-96 justify-center group hover:border-purple-600">
