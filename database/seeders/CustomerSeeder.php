@@ -15,6 +15,7 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
+        // Data pertama
         Customer::factory()->create([
             'full_name' => 'Orry Frasetyo',
             'email' => 'orry@gmail.com',
@@ -24,6 +25,17 @@ class CustomerSeeder extends Seeder
             'remember_token' => Str::random(10)
         ]);
 
+        // Data kedua
+        Customer::factory()->create([
+            'full_name' => 'Riansyah Divano',
+            'email' => 'vano@mail.com',
+            'no_hp' => '085259976677',
+            'email_verified_at' => now(),
+            'password' => Hash::make('vano1234'),
+            'remember_token' => Str::random(10)
+        ]);
+
+        // Data acak
         Customer::factory(5)->create();
     }
 }

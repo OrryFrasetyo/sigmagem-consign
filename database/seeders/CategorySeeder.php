@@ -17,82 +17,223 @@ class CategorySeeder extends Seeder
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Console',
-            'gambar' => 'category_images/console.jpg',
+            'gambar' => 'console.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Cotroller',
-            'gambar' => 'category_images/controller.jpg',
+            'gambar' => 'controller.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Keyboard',
-            'gambar' => 'category_images/keyboard.jpg',
+            'gambar' => 'keyboard.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Mouse',
-            'gambar' => 'category_images/mouse.jpg',
+            'gambar' => 'mouse.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Mousepad',
-            'gambar' => 'category_images/mousepad.jpg',
+            'gambar' => 'mousepad.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Storage',
-            'gambar' => 'category_images/storage.jpg',
+            'gambar' => 'storage.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Headphone',
-            'gambar' => 'category_images/headphone.jpg',
+            'gambar' => 'headphone.jpg',
         ]);
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
             'nama_kategori' => 'Video Games',
-            'gambar' => 'category_images/videogames.jpg',
+            'gambar' => 'videogames.jpg',
         ]);
 
 
 
-        // Category::create([
-        //     'list_category_id' => 1, // ID dari listcategory "Gaming"
-        //     'nama_kategori' => 'Mouse',
-        //     'gambar' => 'category_images/mouse.png',
-        // ]);
-
-        // Category::create([
-        //     'list_category_id' => 1,
-        //     'nama_kategori' => 'Keyboard',
-        //     'gambar' => 'category_images/keyboard.png',
-        // ]);
-
-        // Category::create([
-        //     'list_category_id' => 1,
-        //     'nama_kategori' => 'Headphone',
-        //     'gambar' => 'category_images/headphone.png',
-        // ]);
-
         // Seeder untuk kategori Gadget
-        // Category::create([
-        //     'list_category_id' => 2, // ID dari listcategory "Gadget"
-        //     'nama_kategori' => 'Handphone',
-        //     'gambar' => 'category_images/handphone.png',
-        // ]);
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Camera',
+            'gambar' => 'camera.jpg',
+        ]);
 
-        // Category::create([
-        //     'list_category_id' => 2,
-        //     'nama_kategori' => 'Camera',
-        //     'gambar' => 'category_images/camera.png',
-        // ]);
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Drone',
+            'gambar' => 'drone.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Headset',
+            'gambar' => 'headset.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Microphone',
+            'gambar' => 'microphone.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Phone',
+            'gambar' => 'phone.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Smartwatch',
+            'gambar' => 'smartwatch.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Speaker',
+            'gambar' => 'speaker.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Modem / Router',
+            'gambar' => 'modem.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'CCTV',
+            'gambar' => 'cctv.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Accessories',
+            'gambar' => 'accgadget.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 2,
+            'nama_kategori' => 'Tablet',
+            'gambar' => 'tablet.jpg',
+        ]);
+
+
+        // Seeder untuk kategori PC & Laptop
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'PC',
+            'gambar' => 'pc.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Laptop',
+            'gambar' => 'laptop.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'HDD / SSD',
+            'gambar' => 'hddssd.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Monitor',
+            'gambar' => 'monitor.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Motherboard',
+            'gambar' => 'motherboard.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Processor',
+            'gambar' => 'processor.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'RAM',
+            'gambar' => 'ram.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'PSU (Power Supply Unit)',
+            'gambar' => 'psu.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'VGA',
+            'gambar' => 'VGA.png',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'PC Case',
+            'gambar' => 'pccase.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Fan',
+            'gambar' => 'fan.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Accesories ',
+            'gambar' => 'pcacc.jpg',
+        ]);
+
+        Category::create([
+            'list_category_id' => 3,
+            'nama_kategori' => 'Webcam',
+            'gambar' => 'webcam.jpg',
+        ]);
+
+
+        // Seeder untuk kategori PC & Laptop
+        Category::create([
+            'list_category_id' => 4,
+            'nama_kategori' => 'Action Figures',
+            'gambar' => 'actionfigures.jpg',
+        ]);
+        Category::create([
+            'list_category_id' => 4,
+            'nama_kategori' => 'Board Games',
+            'gambar' => 'boardgames.jpg',
+        ]);
+
+
+        // Seeder untuk kategori PC & Laptop
+        Category::create([
+            'list_category_id' => 5,
+            'nama_kategori' => 'Uncategorized',
+            'gambar' => 'uncategorized.png',
+        ]);
+
+
+
+
     }
 }
