@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    use HasFactory;
+    
     protected $table = 'categories'; // Pastikan nama tabel benar
     protected $fillable = ['list_category_id', 'nama_kategori', 'gambar']; // Kolom yang bisa diisi
 
