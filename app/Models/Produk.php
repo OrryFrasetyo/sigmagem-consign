@@ -19,10 +19,18 @@ class Produk extends Model
         'berat',
         'stok',
         'dimensi_barang',
+        'packing_kayu',
+        'asuransi',
         'gambar',
         'kondisi_barang',
         'garansi',
-        'deskripsi_produk',
+        'lama_pemakaian',
+        'tangan_ke',
+        'waktu_pembelian',
+        'minus',
+        'kelengkapan',
+        'wireless',
+        'suara_aman'
     ]; // Kolom yang bisa diisi
 
     public function category()
