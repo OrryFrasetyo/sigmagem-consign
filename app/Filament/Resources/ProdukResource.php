@@ -2,24 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ListCategoryResource\Pages;
-use App\Filament\Resources\ListCategoryResource\RelationManagers;
-use App\Models\ListCategory;
+use App\Filament\Resources\ProdukResource\Pages;
+use App\Filament\Resources\ProdukResource\RelationManagers;
+use App\Models\Produk;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ListCategoryResource extends Resource
+class ProdukResource extends Resource
 {
-    protected static ?string $model = ListCategory::class;
-
-    protected static ?string $navigationGroup = 'Product';
+    protected static ?string $model = Produk::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,10 +23,7 @@ class ListCategoryResource extends Resource
     {
         return $form
             ->schema([
-                //input list kategori
-                TextInput::make('list_kategori')
-                    ->required()
-                    ->placeholder('Masukkan list kategori, ex: Gaming')
+                //
             ]);
     }
 
@@ -38,17 +31,13 @@ class ListCategoryResource extends Resource
     {
         return $table
             ->columns([
-                //tampilkan kolom list kategori
-                TextColumn::make('list_kategori')
-                    ->sortable()
-                    ->searchable()
+                //
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -67,9 +56,9 @@ class ListCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListListCategories::route('/'),
-            'create' => Pages\CreateListCategory::route('/create'),
-            'edit' => Pages\EditListCategory::route('/{record}/edit'),
+            'index' => Pages\ListProduks::route('/'),
+            'create' => Pages\CreateProduk::route('/create'),
+            'edit' => Pages\EditProduk::route('/{record}/edit'),
         ];
     }
 }

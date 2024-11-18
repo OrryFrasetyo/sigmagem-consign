@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    use HasFactory;
+    
     protected $table = 'categories'; // Pastikan nama tabel benar
     protected $fillable = ['list_category_id', 'nama_kategori', 'gambar']; // Kolom yang bisa diisi
 
     public function listCategory()
     {
         return $this->belongsTo(ListCategory::class, 'list_category_id');
+    }
+
+    // Relasi ke model Produk
+    public function product(): HasMany
+    {
+        return $this->hasMany(Produk::class, 'category_id'); // pastikan nama foreign key sesuai
     }
 }
