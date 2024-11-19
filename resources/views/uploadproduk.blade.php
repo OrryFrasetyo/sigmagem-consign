@@ -269,13 +269,7 @@
                 <div>
                     <div class="max-w-10xl mx-auto bg-gray-900 p-6 border border-gray-700 rounded-lg shadow-md">
                         <div class="grid grid-cols-3 gap-4">
-                            <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Box image" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/wC1lDsBjVdriPZY3cZTe3Z6wD1fl3AIfVNVxx2fVLeIhvoReE.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Foto Box</p>
-                            </div>
+                            {{--  --}}
                             <div
                                 class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
                                 <img alt="Front side of a laptop" class="mb-4" height="100"
@@ -297,13 +291,7 @@
                                     width="100" />
                                 <p class="text-gray-100">Sisi Atas / Bawah</p>
                             </div>
-                            <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Accessories" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/9AbtNTmn9noFORBR241J3kHxgdGs6f12gADnsD4EwCs7iG5JA.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Kelengkapan</p>
-                            </div>
+                            
                             <div
                                 class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
                                 <img alt="Other items" class="mb-4" height="100"

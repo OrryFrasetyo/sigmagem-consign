@@ -11,6 +11,7 @@ class Produk extends Model
 
     protected $table = 'produks'; // Pastikan nama tabel benar
     protected $fillable = [
+        //relasi nama customer
         'nama_produk',
         'category_id',
         'harga',
