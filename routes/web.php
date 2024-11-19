@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ListCategoryController;
 
@@ -17,8 +17,8 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/', [ListCategoryController::class, 'index'])->name('home');
     Route::get('/profile/edit', [CustomerController::class, 'editProfile'])->name('edit-profile');
     Route::post('/profile/edit', [CustomerController::class, 'updateProfile'])->name('update-profile');
-    Route::post('/upload-produk', [ProdukController::class, 'store']);
-    Route::get('/upload-produk', [ProdukController::class, 'index'])->name('upload-produk');
+    Route::get('/upload-produk', [ProductController::class, 'index'])->name('upload-produk');
+    Route::post('/upload-produk', [ProductController::class, 'store'])->name('product.store');
 });
 
 Route::get('/profile', function () {

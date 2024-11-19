@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreProdukRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateProdukRequest;
+use App\Models\Product;
 
-class ProdukController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,12 +38,13 @@ class ProdukController extends Controller
             'harga' => 'required|numeric|min:0',
             'berat' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
-            'panjang' => 'required|integer|min:0',
-            'lebar' => 'required|integer|min:0',
-            'tinggi' => 'required|integer|min:0',
-            //packing kayu
-            //asuransi
-            'gambar' => 'required|array|min:4|max:6',
+            'dimensi_barang' => 'required|array', // Panjang, lebar, tinggi sebagai array
+            'dimensi_barang.panjang' => 'required|integer|min:0',
+            'dimensi_barang.lebar' => 'required|integer|min:0',
+            'dimensi_barang.tinggi' => 'required|integer|min:0',
+            'packing_kayu' => 'nullable|boolean',
+            'asuransi' => 'nullable|boolean',
+            'gambar' => 'required|array|min:4|max:4',
             'gambar.*' => 'image|mimes:jpeg,png,jpg|max:2048',
             'kondisi_barang' => 'required|string|max:255',
             'garansi' => 'nullable|integer|min:0',
@@ -65,22 +65,22 @@ class ProdukController extends Controller
         // Upload gambar
         $uploadedImages = [];
         foreach ($request->file('gambar') as $image) {
-            $path = $image->store('uploads/produk', 'public');
+            $path = $image->store('uploads/products', 'public');
             $uploadedImages[] = $path;
         }
 
+
+        // Hitung fee penjualan dan dana diterima
+        $harga = $request->harga;
+
         // Simpan data produk
-        $produk = Produk::create([
+        $produk = Product::create([
             'nama_produk' => $request->nama_produk,
             'category_id' => $request->category_id,
-            'harga' => $request->harga,
-            'fee_penjualan' => $request->harga * 0.21, // 21% dari harga
-            'dana_diterima' => $request->harga - ($request->harga * 0.21), // Harga - Fee Penjualan
+            'harga' => $harga,
             'berat' => $request->berat,
             'stok' => $request->stok,
-            'panjang' => $request->panjang,
-            'lebar' => $request->lebar,
-            'tinggi' => $request->tinggi,
+            'dimensi_barang' => $request->dimensi_barang,
             'packing_kayu' => $request->packing_kayu ?? false,
             'asuransi' => $request->asuransi ?? false,
             'gambar' => json_encode($uploadedImages),
@@ -95,13 +95,13 @@ class ProdukController extends Controller
             'suara_aman' => $request->suara_aman,
         ]);
 
-        return response()->json(['message' => 'Produk berhasil ditambahkan', 'produk' => $produk], 200);
+        return response()->json(['message' => 'Produk berhasil ditambahkan', 'produk' => $produk], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Produk $produk)
+    public function show(Product $produk)
     {
         //
     }
@@ -109,7 +109,7 @@ class ProdukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produk $produk)
+    public function edit(Product $produk)
     {
         //
     }
@@ -117,7 +117,7 @@ class ProdukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProdukRequest $request, Produk $produk)
+    public function update(UpdateProdukRequest $request, Product $produk)
     {
         //
     }
@@ -125,7 +125,7 @@ class ProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produk $produk)
+    public function destroy(Product $produk)
     {
         //
     }

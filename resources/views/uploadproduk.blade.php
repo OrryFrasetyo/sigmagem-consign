@@ -84,6 +84,8 @@
         <!-- End Stepper Nav -->
 
         <!-- Stepper Content -->
+        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
         <div class="mt-5 sm:mt-8">
             <!-- First Content -->
             <div data-hs-stepper-content-item='{"index": 1,"isCompleted": true}' class="success" style="display: none;">
@@ -92,7 +94,7 @@
                         <!-- Nama Produk -->
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-white">Nama Produk :</label>
-                            <input type="text"
+                            <input type="text" name="nama_produk"
                                 class="mt-1 block w-full bg-gray-800 border-b border-gray-700 text-white focus:border-purple-600 focus:ring-0 rounded-lg">
                         </div>
 
@@ -187,7 +189,7 @@
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-sm font-medium text-white">Harga (Rp) :</span>
                             </div>
-                            <input type="number"
+                            <input type="number" name="harga"
                                 class="text-2xl bg-gray-800 font-semibold text-white mb-4 w-full border-b border-gray-700 focus:border-purple-600 focus:ring-0 rounded-lg">
                             <div class="text-sm text-white mb-2">
                                 <div class="flex justify-between text-gray-300">
@@ -291,7 +293,7 @@
                                     width="100" />
                                 <p class="text-gray-100">Sisi Atas / Bawah</p>
                             </div>
-                            
+
                             <div
                                 class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
                                 <img alt="Other items" class="mb-4" height="100"
@@ -522,6 +524,7 @@
             </button>
         </div>
         <!-- End Button Group -->
+        </form>
     </div>
     <!-- End Stepper Content -->
     </div>
