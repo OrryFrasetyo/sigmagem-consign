@@ -191,6 +191,8 @@
                             </div>
                             <input type="number" name="harga"
                                 class="text-2xl bg-gray-800 font-semibold text-white mb-4 w-full border-b border-gray-700 focus:border-purple-600 focus:ring-0 rounded-lg">
+
+                                {{-- Fee penjualan dan data diterima --}}
                             <div class="text-sm text-white mb-2">
                                 <div class="flex justify-between text-gray-300">
                                     <span>Fee Penjualan</span>
@@ -209,39 +211,46 @@
                                 Disarankan untuk melebihkan sedikit guna menghindari resiko diatas.
                             </p>
                         </div>
+
+
                         <div class="mb-4">
+                            {{-- berat --}}
                             <div class="mb-4">
                                 <label class="block text-white text-sm font-bold mb-1">Berat :</label>
                                 <div class="flex items-center">
-                                    <input type="number"
+                                    <input type="number" name="berat"
                                         class="bg-gray-800 border-b border-gray-700 text-white rounded-md text-lg w-24 text-center focus:outline-none focus:ring-0 focus:ring-purple-600">
                                     <span class="text-gray-300 text-sm ml-2">gram</span>
                                 </div>
                                 <p class="text-gray-300 text-sm mt-1">1 kg = 1000 gram</p>
                             </div>
+
+                            {{-- stok --}}
                             <div class="mb-4">
                                 <label class="block text-white text-sm font-bold mb-1">Stok :</label>
                                 <div class="flex items-center">
-                                    <input type="number"
+                                    <input type="number" name="stok"
                                         class="bg-gray-800 border-b border-gray-700 text-white rounded-md text-lg w-24 text-center focus:outline-none focus:ring-0 focus:ring-purple-600">
                                     <span class="text-gray-300 text-sm ml-2">Pcs</span>
                                 </div>
                             </div>
+
+                            {{-- dimensi barang (panjang, lebar, dan tinggi) --}}
                             <div class="mb-4">
                                 <label class="block text-white text-sm font-bold mb-1">Dimensi Barang :</label>
                                 <div class="flex items-center space-x-4">
                                     <div class="flex items-center">
-                                        <input type="number"
+                                        <input type="number" name="panjang"
                                             class="bg-gray-800 border-b border-gray-700 text-white rounded-md text-lg w-20 text-center focus:outline-none focus:ring-0 focus:ring-purple-600">
                                         <span class="text-gray-300 text-sm ml-2">cm</span>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="number"
+                                        <input type="number" name="lebar"
                                             class="bg-gray-800 border-b border-gray-700 text-white rounded-md text-lg w-20 text-center focus:outline-none focus:ring-0 focus:ring-purple-600">
                                         <span class="text-gray-300 text-sm ml-2">cm</span>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="number"
+                                        <input type="number" name="tinggi"
                                             class="bg-gray-800 border-b border-gray-700 text-white rounded-md text-lg w-20 text-center focus:outline-none focus:ring-0 focus:ring-purple-600">
                                         <span class="text-gray-300 text-sm ml-2">cm</span>
                                     </div>

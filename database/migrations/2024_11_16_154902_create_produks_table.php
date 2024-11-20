@@ -20,10 +20,15 @@ return new class extends Migration
             $table->decimal('dana_diterima', 15, 2);// harga - fee_penjualan
             $table->integer('berat');
             $table->integer('stok');
-            $table->json('dimensi_barang'); // Array JSON untuk panjang, lebar, tinggi barang
+            $table->integer('panjang');
+            $table->integer('lebar');
+            $table->integer('tinggi');
             $table->boolean('packing_kayu')->default(false);
             $table->boolean('asuransi')->default(false);
-            $table->json('gambar'); // Array JSON untuk 4 gambar
+            $table->string('sisi_depan');
+            $table->string('sisi_kanan');
+            $table->string('sisi_atas');
+            $table->string('lainnya');
             $table->string('kondisi_barang');
             $table->string('garansi');
             $table->string('lama_pemakaian')->nullable();
