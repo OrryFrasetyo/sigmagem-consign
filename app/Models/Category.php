@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'categories'; // Pastikan nama tabel benar
     protected $fillable = ['list_category_id', 'nama_kategori', 'gambar']; // Kolom yang bisa diisi
 
@@ -21,6 +21,6 @@ class Category extends Model
     // Relasi ke model Produk
     public function product(): HasMany
     {
-        return $this->hasMany(Produk::class, 'category_id'); // pastikan nama foreign key sesuai
+        return $this->hasMany(Product::class, 'category_id'); // pastikan nama foreign key sesuai
     }
 }
