@@ -39,11 +39,6 @@ class Product extends Model
         'suara_aman'
     ]; // Kolom yang bisa diisi
 
-    public function listCategory()
-    {
-        return $this->belongsTo(ListCategory::class, 'list_category_id');
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
