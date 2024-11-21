@@ -32,11 +32,17 @@ class ProdukResource extends Resource
     {
         return $form
             ->schema([
+                Select::make('customer_id')
+                    ->relationship(name: 'customer', titleAttribute: 'full_name')
+                    ->required()
+                    ->searchable()
+                    ->label('Nama User'),
                 TextInput::make('nama_produk')
                     ->required()
                     ->label('Nama Produk'),
                 Select::make('category_id')
                     ->relationship(name: 'category', titleAttribute: 'nama_kategori')
+                    ->required()
                     ->searchable()
                     ->label('List Kategori'),
                 TextInput::make('harga')
@@ -95,24 +101,28 @@ class ProdukResource extends Resource
                         'Good Condition' => 'Good Condition',
                         'Judge by Pict' => 'Judge By Pict',
                     ])
+                    ->required()
                     ->native(false),
                 Select::make('garansi')
                     ->options([
                         'on' => 'On',
                         'off' => 'Off',
                     ])
+                    ->required()
                     ->native(false),
                 TextInput::make('lama_pemakaian')
+                    ->required()
                     ->label('Lama Pemakaian'),
                 TextInput::make('tangan_ke')
                     ->required()
-                    ->label('Tanggal ke'),
+                    ->label('Tangan ke'),
                 TextInput::make('waktu_pembelian')
                     ->label('Waktu Pembelian'),
                 TextInput::make('Minus')
                     ->required()
                     ->label('Minus'),
                 TextInput::make('kelengkapan')
+                    ->required()
                     ->label('Kelengkapan'),
                 //wireless/wired
                 Select::make('wireless')
@@ -120,9 +130,9 @@ class ProdukResource extends Resource
                         'wireless' => 'Wireless',
                         'wired' => 'Wired',
                     ])
-                    ->native(false),
+                    ->native(false)
+                    ->label('Konektivitas'),
                 TextInput::make('suara_aman')
-                    ->required()
                     ->label('Suara Aman?'),
 
 
@@ -135,6 +145,10 @@ class ProdukResource extends Resource
         return $table
             ->columns([
                 //
+                TextColumn::make('customer.full_name')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Nama User'),
                 TextColumn::make('nama_produk')
                     ->sortable()
                     ->searchable()

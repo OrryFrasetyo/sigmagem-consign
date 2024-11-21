@@ -18,7 +18,6 @@ class ProductSeeder extends Seeder
         Product::create([
             'customer_id' => 3, // ID dari listcategory "Gaming"
             'nama_produk' => 'Samsung Galaxy A24',
-            'list_category_id' => '2',
             'category_id' => '2',
             'harga' => 5000000,
             'fee_penjualan' => 600000,
