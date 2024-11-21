@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -28,6 +29,11 @@ class Customer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function customer(): HasMany
+    {
+        return $this->hasMany(Product::class, 'customer_id'); // pastikan nama foreign key sesuai
+    }
 
     protected static function booted()
     {

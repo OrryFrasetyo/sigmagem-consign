@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('nama_produk');
+            $table->foreignId('list_category_id')->constrained('list_categories')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // Foreign key
             $table->decimal('harga', 15, 2);
             $table->decimal('fee_penjualan', 15, 2); // 12% dari harga

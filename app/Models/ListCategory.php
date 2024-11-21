@@ -15,4 +15,9 @@ class ListCategory extends Model
     {
         return $this->hasMany(Category::class, 'list_category_id'); // pastikan nama foreign key sesuai
     }
+
+    public function product(): HasMany
+    {
+        return $this->hasMany(Product::class, 'list_category_id'); // pastikan nama foreign key sesuai
+    }
 }
