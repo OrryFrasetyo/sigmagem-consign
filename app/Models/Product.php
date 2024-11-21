@@ -14,7 +14,6 @@ class Product extends Model
     protected $fillable = [
         'customer_id',
         'nama_produk',
-        'list_category_id',
         'category_id',
         'harga',
         'berat',
