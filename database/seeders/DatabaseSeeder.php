@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             ListCategorySeeder::class,
             CategorySeeder::class,
-            // ProdukSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 
