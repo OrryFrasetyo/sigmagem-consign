@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('nama_produk');
-            $table->foreignId('list_category_id')->constrained('list_categories')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // Foreign key
             $table->decimal('harga', 15, 2);
-            $table->decimal('fee_penjualan', 15, 2); // 12% dari harga
-            $table->decimal('dana_diterima', 15, 2);// harga - fee_penjualan
+            $table->decimal('fee_penjualan', 15, 2)->default(0); // 12% dari harga
+            $table->decimal('dana_diterima', 15, 2)->default(0);// harga - fee_penjualan
             $table->integer('berat');
             $table->integer('stok');
             $table->integer('panjang');
@@ -42,7 +41,6 @@ return new class extends Migration
             $table->string('suara_aman')->nullable();
             $table->timestamps();
 
-            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

@@ -14,7 +14,6 @@ class Product extends Model
     protected $fillable = [
         'customer_id',
         'nama_produk',
-        'list_category_id',
         'category_id',
         'harga',
         'berat',
@@ -38,11 +37,6 @@ class Product extends Model
         'wireless',
         'suara_aman'
     ]; // Kolom yang bisa diisi
-
-    public function listCategory()
-    {
-        return $this->belongsTo(ListCategory::class, 'list_category_id');
-    }
 
     public function category()
     {

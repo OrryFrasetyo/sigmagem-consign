@@ -11,6 +11,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <title>SigmaGem Consign</title>
 </head>
 
@@ -101,64 +102,27 @@
                         <!-- Kategori Produk -->
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-white">Kategori Produk :</label>
-                            <div class="mt-1">
-                                <!-- Dropdown untuk kategori Gaming -->
-                                <div class="relative">
-                                    <button id="gaming-button"
-                                        class="flex items-center justify-between w-full border-b border-gray-700 py-2 text-left text-white focus:outline-none"
-                                        onclick="toggleDropdown(event, 'gaming-dropdown')">
-                                        <span id="gaming-text">Pilih Kategori</span>
-                                        <i class="fas fa-chevron-down text-gray-400"></i>
-                                    </button>
-                                    <div id="gaming-dropdown"
-                                        class="absolute left-0 w-full mt-1 bg-gray-800 text-white rounded-lg shadow-lg hidden z-10">
-                                        <div class="py-2">
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Headset', 'gaming-button', 'gaming-text')">
-                                                <span>Headset</span>
-                                            </div>
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Keyboard', 'gaming-button', 'gaming-text')">
-                                                <span>Keyboard</span>
-                                            </div>
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Mouse', 'gaming-button', 'gaming-text')">
-                                                <span>Mouse</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Dropdown untuk kategori Gadget -->
-                                <div class="relative mt-2">
-                                    <button id="gadget-button"
-                                        class="flex items-center justify-between w-full border-b border-gray-700 py-2 text-left text-white focus:outline-none"
-                                        onclick="toggleDropdown(event, 'gadget-dropdown')">
-                                        <span id="gadget-text">Pilih Kategori</span>
-                                        <i class="fas fa-chevron-down text-gray-400"></i>
-                                    </button>
-                                    <div id="gadget-dropdown"
-                                        class="absolute left-0 w-full mt-1 bg-gray-800 text-white rounded-lg shadow-lg hidden z-10">
-                                        <div class="py-2">
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Smartphone', 'gadget-button', 'gadget-text')">
-                                                <span>Smartphone</span>
-                                            </div>
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Tablet', 'gadget-button', 'gadget-text')">
-                                                <span>Tablet</span>
-                                            </div>
-                                            <div class="flex items-center justify-between px-4 py-2 hover:bg-purple-600 cursor-pointer"
-                                                onclick="selectCategory('Smartwatch', 'gadget-button', 'gadget-text')">
-                                                <span>Smartwatch</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <select name="category_id" id="category_id" class="mt-1 block w-full bg-gray-800 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="" disabled selected>Pilih Kategori</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->nama_kategori }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
+                        {{-- search dropdown nama kategori --}}
                         <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const categorySelect = new Choices('#category_id', {
+                                    searchEnabled: true, // Aktifkan fitur pencarian
+                                    removeItemButton: true, // Tombol untuk menghapus pilihan
+                                    itemSelectText: '', // Menghilangkan teks default saat memilih
+                                    shouldSort: false, // Tidak mengurutkan hasil pencarian
+                                });
+                            });
+                        </script>
+
+                        {{-- <script>
                             function toggleDropdown(event, dropdownId) {
                                 event.stopPropagation(); // Prevent click event from bubbling up
                                 const dropdown = document.getElementById(dropdownId);
@@ -181,29 +145,76 @@
                                     dropdown.classList.add('hidden');
                                 });
                             }
-                        </script>
+                        </script> --}}
 
 
                         <!-- Harga dan Fee -->
                         <div class="bg-gray-800 p-4 rounded-lg shadow-md">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-sm font-medium text-white">Harga (Rp) :</span>
+                                <label for="harga" class="text-sm font-medium text-white">Harga (Rp) :</label>
                             </div>
-                            <input type="number" name="harga"
+                            <input type="text" id="formatted_harga" placeholder="Rp 0"
                                 class="text-2xl bg-gray-800 font-semibold text-white mb-4 w-full border-b border-gray-700 focus:border-purple-600 focus:ring-0 rounded-lg">
+                            <input type="hidden" id="harga" name="harga"> <!-- Hidden input untuk menyimpan nilai angka asli -->
 
-                                {{-- Fee penjualan dan data diterima --}}
+                            {{-- Fee penjualan dan dana diterima --}}
                             <div class="text-sm text-white mb-2">
                                 <div class="flex justify-between text-gray-300">
-                                    <span>Fee Penjualan</span>
-                                    <span>Rp105.000</span>
+                                    <span>Fee Penjualan (12%)</span>
+                                    <span id="fee_penjualan">Rp0</span>
                                 </div>
                                 <div class="flex justify-between text-gray-300">
                                     <span>Dana Diterima (exc. Ongkir)</span>
-                                    <span class="text-green-600">Rp395.000</span>
+                                    <span id="dana_diterima" class="text-green-600">Rp0</span>
                                 </div>
                             </div>
+
+                            {{-- Hidden inputs --}}
+                            <input type="hidden" name="fee_penjualan" id="hidden_fee_penjualan">
+                            <input type="hidden" name="dana_diterima" id="hidden_dana_diterima">
                         </div>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const formattedInput = document.getElementById('formatted_harga');
+                                const hiddenInput = document.getElementById('harga');
+                                const feePenjualanSpan = document.getElementById('fee_penjualan');
+                                const danaDiterimaSpan = document.getElementById('dana_diterima');
+                                const hiddenFeePenjualan = document.getElementById('hidden_fee_penjualan');
+                                const hiddenDanaDiterima = document.getElementById('hidden_dana_diterima');
+
+                                function formatRupiah(number) {
+                                    return new Intl.NumberFormat('id-ID', {
+                                        style: 'currency',
+                                        currency: 'IDR',
+                                        minimumFractionDigits: 0
+                                    }).format(number);
+                                }
+
+                                function parseRupiah(string) {
+                                    return parseInt(string.replace(/[^\d]/g, '')) || 0;
+                                }
+
+                                formattedInput.addEventListener('input', function () {
+                                    const rawValue = parseRupiah(formattedInput.value); // Dapatkan angka mentah
+                                    formattedInput.value = formatRupiah(rawValue); // Format kembali sebagai Rupiah
+                                    hiddenInput.value = rawValue; // Simpan angka mentah ke input hidden
+
+                                    const feePenjualan = rawValue * 0.12; // 12% fee
+                                    const danaDiterima = rawValue - feePenjualan;
+
+                                    // Update tampilan fee dan dana diterima
+                                    feePenjualanSpan.textContent = formatRupiah(feePenjualan);
+                                    danaDiterimaSpan.textContent = formatRupiah(danaDiterima);
+
+                                    // Simpan nilai ke input hidden
+                                    hiddenFeePenjualan.value = feePenjualan;
+                                    hiddenDanaDiterima.value = danaDiterima;
+                                });
+                            });
+                        </script>
+
+
                         <div class="bg-orange-100 p-4 rounded-md mb-6 mt-6">
                             <p class="text-sm text-gray-700">
                                 Harap isi berat barang & dimensi yang benar. Apabila ada kelebihan berat barang atau
@@ -257,14 +268,16 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Pacing kayu dan asuransi --}}
                         <div class="mb-4">
                             <div class="flex items-center mb-2">
-                                <input type="checkbox"
+                                <input type="checkbox" name="packing_kayu" value="1"
                                     class="bg-gray-800 form-checkbox h-5 w-5 text-purple-600 focus:ring-0">
                                 <label class="ml-2 text-gray-300 text-sm">Packing Kayu</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox"
+                                <input type="checkbox" name="asuransi" value="1"
                                     class="bg-gray-800 form-checkbox h-5 w-5 text-purple-600 focus:ring-0">
                                 <label class="ml-2 text-gray-300 text-sm">Asuransi</label>
                             </div>
@@ -279,38 +292,79 @@
             <div data-hs-stepper-content-item='{"index": 2}' class="active">
                 <div>
                     <div class="max-w-10xl mx-auto bg-gray-900 p-6 border border-gray-700 rounded-lg shadow-md">
-                        <div class="grid grid-cols-3 gap-4">
-                            {{--  --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Upload Sisi Depan -->
                             <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Front side of a laptop" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/fXtbOoc3qD2QfU6NdKsNzmE5gOIL1vbNfZ0ZP1hfczkgX0IPB.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Sisi Depan</p>
-                            </div>
-                            <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Side view of a laptop" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/dOO6BqXieZ3eiE3YEUivtaQYyuLemARf9w70ccozMimrX0IPB.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Sisi Kanan / Kiri</p>
-                            </div>
-                            <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Top or bottom view of a laptop" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/vs29xoUarJ4kPVISzLBeWRFb0eJ9rRHtUGs2OozOHw71FNyTA.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Sisi Atas / Bawah</p>
+                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600 transition duration-300">
+                                <label for="sisi_depan" class="cursor-pointer">
+                                    <img alt="Front side of a laptop" class="mb-4 h-24 w-24 object-contain"
+                                        src="{{ asset('storage/images/default-image.jpg') }}" id="preview_sisi_depan" />
+                                </label>
+                                <input type="file" id="sisi_depan" name="sisi_depan" accept="image/*" class="hidden"
+                                    onchange="previewImage(event, 'preview_sisi_depan')">
+                                <p class="text-gray-100 text-center">Sisi Depan</p>
                             </div>
 
+                            <!-- Upload Sisi Kanan / Kiri -->
                             <div
-                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600">
-                                <img alt="Other items" class="mb-4" height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/If0f7c074Sg8Y0H6ztvmKBqE4u4ofHcT8wIY8YZOpgR2LaknA.jpg"
-                                    width="100" />
-                                <p class="text-gray-100">Lainnya</p>
+                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600 transition duration-300">
+                                <label for="sisi_kanan" class="cursor-pointer">
+                                    <img alt="Side view of a laptop" class="mb-4 h-24 w-24 object-contain"
+                                        src="https://storage.googleapis.com/a1aa/image/dOO6BqXieZ3eiE3YEUivtaQYyuLemARf9w70ccozMimrX0IPB.jpg" id="preview_sisi_kanan" />
+                                </label>
+                                <input type="file" id="sisi_kanan" name="sisi_kanan" accept="image/*" class="hidden"
+                                    onchange="previewImage(event, 'preview_sisi_kanan')">
+                                <p class="text-gray-100 text-center">Sisi Kanan / Kiri</p>
+                            </div>
+
+                            <!-- Upload Sisi Atas / Bawah -->
+                            <div
+                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600 transition duration-300">
+                                <label for="sisi_atas" class="cursor-pointer">
+                                    <img alt="Top or bottom view of a laptop" class="mb-4 h-24 w-24 object-contain"
+                                        src="{{ asset('storage/images/default-image.jpg') }}" id="preview_sisi_atas" />
+                                </label>
+                                <input type="file" id="sisi_atas" name="sisi_atas" accept="image/*" class="hidden"
+                                    onchange="previewImage(event, 'preview_sisi_atas')">
+                                <p class="text-gray-100 text-center">Sisi Atas / Bawah</p>
+                            </div>
+
+                            <!-- Upload Lainnya -->
+                            <div
+                                class="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col items-center border border-transparent hover:border-purple-600 transition duration-300">
+                                <label for="lainnya" class="cursor-pointer">
+                                    <img alt="Other items" class="mb-4 h-24 w-24 object-contain"
+                                        src="{{ asset('storage/images/default-image.jpg') }}" id="preview_lainnya" />
+                                </label>
+                                <input type="file" id="lainnya" name="lainnya" accept="image/*" class="hidden"
+                                    onchange="previewImage(event, 'preview_lainnya')">
+                                <p class="text-gray-100 text-center">Lainnya</p>
                             </div>
                         </div>
+
+                        <script>
+                            function previewImage(event, previewId) {
+                                const file = event.target.files[0];
+                                if (!file || !file.type.startsWith('image/')) {
+                                    alert("Please upload a valid image file!");
+                                    return;
+                                }
+
+                                const reader = new FileReader();
+                                reader.onload = function () {
+                                    const output = document.getElementById(previewId);
+                                    if (output) {
+                                        output.src = reader.result;
+                                    } else {
+                                        console.error("Preview ID not found: ", previewId);
+                                    }
+                                };
+                                reader.onerror = function () {
+                                    console.error("Error reading file");
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
@@ -541,6 +595,7 @@
 
     <x-footer />
     @vite('resources/js/app.js')
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </body>
 
 </html>
