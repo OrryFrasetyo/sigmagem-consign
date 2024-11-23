@@ -50,13 +50,13 @@ class ProductController extends Controller
             'sisi_atas' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'lainnya' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'kondisi_barang' => 'required|string|max:120',
-            'garansi' => 'required|string|min:0',
+            'garansi' => 'required|string|in:On,Off',
             'lama_pemakaian' => 'required|string|max:20',
             'tangan_ke' => 'required|integer|min:1',
             'waktu_pembelian' => 'nullable|string|max:255',
             'minus' => 'required|string|max:20',
             'kelengkapan' => 'required|string|max:255',
-            'wireless' => 'nullable|string',
+            'wireless' => 'nullable|string|in:Wireless,Wired',
             'suara_aman' => 'nullable|string',
         ]);
 
@@ -65,23 +65,32 @@ class ProductController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $validated = $validator->validated();
+
+        // Tambahkan `customer_id` secara otomatis
+        $validated['customer_id'] = auth('customer')->id();
+
         // Upload gambar
         $images = [];
-        foreach (['sisi_depan', 'sisi_kanan', 'sisi_atas', 'lainnya'] as $key) {
-            if ($request->hasFile($key)) {
-                $images[$key] = $request->file($key)->store('products', 'public');
+        try {
+            foreach (['sisi_depan', 'sisi_kanan', 'sisi_atas', 'lainnya'] as $key) {
+                if ($request->hasFile($key)) {
+                    $images[$key] = $request->file($key)->store('products', 'public');
+                }
             }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to upload images: ' . $e->getMessage()], 500);
         }
 
         // Simpan produk ke database
-        $product = Product::create(array_merge($request->all(), [
-            'sisi_depan' => $images['sisi_depan'] ?? null,
-            'sisi_kanan' => $images['sisi_kanan'] ?? null,
-            'sisi_atas' => $images['sisi_atas'] ?? null,
-            'lainnya' => $images['lainnya'] ?? null,
-        ]));
+        $product = Product::create(array_merge($validated, $images));
 
-        return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
+        // Kembalikan respons
+        return response()->json([
+            'message' => 'Product created successfully',
+            'product' => $product,
+            'images' => array_map(fn($path) => asset("storage/{$path}"), $images),
+        ], 201);
     }
 
     /**

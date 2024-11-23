@@ -21,6 +21,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/upload-produk', [ProductController::class, 'store'])->name('product.store');
 });
 
+
 Route::get('/profile', function () {
     return view('user.profile.edit');
 });
