@@ -20,7 +20,7 @@
 
     <!-- Navbar -->
     <x-navbar class="x-navbar"></x-navbar>
-
+    
 </body>
 
 </html>
