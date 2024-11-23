@@ -16,6 +16,8 @@ class Product extends Model
         'nama_produk',
         'category_id',
         'harga',
+        'fee_penjualan',
+        'dana_diterima',
         'berat',
         'stok',
         'panjang',
@@ -55,7 +57,7 @@ class Product extends Model
      */
     public function getFeePenjualanAttribute()
     {
-        return $this->attributes['harga'] * 0.12;
+        return $this->harga * 0.12;
     }
 
     /**
@@ -65,7 +67,7 @@ class Product extends Model
      */
     public function getDanaDiterimaAttribute()
     {
-        return $this->attributes['harga'] - $this->fee_penjualan;
+        return $this->harga - $this->fee_penjualan;
     }
 
     /**
@@ -109,5 +111,4 @@ class Product extends Model
     {
         return json_decode($value, true);
     }
-
 }

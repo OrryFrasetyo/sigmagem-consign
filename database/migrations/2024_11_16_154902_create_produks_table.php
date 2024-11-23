@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nama_produk');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // Foreign key
             $table->decimal('harga', 15, 2);
-            $table->decimal('fee_penjualan', 15, 2)->default(0); // 12% dari harga
-            $table->decimal('dana_diterima', 15, 2)->default(0);// harga - fee_penjualan
+            $table->decimal('fee_penjualan', 10, 2)->nullable(); // 12% dari harga
+            $table->decimal('dana_diterima', 10, 2)->nullable();// harga - fee_penjualan
             $table->integer('berat');
             $table->integer('stok');
             $table->integer('panjang');

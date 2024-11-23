@@ -390,19 +390,19 @@
                         <div class="grid grid-cols-3 gap-2 mt-4">
                             <input type="hidden" id="kondisi_barang" name="kondisi_barang" value="">
                             <button type="button"
-                                class="condition-button border rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                class="condition-button border border-transparent rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
                                 onclick="selectCondition('Brand New In Box', this)">Brand New In Box</button>
                             <button type="button"
-                                class="condition-button border rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                class="condition-button border border-transparent rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
                                 onclick="selectCondition('Brand New Open Box', this)">Brand New Open Box</button>
                             <button type="button"
-                                class="condition-button border rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                class="condition-button border border-transparent rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
                                 onclick="selectCondition('Very Good Condition', this)">Very Good Condition</button>
                             <button type="button"
-                                class="condition-button border rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                class="condition-button border border-transparent rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
                                 onclick="selectCondition('Good Condition', this)">Good Condition</button>
                             <button type="button"
-                                class="condition-button border rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
+                                class="condition-button border border-transparent rounded-lg border-gray-700 bg-gray-800 px-4 py-2 text-white"
                                 onclick="selectCondition('Judge by Pict', this)">Judge by Pict</button>
                         </div>
                         <script>
@@ -419,10 +419,10 @@
                             <div class="flex space-x-2 mt-4">
                                 <input type="hidden" id="garansi" name="garansi" value="">
                                 <button type="button"
-                                    class="warranty-button border rounded-lg bg-gray-800 px-4 py-2 text-white"
+                                    class="warranty-button border border-transparent rounded-lg bg-gray-800 px-4 py-2 text-white"
                                     onclick="selectWarranty('On', this)">On</button>
                                 <button type="button"
-                                    class="warranty-button border rounded-lg bg-gray-800 px-4 py-2 text-white"
+                                    class="warranty-button border border-transparent rounded-lg bg-gray-800 px-4 py-2 text-white"
                                     onclick="selectWarranty('Off', this)">Off</button>
                             </div>
                         </div>
@@ -515,14 +515,14 @@
             </div>
             <!-- End Third Content -->
 
-            <!-- Final Content -->
+            {{-- <!-- Final Content -->
             <div data-hs-stepper-content-item='{"isFinal": true}' style="display: none;">
                 <div
                     class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
                     <h3 class="text-gray-500">Final content</h3>
                 </div>
             </div>
-            <!-- End Final Content -->
+            <!-- End Final Content --> --}}
 
             <!-- Button Group -->
             <div class="mt-5 flex justify-between items-center gap-x-2">
@@ -567,6 +567,35 @@
     <x-footer />
     @vite('resources/js/app.js')
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Produk Berhasil Diupload',
+                text: '{{ session('success') }}',
+                // Styling SweetAlert
+                background: '#1a202c',  // gray-900
+                color: '#fff', // Ubah teks menjadi putih
+                confirmButtonColor: '#6b46c1', // Warna tombol konfirmasi menjadi purple-600
+                customClass: {
+                    title: 'text-xl font-semibold', // Atur ukuran dan font untuk judul
+                    content: 'text-sm', // Atur ukuran dan font untuk konten
+                    confirmButton: 'px-6 py-2 text-lg rounded-lg', // Sesuaikan ukuran dan padding tombol
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn', // Animasi tampil
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut', // Animasi hilang
+                },
+            }).then(() => {
+                window.location.href = '{{ route('home') }}'; // Arahkan ke home setelah pop-up ditutup
+            });
+        @endif
+    </script>
+
+
 </body>
 
 </html>

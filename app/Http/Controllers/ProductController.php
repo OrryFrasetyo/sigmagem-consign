@@ -38,6 +38,8 @@ class ProductController extends Controller
             'nama_produk' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'harga' => 'required|numeric|min:0',
+            // 'fee_penjualan' => 'required|numeric|min:0',
+            // 'dana_diterima' => 'required|numeric|min:0',
             'berat' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
             'panjang' => 'required|integer|min:0',
@@ -60,15 +62,21 @@ class ProductController extends Controller
             'suara_aman' => 'nullable|string',
         ]);
 
+
+
         // Jika validasi gagal
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+        // //untuk melihat apakah data terkirim dengan benar
+        // dd($request->all());
 
         $validated = $validator->validated();
 
         // Tambahkan `customer_id` secara otomatis
         $validated['customer_id'] = auth('customer')->id();
+        $validated['fee_penjualan'] = $request->input('fee_penjualan');
+        $validated['dana_diterima'] = $request->input('dana_diterima');
 
         // Upload gambar
         $images = [];
@@ -85,12 +93,9 @@ class ProductController extends Controller
         // Simpan produk ke database
         $product = Product::create(array_merge($validated, $images));
 
-        // Kembalikan respons
-        return response()->json([
-            'message' => 'Product created successfully',
-            'product' => $product,
-            'images' => array_map(fn($path) => asset("storage/{$path}"), $images),
-        ], 201);
+        // Mengirimkan response redirect dengan pesan sukses
+        // Mengirimkan response redirect dengan pesan sukses
+        return redirect()->route('upload-produk')->with('success', 'Product created successfully');
     }
 
     /**
