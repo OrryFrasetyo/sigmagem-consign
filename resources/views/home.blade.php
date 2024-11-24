@@ -86,22 +86,24 @@
         <div class="ml-8 mr-8 mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($listcategories as $listcategory)
                 @foreach ($listcategory->categories as $category)
-                    <div x-show="selectedCategory === '{{ $listcategory->list_kategori }}'"
-                        class="relative border-transparent rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
+                    <a href="{{ route('products.by-category', $category->id) }}">
+                        <div x-show="selectedCategory === '{{ $listcategory->list_kategori }}'"
+                            class="relative border-transparent rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
 
-                        <!-- Gambar Kategori -->
-                        <img src="{{ Storage::url($category->gambar) }}" alt="{{ $category->nama_kategori }}"
-                            class="w-full h-48 border-transparent object-cover">
+                            <!-- Gambar Kategori -->
+                            <img src="{{ Storage::url($category->gambar) }}" alt="{{ $category->nama_kategori }}"
+                                class="w-full h-48 border-transparent object-cover">
 
-                        <!-- Overlay vignette gelap di bagian bawah -->
-                        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent">
+                            <!-- Overlay vignette gelap di bagian bawah -->
+                            <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent">
+                            </div>
+
+                            <!-- Overlay teks di bagian bawah kanan -->
+                            <div class="absolute bottom-0 right-0 text-white text-sm font-semibold px-2 py-1 m-2">
+                                {{ $category->nama_kategori }}
+                            </div>
                         </div>
-
-                        <!-- Overlay teks di bagian bawah kanan -->
-                        <div class="absolute bottom-0 right-0 text-white text-sm font-semibold px-2 py-1 m-2">
-                            {{ $category->nama_kategori }}
-                        </div>
-                    </div>
+                    </a>
                 @endforeach
             @endforeach
         </div>
@@ -112,8 +114,6 @@
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <script></script>
 
     <!-- Inisialisasi Swiper -->
     <script>

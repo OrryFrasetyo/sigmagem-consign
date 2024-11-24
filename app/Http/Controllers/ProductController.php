@@ -20,6 +20,26 @@ class ProductController extends Controller
         return view('uploadproduk', compact('categories'));
     }
 
+    public function showByCategory($id)
+    {
+        // Ambil kategori berdasarkan ID
+        $category = Category::findOrFail($id);
+
+        // Ambil produk berdasarkan kategori tersebut
+        $products = Product::where('category_id', $id)->with('category')->get();
+
+        // Kirim data ke view
+        return view('listproduk', compact('products', 'category'));
+    }
+
+    // public function list()
+    // {
+    //     $categories = Category::all();
+    //     $products = Product::with('category')->get();
+
+    //     return view('listproduk', compact('categories', 'products'));
+    // }
+
     /**
      * Show the form for creating a new resource.
      */
