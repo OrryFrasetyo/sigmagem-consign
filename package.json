@@ -19,6 +19,7 @@
         "@preline/stepper": "^2.5.1",
         "pagedone": "^1.2.2",
         "preline": "^2.5.1",
+        "sweetalert2": "^11.14.5",
         "swiper": "^11.1.14",
         "tailgrids": "^2.2.7"
     }

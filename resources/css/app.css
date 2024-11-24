@@ -2,50 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-                /* Tambahkan padding untuk body agar elemen tidak tertimpa navbar */
-                /* Sesuaikan dengan tinggi navbar */
-                                /* body {
+/* Tambahkan padding untuk body agar elemen tidak tertimpa navbar */
+/* Sesuaikan dengan tinggi navbar */
+/* body {
                                     padding-top: 4rem;
                                 } */
 
-                .swiper-wrapper {
-                    width: 100%;
-                    height: max-content !important;
-                    padding-bottom: 64px !important;
-                    -webkit-transition-timing-function: linear !important;
-                    transition-timing-function: linear !important;
-                    position: relative;
-                }
+.swiper-wrapper {
+    width: 100%;
+    height: max-content !important;
+    padding-bottom: 64px !important;
+    -webkit-transition-timing-function: linear !important;
+    transition-timing-function: linear !important;
+    position: relative;
+}
 
-                .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-                    background: #6B21A8 !important;
-                }
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    background: #6b21a8 !important;
+}
 
-                                .x-navbar {
-                                    z-index: 100;
-                                    /* Pastikan nilai cukup tinggi */
-                                    position: fixed;
-                                    top: 0;
-                                    width: 100%;
-                                }
+.x-navbar {
+    z-index: 100;
+    /* Pastikan nilai cukup tinggi */
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
 
-                                .progress-slide-carousel {
-                                    z-index: 1;
-                                    position: relative;
-                                    /* margin-top: 1rem; */
-                                    /* Berikan margin agar tidak tertimpa navbar */
-                                }
-                                .swiper-container {
-                                    width: 100%;
-                                    /* Pastikan carousel mengambil seluruh lebar halaman */
-                                }
+.progress-slide-carousel {
+    z-index: 1;
+    position: relative;
+    /* margin-top: 1rem; */
+    /* Berikan margin agar tidak tertimpa navbar */
+}
+.swiper-container {
+    width: 100%;
+    /* Pastikan carousel mengambil seluruh lebar halaman */
+}
 
-                                .swiper-slide {
-                                    width: 100%;
-                                    /* Pastikan setiap slide menyesuaikan dengan lebar carousel */
-                                }
+.swiper-slide {
+    width: 100%;
+    /* Pastikan setiap slide menyesuaikan dengan lebar carousel */
+}
 
-                                .progress-slide-carousel {
-                                    width: 100%;
-                                    /* Tambahkan ini jika div luar carousel tidak melebar */
-                                }
+.progress-slide-carousel {
+    width: 100%;
+    /* Tambahkan ini jika div luar carousel tidak melebar */
+}
