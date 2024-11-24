@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <!-- Ganti skrip Font Awesome dengan CDN alternatif -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+    <title>SigmaGem Consign</title>
+</head>
+
+<body class="h-full">
+
+    <!-- Navbar -->
+    <x-navbar class="x-navbar"></x-navbar>
+
+    <div x-data="{ currentImage: '{{ asset('storage/' . $product->sisi_depan) }}' }" class="max-w-8xl mx-auto p-6 bg-gray-800 rounded-lg shadow-md mt-20 text-white">
+        <div class="flex">
+            <!-- Left Section: Gambar -->
+            <div class="w-1/2">
+                <!-- Gambar Preview Besar -->
+                <div class="relative">
+                    <img :src="currentImage" alt="Preview Gambar" class="w-full h-full rounded-lg object-cover">
+                </div>
+
+                <!-- Gambar Kecil di Bawah -->
+                <div class="flex mt-4 space-x-4">
+                    <!-- Sisi Depan -->
+                    <img @click="currentImage = '{{ asset('storage/' . $product->sisi_depan) }}'"
+                        src="{{ asset('storage/' . $product->sisi_depan) }}" alt="Sisi Depan"
+                        class="w-20 h-20 rounded-lg border-2 border-gray-500 cursor-pointer hover:border-purple-600 object-cover">
+
+                    <!-- Sisi Kanan -->
+                    <img @click="currentImage = '{{ asset('storage/' . $product->sisi_kanan) }}'"
+                        src="{{ asset('storage/' . $product->sisi_kanan) }}" alt="Sisi Kanan"
+                        class="w-20 h-20 rounded-lg border-2 border-gray-500 cursor-pointer hover:border-purple-600 object-cover">
+
+                    <!-- Sisi Atas -->
+                    <img @click="currentImage = '{{ asset('storage/' . $product->sisi_atas) }}'"
+                        src="{{ asset('storage/' . $product->sisi_atas) }}" alt="Sisi Atas"
+                        class="w-20 h-20 rounded-lg border-2 border-gray-500 cursor-pointer hover:border-purple-600 object-cover">
+
+                    <!-- Lainnya -->
+                    <img @click="currentImage = '{{ asset('storage/' . $product->lainnya) }}'"
+                        src="{{ asset('storage/' . $product->lainnya) }}" alt="Lainnya"
+                        class="w-20 h-20 rounded-lg border-2 border-gray-500 cursor-pointer hover:border-purple-600 object-cover">
+                </div>
+            </div>
+
+
+            <!-- Right Section: Product Details -->
+            <div class="w-1/2 pl-10">
+                <h1 class="text-2xl font-bold">
+                    {{ $product->nama_produk }}
+                </h1>
+                <p class="text-gray-300 mt-2">
+                    Dilihat {{ $product->views }} kali
+                </p>
+                {{-- <div class="flex items-center mt-4"> --}}
+                <p class="text-3xl font-bold">
+                    Rp{{ number_format($product->harga, 0, ',', '.') }}
+                </p>
+                <span
+                    class="bg-green-600 text-white text-xs font-semibold px-2 py-1 mt-2 inline-block">{{ $product->kondisi_barang }}</span>
+                {{-- </div> --}}
+
+                <div class="mt-6">
+                    <div class="flex items-center mt-2">
+                        <img alt="Profile Picture" class="w-12 h-12 rounded-full" height="100"
+                            src="https://storage.googleapis.com/a1aa/image/OlwfXutxW6VOTCsn0u1MLegsy3KRQ2OGWs0E2gffcudOL7QPB.jpg"
+                            width="100" />
+                        <div class="ml-4">
+                            <p class="font-semibold">
+                                {{ $product->customer->full_name ?? '-' }}
+                            </p>
+
+                            <p class="text-gray-300">
+                                Kota
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h2 class="text-lg font-semibold">
+                        Detail Produk
+                    </h2>
+                    <ul class="list-disc list-inside text-gray-300 mt-2">
+                        <li>
+                            Garansi: {{ $product->garansi ?? 'Tidak ada informasi' }}
+                        </li>
+                        <li>
+                            Stok: {{ $product->stok }} unit
+                        </li>
+                        <li>
+                            Berat: {{ number_format($product->berat) }} gram
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-2">
+                    <table class="w-full text-left text-gray-300">
+                        <tbody>
+                            <tr class="border-b border-gray-600">
+                                <td class="py-2">
+                                    Tanggal Publish
+                                </td>
+                                <td class="py-2">
+                                    {{ \Carbon\Carbon::parse($product->created_at)->translatedFormat('d F Y') }}
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-600">
+                                <td class="py-2">
+                                    Kategori
+                                </td>
+                                <td class="py-2">
+                                    <a href="{{ route('products.by-category', $product->category->id) }}"
+                                        class="text-gray-300 hover:text-purple-600 transition-colors duration-300">
+                                        {{ $product->category->nama_kategori ?? 'Tidak ada kategori' }}
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="mt-6">
+                    <h2 class="text-lg font-semibold">
+                        Produk Description
+                    </h2>
+                    <ul class="list-disc list-inside text-gray-300 mt-2">
+                        <li>
+                            Lama Pemakaian: {{ $product->lama_pemakaian ?? '-' }}
+                        </li>
+                        <li>
+                            Tangan ke: {{ $product->tangan_ke ?? '-' }}
+                        </li>
+                        <li>
+                            Waktu Pembelian: {{ $product->waktu_pembelian ?? '-' }}
+                        </li>
+                        <li>
+                            Kelengkapan: {{ $product->kelengkapan ?? '-' }}
+                        </li>
+                        <li>
+                            Minus: {{ $product->minus ?? '-' }}
+                        </li>
+                        <li>
+                            Konektivitas: {{ $product->wireless ?? '-' }}
+                        </li>
+                        <li>
+                            Suara Aman: {{ $product->suara_aman ?? '-' }}
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 flex items-center space-x-4">
+                    <button class="px-6 py-2 bg-blue-600 text-white rounded-lg">
+                        Add to Cart
+                    </button>
+                    <button class="px-6 py-2 bg-gray-600 text-white rounded-lg">
+                        Buy Now
+                    </button>
+                    <button class="px-6 py-2 bg-yellow-500 text-white rounded-lg flex items-center">
+                        <i class="fas fa-heart mr-2">
+                        </i>
+                        Add to Wishlist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <x-footer />
+    @vite('resources/js/app.js')
+
+</body>
+
+</html>

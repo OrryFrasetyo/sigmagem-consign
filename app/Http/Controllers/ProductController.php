@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Category;
 use App\Models\ListCategory;
 use App\Models\Product;
+use Intervention\Image\Facades\Image;
+
 
 class ProductController extends Controller
 {
@@ -31,6 +33,9 @@ class ProductController extends Controller
         // Kirim data ke view
         return view('listproduk', compact('products', 'category'));
     }
+
+
+
 
     // public function list()
     // {
@@ -67,16 +72,16 @@ class ProductController extends Controller
             'tinggi' => 'required|integer|min:0',
             'packing_kayu' => 'nullable|boolean',
             'asuransi' => 'nullable|boolean',
-            'sisi_depan' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'sisi_kanan' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'sisi_atas' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'lainnya' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'sisi_depan' => 'required|image|mimes:jpeg,png,jpg',
+            'sisi_kanan' => 'required|image|mimes:jpeg,png,jpg',
+            'sisi_atas' => 'required|image|mimes:jpeg,png,jpg',
+            'lainnya' => 'required|image|mimes:jpeg,png,jpg',
             'kondisi_barang' => 'required|string|max:120',
             'garansi' => 'required|string|in:On,Off',
             'lama_pemakaian' => 'required|string|max:20',
             'tangan_ke' => 'required|integer|min:1',
             'waktu_pembelian' => 'nullable|string|max:255',
-            'minus' => 'required|string|max:20',
+            'minus' => 'required|string|max:255',
             'kelengkapan' => 'required|string|max:255',
             'wireless' => 'nullable|string|in:Wireless,Wired',
             'suara_aman' => 'nullable|string',
@@ -121,10 +126,19 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $produk)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        // Increment views
+        $product->increment('views');
+
+        return view('detailproduk', compact('product'));
     }
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

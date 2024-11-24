@@ -9,9 +9,9 @@ use App\Http\Controllers\ListCategoryController;
 //     return view('welcome');
 // });
 
-// Route::get('/upload-produk', function () {
-//     return view('uploadproduk'); // Mengarahkan ke file uploadproduk.blade.php
-// });
+Route::get('/detail-produk', function () {
+    return view('detailproduk'); // Mengarahkan ke file uploadproduk.blade.php
+});
 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/', [ListCategoryController::class, 'index'])->name('home');
@@ -21,7 +21,11 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/upload-produk', [ProductController::class, 'store'])->name('product.store');
     // Route::get('/list-produk', [ProductController::class, 'list'])->name('list-produk');
     Route::get('/products/category/{id}', [ProductController::class, 'showByCategory'])->name('products.by-category');
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
     
+
+
+
 
 });
 

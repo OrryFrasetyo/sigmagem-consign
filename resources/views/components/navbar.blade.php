@@ -8,7 +8,7 @@
         class="bg-transparent border-gray-200 dark:bg-transparent fixed w-full z-10 top-0 left-0 transition-all duration-300">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="img/scz.png" class="h-12 w-12"/>
+                <img src="{{ asset('img/scz.png') }}" class="h-12 w-12" alt="Logo"/>
                 <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SigmaGem Consign</span>
             </a>
 
@@ -18,7 +18,7 @@
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                     data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full" src="img/avatar.png" alt="user photo">
+                    <img class="w-8 h-8 rounded-full" src="{{ asset('img/avatar.png') }}" alt="user photo">
                 </button>
                 <!-- Dropdown menu -->
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute top-12 translate-x-[-40%]"

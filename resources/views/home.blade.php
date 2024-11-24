@@ -69,9 +69,9 @@
         </div>
     </div>
 
-    <!-- Kategori -->
+    <!-- ListKategori dan Kategor -->
     <div x-data="{ selectedCategory: 'Gaming' }" class="mx-auto p-4">
-        <!-- Tombol Kategori -->
+        <!-- Tombol ListKategori -->
         <div class="flex overflow-hidden ml-4">
             @foreach ($listcategories as $listcategory)
                 <button @click="selectedCategory = '{{ $listcategory->list_kategori }}'"
@@ -86,8 +86,9 @@
         <div class="ml-8 mr-8 mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach ($listcategories as $listcategory)
                 @foreach ($listcategory->categories as $category)
-                    <a href="{{ route('products.by-category', $category->id) }}">
-                        <div x-show="selectedCategory === '{{ $listcategory->list_kategori }}'"
+                    <a href="{{ route('products.by-category', $category->id) }}"
+                        x-show="selectedCategory === '{{ $listcategory->list_kategori }}'" x-cloak class="block">
+                        <div
                             class="relative border-transparent rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition duration-200 w-full">
 
                             <!-- Gambar Kategori -->
@@ -107,6 +108,7 @@
                 @endforeach
             @endforeach
         </div>
+
     </div>
 
     <x-footer />

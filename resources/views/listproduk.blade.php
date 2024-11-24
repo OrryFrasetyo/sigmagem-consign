@@ -27,10 +27,11 @@
             <h1 class="text-3xl font-bold text-white mb-6">Products in {{ $category->nama_kategori }}</h1>
 
             <!-- Grid Layout -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
                 @foreach ($products as $product)
                     <!-- Card -->
-                    <a href="" class="bg-gray-800 shadow-md rounded-lg overflow-hidden block">
+                    <a href="{{ route('product.detail', $product->id) }}"
+                        class="bg-gray-800 shadow-md border border-transparent hover:border-purple-600 rounded-lg overflow-hidden block">
                         <img src="{{ asset('storage/' . $product->sisi_depan) }}" alt="{{ $product->nama_produk }}"
                             class="w-full h-48 object-cover">
                         <div class="p-4">
@@ -43,6 +44,7 @@
                     </a>
                 @endforeach
             </div>
+
         </div>
 
 
