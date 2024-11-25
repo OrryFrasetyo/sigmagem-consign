@@ -18,6 +18,7 @@ class Customer extends Authenticatable
         'no_hp',
         'email_verified_at',
         'password',
+        'foto_profile',
         'remember_token'
     ];
 

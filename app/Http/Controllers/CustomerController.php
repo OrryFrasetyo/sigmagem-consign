@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
@@ -71,6 +72,7 @@ class CustomerController extends Controller
             ],
             'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp', // sesuaikan dengan format no hp
             'password' => 'required|min:8', // konfirmasi password
+            'foto_profile'
         ]);
 
         //create new user
@@ -80,7 +82,8 @@ class CustomerController extends Controller
             'no_hp' => $request->no_hp,
             'email_verified_at' => now(),
             'password' => Hash::make($request->password),
-            'remember_token' => Str::random(10)
+            'remember_token' => Str::random(10),
+            'foto_profile' => $request->foto_profile
         ]);
 
         //redirect or login after registration
@@ -112,6 +115,7 @@ class CustomerController extends Controller
             ],
             'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp,' . $user->id,
             'password' => 'nullable|min:8',
+            'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Collect data to update
@@ -121,6 +125,19 @@ class CustomerController extends Controller
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
+
+        // Handle foto_profile
+        // if ($request->hasFile('foto_profile')) {
+
+        //      // Hapus foto lama jika ada
+        //     if ($user->foto_profile && $user->foto_profile !== 'profiles/default_profile.jpg' && Storage::disk('public')->exists($user->foto_profile)) {
+        //         Storage::disk('public')->delete($user->foto_profile);
+        //     }
+
+        //     // Simpan foto baru
+        //     $filePath = $request->file('foto_profile')->store('profiles', 'public');
+        //     $data['foto_profile'] = $filePath;
+        // }
 
         $user->update($data);
 
