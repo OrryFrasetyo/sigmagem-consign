@@ -176,7 +176,7 @@
                         </button>
                     </form>
 
-                    <button class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105">
+                    <button class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105 hover:bg-green-600">
                         Buy Now
                     </button>
 
