@@ -19,6 +19,7 @@ class CustomerController extends Controller
         return view('customer.auth.login');
     }
 
+
     public function login(Request $request)
     {
         // dd("Metode login diakses.");
@@ -143,4 +144,6 @@ class CustomerController extends Controller
 
         return redirect()->route('home')->with('success', 'Profil berhasil diperbarui.');
     }
+
+
 }

@@ -45,10 +45,14 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class);  // Satu Produk dimiliki oleh satu Customer
     }
+
+
+
 
     /**
      * Accessor untuk fee_penjualan (12% dari harga).

@@ -31,9 +31,14 @@ class Customer extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function customer(): HasMany
+    public function products()
     {
-        return $this->hasMany(Product::class, 'customer_id'); // pastikan nama foreign key sesuai
+        return $this->hasMany(Product::class);  // Seorang Customer dapat memiliki banyak Produk
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);  // Seorang Customer dapat memiliki banyak Cart
     }
 
     protected static function booted()
@@ -43,6 +48,4 @@ class Customer extends Authenticatable
             $customer->remember_token = $customer->remember_token ?? Str::random(60);
         });
     }
-
-
 }

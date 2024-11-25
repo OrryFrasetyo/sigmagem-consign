@@ -43,7 +43,7 @@ return [
 
         'customer' => [
             'driver' => 'session',
-            'provider' => 'customers',
+            'provider' => 'customers', // Pastikan ini sesuai dengan provider Anda untuk customers
         ],
     ],
 

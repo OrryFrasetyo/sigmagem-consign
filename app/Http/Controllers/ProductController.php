@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Wishlist;
+use App\Models\ListCategory;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateProdukRequest;
-use App\Models\Category;
-use App\Models\ListCategory;
-use App\Models\Product;
-use Intervention\Image\Facades\Image;
 
 
 class ProductController extends Controller
@@ -126,15 +127,25 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($productId)
     {
-        $product = Product::findOrFail($id);
+        // Ambil ID customer yang sedang login
+        $customerId = auth()->guard('customer')->id();
 
-        // Increment views
-        $product->increment('views');
+        if (!$customerId) {
+            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
 
-        return view('detailproduk', compact('product'));
+        // Ambil produk berdasarkan ID
+        $product = Product::findOrFail($productId);
+
+        // Cek apakah produk sudah ada di wishlist
+        $isInWishlist = Wishlist::where('customer_id', $customerId)->where('product_id', $productId)->exists();
+
+        // Kirim data produk dan status wishlist ke view
+        return view('detailproduk', compact('product', 'isInWishlist'));
     }
+
 
 
 

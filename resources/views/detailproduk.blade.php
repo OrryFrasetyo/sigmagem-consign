@@ -166,9 +166,15 @@
                 </div>
 
                 <div class="mt-6 flex items-center space-x-4">
-                    <button class="px-6 py-2 bg-blue-600 text-white rounded-lg transition-all hover:scale-105">
-                        Add to Cart
-                    </button>
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+
+                        <!-- Tombol Add to Cart -->
+                        <button type="submit"
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg transition-all hover:scale-105">
+                            Add to Cart
+                        </button>
+                    </form>
 
                     <button class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105">
                         Buy Now
@@ -177,14 +183,18 @@
                     <!-- Tombol Wishlist -->
                     <button id="wishlist-toggle"
                         class="px-6 py-2 rounded-lg flex items-center transition-all
-        {{ in_array($product->id, session('wishlist', [])) ? 'bg-red-500 text-white' : 'bg-yellow-500 text-white' }}
+        {{ $isInWishlist ? 'bg-red-500 text-white' : 'bg-yellow-500 text-white' }}
         hover:scale-105"
                         data-id="{{ $product->id }}">
                         <i class="fas fa-heart mr-2"></i>
                         <span>
-                            {{ in_array($product->id, session('wishlist', [])) ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+                            {{ $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }}
                         </span>
                     </button>
+
+
+
+
 
 
                 </div>
@@ -197,88 +207,79 @@
     @vite('resources/js/app.js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.js"></script>
     <script>
-        document.getElementById('wishlist-toggle').addEventListener('click', function() {
-            const productId = this.dataset.id;
-            const isInWishlist = this.classList.contains('bg-red-500');
+        document.querySelectorAll('#wishlist-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.id;
+                const isInWishlist = this.classList.contains('bg-red-500'); // Cek status wishlist
 
-            // Kirim request ke backend untuk menambah atau menghapus dari wishlist
-            fetch(isInWishlist ? "{{ route('wishlist.remove', '') }}/" + productId :
-                    "{{ route('wishlist.add') }}", {
-                        method: isInWishlist ? 'DELETE' : 'POST',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-                        body: JSON.stringify({
-                            id: productId
+                fetch(isInWishlist ? "{{ route('wishlist.remove', '') }}/" + productId :
+                        "{{ route('wishlist.add') }}", {
+                            method: isInWishlist ? 'DELETE' : 'POST',
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify({
+                                id: productId
+                            })
                         })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update tombol dan kelas warna berdasarkan status
+                            this.classList.toggle('bg-red-500');
+                            this.classList.toggle('bg-yellow-500');
+                            this.querySelector('span').textContent = isInWishlist ? 'Add to Wishlist' :
+                                'Remove from Wishlist';
+
+                            // Tampilkan SweetAlert dengan pesan sukses dan animasi
+                            Swal.fire({
+                                title: data.message,
+                                icon: 'success',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInUp animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutDown animate__faster'
+                                },
+                                background: '#1a202c',
+                                color: '#fff',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            // Tampilkan SweetAlert dengan pesan error dan animasi
+                            Swal.fire({
+                                title: data.message,
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInUp animate__faster'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutDown animate__faster'
+                                },
+                                background: '#1a202c',
+                                color: '#fff',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update tombol dan kelas warna berdasarkan status
-                        this.classList.toggle('bg-red-500');
-                        this.classList.toggle('bg-yellow-500');
-                        this.querySelector('span').textContent = isInWishlist ? 'Add to Wishlist' :
-                            'Remove from Wishlist';
-
-                        // Tampilkan SweetAlert dengan pesan sukses dan animasi
+                    .catch(error => {
+                        console.error('Error:', error);
                         Swal.fire({
-                            title: data.message,
-                            icon: 'success',
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInUp animate__faster'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutDown animate__faster'
-                            },
-                            background: '#1a202c', // Background gelap
-                            color: '#fff', // Warna teks putih
-                            showConfirmButton: false, // Tidak ada tombol konfirmasi
-                            timer: 1750, // Alert akan menghilang setelah 1.5 detik
-                            customClass: {
-                                title: 'text-base text-xl font-semibold' // Ukuran dan ketebalan teks pada title
-                            }
-                        });
-
-                    } else {
-                        // Tampilkan SweetAlert dengan pesan error dan animasi
-                        Swal.fire({
-                            title: data.message,
+                            title: 'Gagal memproses permintaan.',
                             icon: 'error',
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInUp animate__faster'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutDown animate__faster'
-                            },
-                            background: '#1a202c', // Background gelap
-                            color: '#fff', // Warna teks putih
-                            showConfirmButton: false, // Tidak ada tombol konfirmasi
-                            timer: 1500 // Alert akan menghilang setelah 1.5 detik
+                            background: '#1a202c',
+                            color: '#fff',
+                            showConfirmButton: false,
+                            timer: 1500
                         });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Tampilkan SweetAlert untuk kesalahan
-                    Swal.fire({
-                        title: 'Gagal memproses permintaan.',
-                        icon: 'error',
-                        showClass: {
-                            popup: 'animate__animated animate__fadeInUp animate__faster'
-                        },
-                        hideClass: {
-                            popup: 'animate__animated animate__fadeOutDown animate__faster'
-                        },
-                        background: '#1a202c', // Background gelap
-                        color: '#fff', // Warna teks putih
-                        showConfirmButton: false, // Tidak ada tombol konfirmasi
-                        timer: 1500 // Alert akan menghilang setelah 1.5 detik
                     });
-                });
+            });
         });
     </script>
+
 
 </body>
 

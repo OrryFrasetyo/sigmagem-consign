@@ -2,50 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Models\Wishlist;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-    // Menambahkan produk ke wishlist
-    public function add(Request $request)
-    {
-        $wishlist = Session::get('wishlist', []); // Ambil data wishlist dari session
-
-        // Tambahkan ID produk ke wishlist jika belum ada
-        if (!in_array($request->id, $wishlist)) {
-            $wishlist[] = $request->id;
-            Session::put('wishlist', $wishlist);
-
-            return response()->json(['success' => true, 'message' => 'Produk berhasil ditambahkan ke wishlist!']);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Produk sudah ada di wishlist.']);
-    }
-
-    // Menampilkan wishlist
     public function index()
     {
-        $wishlist = Session::get('wishlist', []); // Ambil ID produk dari session
+        // Gunakan auth guard untuk 'customer' jika Anda menggunakan custom guard
+        $customerId = auth()->guard('customer')->id();
 
-        // Ambil data produk berdasarkan ID di wishlist
-        $products = Product::whereIn('id', $wishlist)->get();
+        if (!$customerId) {
+            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
 
+        // Ambil produk dari tabel wishlist berdasarkan pelanggan yang login
+        $products = \App\Models\Product::whereIn('id', function ($query) use ($customerId) {
+            $query->select('product_id')
+                ->from('wishlists')
+                ->where('customer_id', $customerId);
+        })->get();
+
+        // Pastikan variabel $products dikirimkan ke view
         return view('wishlistproduk', compact('products'));
     }
 
-    // Menghapus produk dari wishlist
-    public function remove($id)
+    public function add(Request $request)
     {
-        $wishlist = Session::get('wishlist', []); // Ambil data wishlist dari session
+        $productId = $request->id;
+        // Gunakan auth guard untuk 'customer'
+        $customerId = auth()->guard('customer')->id();
 
-        // Hapus produk dari wishlist
-        if (($key = array_search($id, $wishlist)) !== false) {
-            unset($wishlist[$key]);
-            Session::put('wishlist', array_values($wishlist)); // Menjaga index array
+        // Cek jika id customer valid
+        if (!$customerId) {
+            return response()->json(['success' => false, 'message' => 'User not authenticated.']);
         }
 
-        return response()->json(['success' => true, 'message' => 'Produk berhasil dihapus dari wishlist.']);
+        // Logika untuk menambahkan produk ke wishlist
+        Wishlist::create([
+            'product_id' => $productId,
+            'customer_id' => $customerId,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Product added to wishlist.']);
+    }
+
+    public function remove($productId)
+    {
+        // Gunakan auth guard untuk 'customer'
+        $customerId = auth()->guard('customer')->id();
+
+        if (!$customerId) {
+            return response()->json(['success' => false, 'message' => 'User not authenticated.']);
+        }
+
+        // Hapus produk dari wishlist berdasarkan customer_id dan product_id
+        Wishlist::where('customer_id', $customerId)->where('product_id', $productId)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Product removed from wishlist.']);
     }
 }

@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@preline/stepper": "^2.5.1",
+        "jquery": "^3.7.1",
         "pagedone": "^1.2.2",
         "preline": "^2.5.1",
         "sweetalert2": "^11.14.5",
