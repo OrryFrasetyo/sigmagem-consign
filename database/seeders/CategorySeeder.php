@@ -22,7 +22,7 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'list_category_id' => 1, // ID dari listcategory "Gaming"
-            'nama_kategori' => 'Cotroller',
+            'nama_kategori' => 'Controller',
             'gambar' => 'controller.jpg',
         ]);
 
