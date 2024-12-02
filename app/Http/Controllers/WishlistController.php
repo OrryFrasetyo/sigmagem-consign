@@ -19,7 +19,7 @@ class WishlistController extends Controller
         }
 
         // Ambil produk dari tabel wishlist berdasarkan pelanggan yang login
-        $products = \App\Models\Product::whereIn('id', function ($query) use ($customerId) {
+        $products = Product::whereIn('id', function ($query) use ($customerId) {
             $query->select('product_id')
                 ->from('wishlists')
                 ->where('customer_id', $customerId);

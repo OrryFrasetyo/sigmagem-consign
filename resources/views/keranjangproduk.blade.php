@@ -25,7 +25,9 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-4 mt-20 text-white">
             <h1 class="text-2xl font-semibold">Cart</h1>
-            <i class="far fa-heart text-2xl"></i>
+            <a href="/wishlist">
+                <i class="far fa-heart text-2xl"></i>
+            </a>
         </div>
 
         <!-- Cart Items -->

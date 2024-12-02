@@ -139,6 +139,8 @@ class ProductController extends Controller
         // Ambil produk berdasarkan ID
         $product = Product::findOrFail($productId);
 
+        $product->increment('views');
+
         // Cek apakah produk sudah ada di wishlist
         $isInWishlist = Wishlist::where('customer_id', $customerId)->where('product_id', $productId)->exists();
 
