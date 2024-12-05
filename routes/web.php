@@ -21,7 +21,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/profile/edit', [CustomerController::class, 'updateProfile'])->name('update-profile');
     Route::get('/upload-produk', [ProductController::class, 'index'])->name('upload-produk');
     Route::post('/upload-produk', [ProductController::class, 'store'])->name('product.store');
-    // Route::get('/list-produk', [ProductController::class, 'list'])->name('list-produk');
+    Route::get('/products', [ProductController::class, 'listAllProducts'])->name('products.all');
     Route::get('/products/category/{id}', [ProductController::class, 'showByCategory'])->name('products.by-category');
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
     //Wishlist

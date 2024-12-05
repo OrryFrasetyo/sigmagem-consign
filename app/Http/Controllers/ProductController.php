@@ -23,6 +23,18 @@ class ProductController extends Controller
         return view('uploadproduk', compact('categories'));
     }
 
+    public function listAllProducts()
+    {
+        // Ambil semua produk
+        $products = Product::with('category')->get();
+
+        // Kirim data produk ke view
+        return view('allproduk', compact('products'));
+    }
+
+
+
+
     public function showByCategory($id)
     {
         // Ambil kategori berdasarkan ID
@@ -49,10 +61,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Store a newly created produk in storage.
