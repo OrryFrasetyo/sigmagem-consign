@@ -184,7 +184,7 @@ class CategorySeeder extends Seeder
         Category::create([
             'list_category_id' => 3,
             'nama_kategori' => 'VGA',
-            'gambar' => 'VGA.png',
+            'gambar' => 'vga.jpg',
         ]);
 
         Category::create([
