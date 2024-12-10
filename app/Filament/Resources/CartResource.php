@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
 
 class CartResource extends Resource
 {
@@ -72,7 +73,21 @@ class CartResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->contentFooter(function () {
+                $totalHarga = DB::table('carts')
+                ->join('products', 'carts.product_id', '=', 'products.id')
+                ->sum('products.harga');
+
+            $totalFeePenjualan = DB::table('carts')
+                ->join('products', 'carts.product_id', '=', 'products.id')
+                ->sum('products.fee_penjualan');
+
+            return view('components.table-footer', [
+                'totalHarga' => $totalHarga,
+                'totalFeePenjualan' => $totalFeePenjualan,
             ]);
+        });
     }
 
     public static function getRelations(): array
@@ -90,4 +105,6 @@ class CartResource extends Resource
             'edit' => Pages\EditCart::route('/{record}/edit'),
         ];
     }
+
+
 }
