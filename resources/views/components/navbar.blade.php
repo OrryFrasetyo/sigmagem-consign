@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/alamat"
                                 class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">

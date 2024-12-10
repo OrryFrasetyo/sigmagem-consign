@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WishlistController;
@@ -28,7 +29,13 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');  // Menambah produk ke wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); // Melihat wishlist
     Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove'); // Menghapus produk dari wishlist
-
+    //alamat
+    // Rute untuk menampilkan daftar alamat
+    Route::get('/alamat', [AlamatController::class, 'index'])->name('alamat.index');
+    Route::post('/alamat', [AlamatController::class, 'store'])->name('alamat.store');
+    Route::get('/alamat/{id}/edit', [AlamatController::class, 'edit'])->name('alamat.edit');
+    Route::put('/alamat/{id}', [AlamatController::class, 'update'])->name('alamat.update');
+    Route::delete('/alamat/{id}', [AlamatController::class, 'destroy'])->name('alamat.destroy');
     //Cart
     Route::middleware('auth')->group(function () {
         // Route untuk menambahkan produk ke keranjang
