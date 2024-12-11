@@ -46,46 +46,56 @@
                         <label for="full_name" class="block text-white font-medium mb-2">
                             Nama Lengkap
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
-                            type="text" name="full_name" id="full_name" value="{{ old('full_name', $user->full_name) }}"  />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text"
+                            name="full_name" id="full_name" value="{{ old('full_name', $user->full_name) }}" />
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block text-white font-medium mb-2">
                             Email
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"  name="email" id="email"
-                            type="text" value="{{ old('email', $user->email) }}" />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" name="email"
+                            id="email" type="text" value="{{ old('email', $user->email) }}" />
                     </div>
                     <div class="mb-4">
                         <label for="no_hp" class="block text-white font-medium mb-2">
                             Nomor Telepon
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
-                            type="text" name="no_hp" id="no_hp" value="{{ old('no_hp', $user->no_hp) }}" />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text"
+                            name="no_hp" id="no_hp" value="{{ old('no_hp', $user->no_hp) }}" />
                     </div>
                     <div class="mb-4">
                         <label for="kota" class="block text-white font-medium mb-2">
                             Kota Asal
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text" name="kota" id="kota" value="{{ old('kota', $user->kota) }}" >
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text"
+                            name="kota" id="kota" value="{{ old('kota', $user->kota) }}">
                     </div>
                     <div class="mb-4">
                         <label for="password" class="block text-white font-medium mb-2">
                             Password
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="password" name="password" id="password"
-                             />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="password"
+                            name="password" id="password" />
                     </div>
                 </div>
                 <div class="flex flex-col items-center">
                     <!-- Preview Gambar -->
                     <div class="w-24 h-24 rounded-full overflow-hidden mb-4">
-                        <img id="previewImage"
-                             alt="Profile picture preview"
-                             class="w-full h-full object-cover object-center"
-                             src="{{ $user->foto_profile ? asset('storage/' . $user->foto_profile) : asset('img/avatar.png') }}"
-                        />
+                        <img id="previewImage" alt="Profile picture preview"
+                            class="w-full h-full object-cover object-center cursor-pointer"
+                            src="{{ $user->foto_profile ? asset('storage/' . $user->foto_profile) : asset('img/avatar.png') }}" />
+                        <!-- Modal untuk preview gambar -->
+                        <div id="imageModal"
+                            class="fixed inset-0 z-50 hidden bg-black bg-opacity-75 flex items-center justify-center">
+                            <div class="relative">
+                                <button id="closeModal" type="button"
+                                    class="absolute top-2 right-2 text-white text-xl">&times;</button>
+                                <img id="modalImage" class="max-w-full max-h-screen rounded" />
+                            </div>
+                        </div>
                     </div>
+
+
 
                     <!-- Input File -->
                     <input type="file" id="uploadImage" accept="image/*" class="hidden" name="foto_profile" />
@@ -130,6 +140,33 @@
         <h1 class="text-gray-900 mb-10">jarak</h1>
     </div>
     <x-footer></x-footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const previewImage = document.getElementById("previewImage");
+            const imageModal = document.getElementById("imageModal");
+            const modalImage = document.getElementById("modalImage");
+            const closeModal = document.getElementById("closeModal");
+
+            // Ketika gambar diklik
+            previewImage.addEventListener("click", function() {
+                modalImage.src = previewImage.src;
+                imageModal.classList.remove("hidden");
+            });
+
+            // Ketika tombol close diklik
+            closeModal.addEventListener("click", function() {
+                imageModal.classList.add("hidden");
+            });
+
+            // Ketika klik di luar gambar di modal
+            imageModal.addEventListener("click", function(event) {
+                if (event.target === imageModal) {
+                    imageModal.classList.add("hidden");
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
