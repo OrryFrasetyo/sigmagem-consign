@@ -29,51 +29,74 @@
         </p>
         <div class="border-b border-gray-700 mb-6">
         </div>
-        <form>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('update-profile') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-2">
                     <div class="mb-4">
-                        <label class="block text-white font-medium mb-2">
+                        <label for="full_name" class="block text-white font-medium mb-2">
                             Nama Lengkap
                         </label>
                         <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
-                            type="text" />
+                            type="text" name="full_name" id="full_name" value="{{ old('full_name', $user->full_name) }}"  />
                     </div>
                     <div class="mb-4">
-                        <label class="block text-white font-medium mb-2">
+                        <label for="email" class="block text-white font-medium mb-2">
                             Email
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" disabled=""
-                            type="text" />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"  name="email" id="email"
+                            type="text" value="{{ old('email', $user->email) }}" />
                     </div>
                     <div class="mb-4">
-                        <label class="block text-white font-medium mb-2">
+                        <label for="no_hp" class="block text-white font-medium mb-2">
                             Nomor Telepon
                         </label>
                         <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
-                            type="text" />
+                            type="text" name="no_hp" id="no_hp" value="{{ old('no_hp', $user->no_hp) }}" />
                     </div>
                     <div class="mb-4">
-                        <label class="block text-white font-medium mb-2">
+                        <label for="kota" class="block text-white font-medium mb-2">
                             Kota Asal
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text">
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text" name="kota" id="kota" value="{{ old('kota', $user->kota) }}" >
                     </div>
                     <div class="mb-4">
-                        <label class="block text-white font-medium mb-2">
+                        <label for="password" class="block text-white font-medium mb-2">
                             Password
                         </label>
-                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="password"
-                            value="" />
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="password" name="password" id="password"
+                             />
                     </div>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img alt="Profile picture of a cat" class="w-24 h-24 rounded-full mb-4" height="100"
-                        src="https://storage.googleapis.com/a1aa/image/AiLfzh5zkUXXNiFBB33Zf5x0ccqu3P812LsfeOz96GXjRZnPB.jpg"
-                        width="100" />
-                    <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                    <!-- Preview Gambar -->
+                    <div class="w-24 h-24 rounded-full overflow-hidden mb-4">
+                        <img id="previewImage"
+                             alt="Profile picture preview"
+                             class="w-full h-full object-cover object-center"
+                             src="{{ $user->foto_profile ? asset('storage/' . $user->foto_profile) : asset('img/avatar.png') }}"
+                        />
+                    </div>
+
+                    <!-- Input File -->
+                    <input type="file" id="uploadImage" accept="image/*" class="hidden" name="foto_profile" />
+
+                    <!-- Tombol Pilih Gambar -->
+                    <button type="button" onclick="document.getElementById('uploadImage').click()"
+                        class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
                         Pilih Gambar
                     </button>
+
+                    <!-- Informasi -->
                     <p class="text-gray-500 text-sm mt-2">
                         Ukuran gambar: maks. 1 MB
                     </p>
@@ -81,9 +104,23 @@
                         Format gambar: .JPEG, .PNG
                     </p>
                 </div>
+
+                <script>
+                    // Preview Gambar
+                    document.getElementById('uploadImage').addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById('previewImage').src = e.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                </script>
             </div>
             <div class="mt-6">
-                <button class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
+                <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
                     Simpan
                 </button>
             </div>

@@ -101,51 +101,55 @@ class CustomerController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $user = Auth::guard('customer')->user();
+    $user = Auth::guard('customer')->user();
 
-        if (!$user) {
-            return redirect()->route('edit-profile')->with('error', 'User tidak ditemukan.');
-        }
+    if (!$user) {
+        return redirect()->route('edit-profile')->with('error', 'User tidak ditemukan.');
+    }
 
-        // Validate profile update input
-        $request->validate([
-            'full_name' => 'required|string|max:64',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('customers', 'email')->ignore($user->id),
-            ],
-            'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp,' . $user->id,
-            'password' => 'nullable|min:8',
-            'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kota' => 'nullable|string|max:64'
-        ]);
+    // Validasi input
+    $request->validate([
+        'full_name' => 'required|string|max:64',
+        'email' => [
+            'required',
+            'email',
+            Rule::unique('customers', 'email')->ignore($user->id),
+        ],
+        'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp,' . $user->id,
+        'password' => 'nullable|min:8',
+        'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'kota' => 'nullable|string|max:64',
+    ]);
 
-        // Collect data to update
-        $data = $request->only('full_name', 'email', 'no_hp', 'kota');
+    // Data untuk update
+    $data = $request->only('full_name', 'email', 'no_hp', 'kota');
 
-        // If password is provided, hash and update it
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
+    // Update password jika ada input baru
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
+    }
 
-        // Handle foto_profile
-        // if ($request->hasFile('foto_profile')) {
+    // Proses upload foto profil
+    if ($request->hasFile('foto_profile')) {
+        $file = $request->file('foto_profile');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $filePath = $file->storeAs('profiles', $fileName, 'public'); // Simpan di storage/public/profiles
 
-        //      // Hapus foto lama jika ada
-        //     if ($user->foto_profile && $user->foto_profile !== 'profiles/default_profile.jpg' && Storage::disk('public')->exists($user->foto_profile)) {
-        //         Storage::disk('public')->delete($user->foto_profile);
-        //     }
-
-        //     // Simpan foto baru
-        //     $filePath = $request->file('foto_profile')->store('profiles', 'public');
-        //     $data['foto_profile'] = $filePath;
+        // Hapus foto lama jika ada
+        // if ($user->foto_profile && $user->foto_profile !== 'profiles/default_profile.jpg') {
+        //     Storage::disk('public')->delete($user->foto_profile);
         // }
 
-        $user->update($data);
-
-        return redirect()->route('home')->with('success', 'Profil berhasil diperbarui.');
+        // Update path foto_profile
+        $data['foto_profile'] = $filePath;
     }
+
+    // Update data user
+    $user->update($data);
+
+    return redirect()->route('home')->with('success', 'Profil berhasil diperbarui.');
+}
+
 
 
 }

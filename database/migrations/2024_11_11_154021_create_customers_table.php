@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('no_hp')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('foto_profile')->default('profiles/default_profile.jpg');
+            $table->string('foto_profile')->nullable()->default('profiles/default_profile.jpg');
             $table->string('kota')->nullable();
             $table->rememberToken();
             $table->timestamps();

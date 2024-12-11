@@ -18,7 +18,7 @@
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                     data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full"
+                    <img class="w-8 h-8 rounded-full object-cover object-center"
                         src="{{ auth()->user()->foto_profile ? Storage::url(auth()->user()->foto_profile) : asset('default_profile.jpg') }}"
                         alt="Foto Profile">
                 </button>
