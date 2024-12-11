@@ -71,7 +71,7 @@ class CustomerController extends Controller
                 'max:64',
                 Rule::unique('customers', 'email'), // pastikan email unik
             ],
-            'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp', // sesuaikan dengan format no hp
+            'no_hp' => 'required|digits_between:5,13|unique:customers,no_hp', // sesuaikan dengan format no hp
             'password' => 'required|min:8', // konfirmasi password
             'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kota' => 'nullable|string|max:64'

@@ -79,8 +79,8 @@
                 <div class="mt-6">
                     <div class="flex items-center mt-2">
                         <img alt="Profile Picture" class="w-12 h-12 rounded-full" height="100"
-                            src="https://storage.googleapis.com/a1aa/image/OlwfXutxW6VOTCsn0u1MLegsy3KRQ2OGWs0E2gffcudOL7QPB.jpg"
-                            width="100" />
+                            src="{{ auth()->user()->foto_profile ? Storage::url(auth()->user()->foto_profile) : asset('default_profile.jpg') }}"
+                            alt="Foto Profile" width="100" />
                         <div class="ml-4">
                             <p class="font-semibold">
                                 {{ $product->customer->full_name ?? '-' }}
@@ -227,7 +227,8 @@
                                     <p class="text-right">{{ $discussion->message }}</p>
                                 </div>
                                 <img alt="Customer profile picture" class="w-10 h-10 rounded-full" height="40"
-                                    src="{{ $discussion->customer->profile_picture }}" />
+                                    src="{{ auth()->user()->foto_profile ? Storage::url(auth()->user()->foto_profile) : asset('default_profile.jpg') }}"
+                                    alt="Foto Profile" />
                             </div>
                         @else
                             {{-- If the message is from another user (e.g., Seller) --}}
