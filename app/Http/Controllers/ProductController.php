@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
+use App\Models\Discussion;
 use App\Models\ListCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateProdukRequest;
@@ -148,17 +150,48 @@ class ProductController extends Controller
         // Ambil produk berdasarkan ID
         $product = Product::findOrFail($productId);
 
+        // Ambil diskusi terkait produk ini, beserta data customer yang membuat diskusi
+        $discussions = Discussion::where('product_id', $productId)
+            ->with('customer') // Memuat relasi customer untuk setiap diskusi
+            ->get();
+
+        // Increment jumlah views untuk produk
         $product->increment('views');
 
         // Cek apakah produk sudah ada di wishlist
         $isInWishlist = Wishlist::where('customer_id', $customerId)->where('product_id', $productId)->exists();
 
-        // Kirim data produk dan status wishlist ke view
-        return view('detailproduk', compact('product', 'isInWishlist'));
+        // Kirim data produk, diskusi, dan status wishlist ke view
+        return view('detailproduk', compact('product', 'discussions', 'isInWishlist'));
     }
 
+    public function storeDiscussion(Request $request, $productId)
+    {
+        // Validasi input diskusi
+        $request->validate([
+            'message' => 'required|string|max:500',
+        ]);
 
+        // Ambil data customer yang sedang login
+        $customerId = auth('customer')->id();
 
+        // Cek apakah customer sudah login
+        if (!$customerId) {
+            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
+        // Menyimpan diskusi ke tabel 'discussions'
+        Discussion::create([
+            'product_id' => $productId,
+            'customer_id' => $customerId,
+            'message' => $request->message,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Redirect kembali ke halaman detail produk dengan pesan sukses
+        return redirect()->route('product.detail', $productId)->with('success', 'Diskusi berhasil dikirim.');
+    }
 
 
 

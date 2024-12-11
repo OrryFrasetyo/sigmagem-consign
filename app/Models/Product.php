@@ -51,7 +51,10 @@ class Product extends Model
         return $this->belongsTo(Customer::class);  // Satu Produk dimiliki oleh satu Customer
     }
 
-
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class);
+    }
 
 
     /**

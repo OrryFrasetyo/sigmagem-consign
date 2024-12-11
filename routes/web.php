@@ -6,6 +6,7 @@ use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\ListCategoryController;
 
 // Route::get('/', function () {
@@ -36,6 +37,11 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/alamat/{id}/edit', [AlamatController::class, 'edit'])->name('alamat.edit');
     Route::put('/alamat/{id}', [AlamatController::class, 'update'])->name('alamat.update');
     Route::delete('/alamat/{id}', [AlamatController::class, 'destroy'])->name('alamat.destroy');
+    //diskusi
+    // Route untuk menyimpan diskusi
+    Route::post('/product/{id}/diskusi', [ProductController::class, 'storeDiscussion'])->middleware('auth:customer')->name('discussion.store');
+
+
     //Cart
     Route::middleware('auth')->group(function () {
         // Route untuk menambahkan produk ke keranjang

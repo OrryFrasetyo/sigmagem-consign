@@ -176,7 +176,8 @@
                         </button>
                     </form>
 
-                    <button class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105 hover:bg-green-600">
+                    <button
+                        class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105 hover:bg-green-600">
                         Buy Now
                     </button>
 
@@ -191,14 +192,76 @@
                             {{ $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }}
                         </span>
                     </button>
-
-
-
-
-
-
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="max-w-8xl mx-auto bg-gray-800 shadow-md rounded-lg mt-6 text-white">
+        <div class="p-4 border-b border-gray-700">
+            <div class="flex items-center">
+                <i class="fas fa-arrow-left text-xl"></i>
+                <h1 class="ml-4 text-xl font-semibold">Diskusi</h1>
+            </div>
+        </div>
+        <div class="p-4">
+            <div class="space-y-4">
+                @foreach ($product->discussions as $discussion)
+                    @if ($discussion->customer->id === auth()->user()->id)
+                        {{-- If logged-in customer is the one who posted --}}
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div>
+                                <div class="flex items-center space-x-2 justify-end">
+                                    <span
+                                        class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                                    <span class="font-semibold">
+                                        {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
+                                        @if ($discussion->customer->id === $product->customer_id)
+                                            <span class="text-green-500 text-sm">(Seller)</span>
+                                        @endif
+                                    </span>
+                                </div>
+                                <p class="text-right">{{ $discussion->message }}</p>
+                            </div>
+                            <img alt="Customer profile picture" class="w-10 h-10 rounded-full" height="40"
+                                src="{{ $discussion->customer->profile_picture }}" />
+                        </div>
+                    @else
+                        {{-- If the message is from another user (e.g., Seller) --}}
+                        <div class="flex items-start space-x-3">
+                            <img alt="User profile picture" class="w-10 h-10 rounded-full" height="40"
+                                src="{{ $discussion->customer->profile_picture }}" />
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-semibold">
+                                        {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
+                                        @if ($discussion->customer->id === $product->customer_id)
+                                            <span class="text-green-500 text-sm">(Seller)</span>
+                                        @endif
+                                    </span>
+                                    <span
+                                        class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                                </div>
+                                <p>{{ $discussion->message }}</p>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+        </div>
+        <div class="p-4 border-t border-gray-700">
+            <!-- Form Diskusi -->
+            <form action="{{ route('discussion.store', $product->id) }}" method="POST"
+                class="flex items-center space-x-2">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <input class="flex-1 rounded-full px-4 py-2 focus:outline-none bg-gray-700 text-white"
+                    placeholder="Tulis diskusi disini" type="text" name="message" required />
+                <button type="submit" class="text-gray-400">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
     </div>
 

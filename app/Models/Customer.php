@@ -48,4 +48,9 @@ class Customer extends Authenticatable
             $customer->remember_token = $customer->remember_token ?? Str::random(60);
         });
     }
+
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class);
+    }
 }
