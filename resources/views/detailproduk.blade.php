@@ -87,7 +87,7 @@
                             </p>
 
                             <p class="text-gray-300">
-                                Kota
+                                {{ $product->customer->kota ?? '-' }}
                             </p>
                         </div>
                     </div>
