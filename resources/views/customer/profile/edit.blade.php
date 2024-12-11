@@ -20,7 +20,7 @@
         <h1 class="text-gray-900 mt-20">test</h1>
     </div>
 
-    <div class="max-w-6xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-800 mt-10 mb-20">
+    <div class="max-w-5xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-800 mt-10 mb-20">
         <h1 class="text-2xl font-semibold mb-4 text-white">
             Profil Saya
         </h1>
