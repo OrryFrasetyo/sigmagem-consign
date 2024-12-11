@@ -206,49 +206,52 @@
         </div>
         <div class="p-4">
             <div class="space-y-4">
-                @foreach ($product->discussions as $discussion)
-                    @if ($discussion->customer->id === auth()->user()->id)
-                        {{-- If logged-in customer is the one who posted --}}
-                        <div class="flex items-start space-x-3 justify-end">
-                            <div>
-                                <div class="flex items-center space-x-2 justify-end">
-                                    <span
-                                        class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
-                                    <span class="font-semibold">
-                                        {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
-                                        @if ($discussion->customer->id === $product->customer_id)
-                                            <span class="text-green-500 text-sm">(Seller)</span>
-                                        @endif
-                                    </span>
+                @if ($product->discussions->isEmpty())
+                    <p class="text-gray-400">Belum ada diskusi.</p>
+                @else
+                    @foreach ($product->discussions as $discussion)
+                        @if ($discussion->customer->id === auth()->user()->id)
+                            {{-- If logged-in customer is the one who posted --}}
+                            <div class="flex items-start space-x-3 justify-end">
+                                <div>
+                                    <div class="flex items-center space-x-2 justify-end">
+                                        <span
+                                            class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                                        <span class="font-semibold">
+                                            {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
+                                            @if ($discussion->customer->id === $product->customer_id)
+                                                <span class="text-green-500 text-sm">(Seller)</span>
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <p class="text-right">{{ $discussion->message }}</p>
                                 </div>
-                                <p class="text-right">{{ $discussion->message }}</p>
+                                <img alt="Customer profile picture" class="w-10 h-10 rounded-full" height="40"
+                                    src="{{ $discussion->customer->profile_picture }}" />
                             </div>
-                            <img alt="Customer profile picture" class="w-10 h-10 rounded-full" height="40"
-                                src="{{ $discussion->customer->profile_picture }}" />
-                        </div>
-                    @else
-                        {{-- If the message is from another user (e.g., Seller) --}}
-                        <div class="flex items-start space-x-3">
-                            <img alt="User profile picture" class="w-10 h-10 rounded-full" height="40"
-                                src="{{ $discussion->customer->profile_picture }}" />
-                            <div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="font-semibold">
-                                        {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
-                                        @if ($discussion->customer->id === $product->customer_id)
-                                            <span class="text-green-500 text-sm">(Seller)</span>
-                                        @endif
-                                    </span>
-                                    <span
-                                        class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                        @else
+                            {{-- If the message is from another user (e.g., Seller) --}}
+                            <div class="flex items-start space-x-3">
+                                <img alt="User profile picture" class="w-10 h-10 rounded-full" height="40"
+                                    src="{{ $discussion->customer->profile_picture }}" />
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="font-semibold">
+                                            {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
+                                            @if ($discussion->customer->id === $product->customer_id)
+                                                <span class="text-green-500 text-sm">(Seller)</span>
+                                            @endif
+                                        </span>
+                                        <span
+                                            class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                                    </div>
+                                    <p>{{ $discussion->message }}</p>
                                 </div>
-                                <p>{{ $discussion->message }}</p>
                             </div>
-                        </div>
-                    @endif
-                @endforeach
+                        @endif
+                    @endforeach
+                @endif
             </div>
-
         </div>
         <div class="p-4 border-t border-gray-700">
             <!-- Form Diskusi -->
@@ -264,6 +267,7 @@
             </form>
         </div>
     </div>
+
 
 
     <x-footer />
