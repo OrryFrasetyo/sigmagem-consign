@@ -78,9 +78,9 @@
 
                 <div class="mt-6">
                     <div class="flex items-center mt-2">
-                        <img alt="Profile Picture" class="w-12 h-12 rounded-full" height="100"
-                            src="{{ auth()->user()->foto_profile ? Storage::url(auth()->user()->foto_profile) : asset('default_profile.jpg') }}"
-                            alt="Foto Profile" width="100" />
+                        <img alt="Profile Picture" class="w-12 h-12 rounded-full"
+                            src="{{ $product->customer && $product->customer->foto_profile ? asset('storage/' . $product->customer->foto_profile) : asset('profiles/default_profile.jpg') }}"
+                            width="100" height="100" />
                         <div class="ml-4">
                             <p class="font-semibold">
                                 {{ $product->customer->full_name ?? '-' }}
@@ -215,8 +215,9 @@
                             <div class="flex items-start space-x-3 justify-end">
                                 <div>
                                     <div class="flex items-center space-x-2 justify-end">
-                                        <span
-                                            class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+                                        <span class="text-gray-400 text-sm">
+                                            {{ $discussion->created_at->format('d M Y | H:i') }}
+                                        </span>
                                         <span class="font-semibold">
                                             {{ $discussion->customer->full_name ?? 'Tidak diketahui' }}
                                             @if ($discussion->customer->id === $product->customer_id)
@@ -226,15 +227,21 @@
                                     </div>
                                     <p class="text-right">{{ $discussion->message }}</p>
                                 </div>
-                                <img alt="Customer profile picture" class="w-10 h-10 rounded-full" height="40"
-                                    src="{{ auth()->user()->foto_profile ? Storage::url(auth()->user()->foto_profile) : asset('default_profile.jpg') }}"
-                                    alt="Foto Profile" />
+                                <img alt="Customer profile picture" class="w-10 h-10 rounded-full"
+                                    src="{{ $discussion->customer && $discussion->customer->foto_profile
+                                        ? asset('storage/' . $discussion->customer->foto_profile)
+                                        : asset('profiles/default_profile.jpg') }}"
+                                    width="40" height="40" />
+
                             </div>
                         @else
                             {{-- If the message is from another user (e.g., Seller) --}}
                             <div class="flex items-start space-x-3">
-                                <img alt="User profile picture" class="w-10 h-10 rounded-full" height="40"
-                                    src="{{ $discussion->customer->profile_picture }}" />
+                                <img alt="Customer profile picture" class="w-10 h-10 rounded-full"
+                                    src="{{ $discussion->customer && $discussion->customer->foto_profile
+                                        ? asset('storage/' . $discussion->customer->foto_profile)
+                                        : asset('profiles/default_profile.jpg') }}"
+                                    width="40" height="40" />
                                 <div>
                                     <div class="flex items-center space-x-2">
                                         <span class="font-semibold">
@@ -243,8 +250,10 @@
                                                 <span class="text-green-500 text-sm">(Seller)</span>
                                             @endif
                                         </span>
-                                        <span
-                                            class="text-gray-400 text-sm">{{ $discussion->created_at->format('d M Y') }}</span>
+
+                                        <span class="text-gray-400 text-sm">
+                                            {{ $discussion->created_at->format('d M Y | H:i') }}
+                                        </span>
                                     </div>
                                     <p>{{ $discussion->message }}</p>
                                 </div>
