@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full bg-gray-900">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,83 +11,88 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <title>Edit Profil</title>
 </head>
+
 <body class="h-full">
 
     <x-navbar></x-navbar>
 
-    <section class=" dark:bg-gray-900">
-        <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
-            <h1 class="mb-4 text-2xl text-center font-bold text-white mt-5">Edit Profil</h1>
-            <form action="{{ route('update-profile') }}" method="POST">
-                @csrf
-                <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-                    <div class="sm:col-span-2">
-                        <label for="full_name" class="block mb-2 text-sm font-medium text-white">Nama Lengkap</label>
-                        <input type="text" name="full_name" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('full_name', $user->full_name) }}" placeholder="Masukkan nama lengkap" required>
-                    </div>
+    <div>
+        <h1 class="text-gray-900 mt-20">test</h1>
+    </div>
 
-                    <div class="sm:col-span-2">
-                        <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
-                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('email', $user->email) }}" placeholder="Masukkan email" required>
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label for="kota" class="block mb-2 text-sm font-medium text-white">Nama Kota</label>
-                        <input type="text" name="kota" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('kota', $user->kota) }}" placeholder="Masukkan nama kota">
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label for="no_handphone" class="block mb-2 text-sm font-medium text-white">Nomor Handphone</label>
-                        <input type="number" name="no_hp" id="no_hp" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('no_hp', $user->no_hp) }}" placeholder="Masukkan Nomor Handphone">
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
-                        <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Ubah Password">
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <label for="foto_profile" class="block mb-2 text-sm font-medium text-white">Ganti Foto Profile</label>
-                        <input type="file" name="foto_profile" id="foto_profile" accept="image/*" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    </div>
-
-
-                    {{-- <div class="sm:col-span-2">
-                        <label for="full_name" class="block mb-2 text-sm font-medium text-white">Nama Lengkap</label>
-                        <input type="text" name="full_name" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="Orry Frasetyo" placeholder="Masukkan nama lengkap" required="">
-                    </div> --}}
-
-                    {{-- <div class="sm:col-span-2">
-                        <label for="tempat_lahir" class="block mb-2 text-sm font-medium text-white">Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" id="tempat_lahir" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="Padang" placeholder="Masukkan tempat lahir" required="">
-                    </div> --}}
-
-                    {{-- <div class="sm:col-span-2">
-                        <label for="tanggal_lahir" class="block mb-2 text-sm font-medium text-white">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="Orry Frasetyo" placeholder="Masukkan tanggal lahir" required="">
-                    </div> --}}
-
-                    {{-- <div class="sm:col-span-2">
-                        <label for="jenis_kelamin" class="block mb-2 text-sm font-medium text-white">Jenis Kelamin</label>
-
-                        <div class="flex items-center mb-4">
-                            <input id="laki_laki" type="radio" value="Laki-laki" name="jenis_kelamin" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="laki_laki" class="ms-2 text-sm font-medium text-white">Laki-laki</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input id="perempuan" type="radio" value="Perempuan" name="jenis_kelamin" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="perempuan" class="ml-2 text-sm font-medium text-white">Perempuan</label>
-                        </div>
-                    </div> --}}
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button type="submit" class="text-white bg-purple-900 hover:bg-purple-950 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Simpan
-                    </button>
-                </div>
-            </form>
+    <div class="max-w-4xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-800 mt-10 mb-20">
+        <h1 class="text-2xl font-semibold mb-4 text-white">
+            Profil Saya
+        </h1>
+        <p class="text-gray-400 mb-6">
+            Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun
+        </p>
+        <div class="border-b border-gray-700 mb-6">
         </div>
-      </section>
-
+        <form>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                    <div class="mb-4">
+                        <label class="block text-white font-medium mb-2">
+                            Nama Lengkap
+                        </label>
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
+                            type="text" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-white font-medium mb-2">
+                            Email
+                        </label>
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" disabled=""
+                            type="text" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-white font-medium mb-2">
+                            Nomor Telepon
+                        </label>
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white"
+                            type="text" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-white font-medium mb-2">
+                            Kota Asal
+                        </label>
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="text">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-white font-medium mb-2">
+                            Password
+                        </label>
+                        <input class="w-full border border-gray-700 p-2 rounded bg-gray-800 text-white" type="password"
+                            value="" />
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img alt="Profile picture of a cat" class="w-24 h-24 rounded-full mb-4" height="100"
+                        src="https://storage.googleapis.com/a1aa/image/AiLfzh5zkUXXNiFBB33Zf5x0ccqu3P812LsfeOz96GXjRZnPB.jpg"
+                        width="100" />
+                    <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                        Pilih Gambar
+                    </button>
+                    <p class="text-gray-500 text-sm mt-2">
+                        Ukuran gambar: maks. 1 MB
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        Format gambar: .JPEG, .PNG
+                    </p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h1 class="text-gray-900 mb-10">jarak</h1>
+    </div>
+    <x-footer></x-footer>
 </body>
+
 </html>
