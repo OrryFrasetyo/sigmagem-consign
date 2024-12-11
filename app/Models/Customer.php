@@ -19,6 +19,7 @@ class Customer extends Authenticatable
         'email_verified_at',
         'password',
         'foto_profile',
+        'kota',
         'remember_token'
     ];
 

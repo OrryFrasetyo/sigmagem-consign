@@ -31,6 +31,11 @@
                     </div>
 
                     <div class="sm:col-span-2">
+                        <label for="kota" class="block mb-2 text-sm font-medium text-white">Nama Kota</label>
+                        <input type="text" name="kota" id="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('kota', $user->kota) }}" placeholder="Masukkan nama kota">
+                    </div>
+
+                    <div class="sm:col-span-2">
                         <label for="no_handphone" class="block mb-2 text-sm font-medium text-white">Nomor Handphone</label>
                         <input type="number" name="no_hp" id="no_hp" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ old('no_hp', $user->no_hp) }}" placeholder="Masukkan Nomor Handphone">
                     </div>

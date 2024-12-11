@@ -73,7 +73,8 @@ class CustomerController extends Controller
             ],
             'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp', // sesuaikan dengan format no hp
             'password' => 'required|min:8', // konfirmasi password
-            'foto_profile'
+            'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kota' => 'nullable|string|max:64'
         ]);
 
         //create new user
@@ -84,7 +85,7 @@ class CustomerController extends Controller
             'email_verified_at' => now(),
             'password' => Hash::make($request->password),
             'remember_token' => Str::random(10),
-            'foto_profile' => $request->foto_profile
+            'kota' => $request->kota
         ]);
 
         //redirect or login after registration
@@ -117,10 +118,11 @@ class CustomerController extends Controller
             'no_hp' => 'required|digits_between:10,13|unique:customers,no_hp,' . $user->id,
             'password' => 'nullable|min:8',
             'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kota' => 'nullable|string|max:64'
         ]);
 
         // Collect data to update
-        $data = $request->only('full_name', 'email', 'no_hp');
+        $data = $request->only('full_name', 'email', 'no_hp', 'kota');
 
         // If password is provided, hash and update it
         if ($request->filled('password')) {
