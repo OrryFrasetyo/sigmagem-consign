@@ -112,7 +112,7 @@
                             <div>
                                 <h3 class="font-bold">{{ $item->nama_penerima }}</h3>
                                 <p class="text-gray-400">{{ $item->no_telp }}</p>
-                                <p class="text-gray-400">{{ $item->alamat }}</p>
+                                <p class="text-gray-400">{{ $item->alamat }} {{ $item->detail }} </p>
                                 <p class="text-gray-400">{{ strtoupper($item->kecamatan) }},
                                     {{ strtoupper($item->kota) }}, {{ strtoupper($item->provinsi) }}, ID,
                                     {{ $item->kode_pos }}</p>
@@ -124,7 +124,64 @@
                                     @method('DELETE')
                                     <button type="submit" class="text-red-400">Hapus</button>
                                 </form>
-                                <a href="{{ route('alamat.edit', $item->id) }}" class="text-blue-400 ml-2">Ubah</a>
+                                <a href="#" class="text-blue-400 ml-2 edit-alamat-btn"
+                                    data-id="{{ $item->id }}">Ubah</a>
+                                <!-- Modal Edit Alamat -->
+                                <div class="fixed inset-0 bg-opacity-50 flex items-center justify-center hidden"
+                                    id="modalEditAlamat">
+                                    <div class="bg-gray-900 p-8 rounded-lg shadow-md w-full max-w-2xl">
+                                        <h2 class="text-2xl font-semibold mb-6 text-white">Edit Alamat</h2>
+                                        <form action="{{ route('alamat.update', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="grid grid-cols-1 gap-4">
+                                                <div class="grid grid-cols-2 gap-4">
+                                                    <input
+                                                        class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                        name="nama_penerima" placeholder="Nama Lengkap" type="text"
+                                                        value="{{ $item->nama_penerima }}" required />
+                                                    <input
+                                                        class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                        name="no_telp" placeholder="Nomor Telepon" type="text"
+                                                        value="{{ $item->no_telp }}" required />
+                                                </div>
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="provinsi" placeholder="Provinsi" type="text"
+                                                    value="{{ $item->provinsi }}" required />
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="kota" placeholder="Kota" type="text"
+                                                    value="{{ $item->kota }}" required />
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="kecamatan" placeholder="Kecamatan" type="text"
+                                                    value="{{ $item->kecamatan }}" required />
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="kode_pos" placeholder="Kode Pos" type="text"
+                                                    value="{{ $item->kode_pos }}" required />
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="alamat" placeholder="Nama Jalan, Gedung, No. Rumah"
+                                                    type="text" value="{{ $item->alamat }}" required />
+                                                <input
+                                                    class="border border-gray-700 bg-gray-800 text-white p-3 rounded-md w-full"
+                                                    name="detail"
+                                                    placeholder="Detail Lainnya (Cth: Blok / Unit No., Patokan)"
+                                                    type="text" value="{{ $item->detail }}" />
+                                                <div class="flex justify-end mt-6 space-x-4">
+                                                    <button type="button"
+                                                        class="text-gray-500 border border-transparent hover:border-gray-500 hover:text-white p-3 rounded-md w-32"
+                                                        id="closeModalEdit">Batal</button>
+                                                    <button type="submit"
+                                                        class="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-md w-32">Simpan</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
@@ -140,6 +197,38 @@
     <x-footer />
     @vite('resources/js/app.js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+    <script>
+        const modalEditAlamat = document.getElementById('modalEditAlamat');
+        const openModalEdit = document.querySelectorAll('.edit-alamat-btn');
+        const closeModalEdit = document.getElementById('closeModalEdit');
+
+        openModalEdit.forEach(button => {
+            button.addEventListener('click', () => {
+                modalEditAlamat.classList.remove('hidden'); // Menampilkan modal
+                modalEditAlamat.classList.add('modal-enter'); // Menambahkan animasi masuk
+            });
+        });
+
+        closeModalEdit.addEventListener('click', () => {
+            modalEditAlamat.classList.add('modal-exit'); // Menambahkan animasi keluar
+            setTimeout(() => {
+                modalEditAlamat.classList.add('hidden'); // Sembunyikan modal setelah animasi selesai
+                modalEditAlamat.classList.remove('modal-exit'); // Menghapus kelas animasi keluar
+            }, 300); // Durasi animasi keluar (sama seperti durasi fadeOut)
+        });
+
+        // Optional: Tutup modal jika klik di luar modal
+        window.addEventListener('click', (event) => {
+            if (event.target === modalEditAlamat) {
+                modalEditAlamat.classList.add('modal-exit'); // Menambahkan animasi keluar
+                setTimeout(() => {
+                    modalEditAlamat.classList.add('hidden');
+                    modalEditAlamat.classList.remove('modal-exit');
+                }, 300);
+            }
+        });
+    </script>
 
     <script>
         const modal = document.getElementById('modalAlamat');
