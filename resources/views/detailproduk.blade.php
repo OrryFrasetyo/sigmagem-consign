@@ -176,7 +176,7 @@
 
                     <!-- Modal Popup -->
                     <div id="checkoutModal"
-                        class="fixed inset-0 p-6 bg-black bg-opacity-50 flex items-center justify-center hidden ">
+                        class="fixed inset-0 p-6 bg-black bg-opacity-50 flex items-center justify-center hidden mt-20">
                         <div class="bg-gray-900 p-6 rounded-lg shadow-lg text-white relative w-full max-w-3xl">
                             <button id="closeModalButton" class="absolute top-2 right-2 text-gray-400 hover:text-white">
                                 &times;
@@ -184,48 +184,70 @@
                             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
                             <form>
                                 <div class="mb-4">
-                                    <label class="block text-gray-300 font-bold mb-2" for="address">
+                                    <label class="block text-white font-bold mb-2" for="address">
                                         Alamat Pengiriman
                                     </label>
-                                    <h3 class="font-bold">$item->nama_penerima | $item->no_telp </h3>
-                                    <p class="text-gray-400">$item->alamat $item->detail</p>
-                                    <p class="text-gray-400">strtoupper$item->kecamatan,
-                                       strtoupper,strtoupper$item->kota,strtoupper$item->provinsi, ID,
-                                        $item->kode_pos</p>
+                                    <div class="border border-gray-700 p-3 rounded-lg">
+                                        <h3 class="font-bold">$item->nama_penerima | $item->no_telp </h3>
+                                        <p class="text-gray-400">$item->alamat $item->detail</p>
+                                        <p class="text-gray-400">strtoupper$item->kecamatan,
+                                            strtoupper,strtoupper$item->kota,strtoupper$item->provinsi, ID,
+                                            $item->kode_pos</p>
+                                    </div>
                                 </div>
                                 <div class="mb-4">
-                                    <h3 class="text-xl font-bold mb-2">Produk</h3>
-                                    <div class="flex items-center bg-gray-800 p-4 rounded-lg shadow-md">
+                                    <label class="block font-bold mb-2">Produk</label>
+                                    <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
                                         <img alt="Gambar produk dengan deskripsi detail"
                                             class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
                                             src="https://storage.googleapis.com/a1aa/image/4kJsr4W0W4aQF9YCRLvRkauJeu9efhddbL6fIcrjJ1WfSOWfE.jpg"
                                             width="100" />
-                                        <div>
+                                        <div class="flex-1">
                                             <h4 class="text-lg font-bold text-white">Nama Produk</h4>
                                             <p class="text-gray-300">Deskripsi singkat produk</p>
                                         </div>
+                                        <div class="absolute bottom-4 right-4 text-sm">
+                                            <label class="block text-white mb-1">Jumlah</label>
+                                            <input type="text" pattern="\d*" min="1" value="1"
+                                                class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="mb-4">
-                                    <h3 class="text-xl font-bold mb-2">Rincian Harga</h3>
-                                    <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-bold">Rincian Harga</h3>
+                                    <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Harga Barang</span>
                                         <span class="text-gray-300">Rp 100.000</span>
                                     </div>
-                                    <div class="flex justify-between items-center mb-2">
+                                    <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Ongkos Kirim</span>
                                         <span class="text-gray-300">Rp 20.000</span>
                                     </div>
-                                    <div class="flex justify-between items-center font-bold text-lg">
+                                    <div class="flex justify-between items-center font-bold text-lg mt-2">
                                         <span>Total Harga</span>
                                         <span>Rp 120.000</span>
                                     </div>
                                 </div>
-                                <button
-                                    class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
-                                    type="submit">
-                                    Bayar Sekarang
-                                </button>
+                                <div class="mb-6">
+                                    <h3 class="block mb-2 font-bold text-white" for="file_input">Upload Bukti
+                                        Pembayaran</h3>
+                                    <input
+                                        class="block w-full text-sm text-white  rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                        id="file_input" type="file">
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button
+                                        class="w-full bg-yellow-500 text-white py-2 rounded-lg font-bold hover:bg-yellow-700 transition duration-300"
+                                        type="button">
+                                        Bayar Nanti
+                                    </button>
+                                    <button
+                                        class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
+                                        type="submit">
+                                        Bayar Sekarang
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
