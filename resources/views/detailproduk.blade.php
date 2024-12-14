@@ -184,36 +184,99 @@
                             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
                             <form>
                                 <div class="mb-4">
-                                    <label class="block text-white font-bold mb-2" for="address">
-                                        Alamat Pengiriman
-                                    </label>
-                                    <div class="border border-gray-700 p-3 rounded-lg">
-                                        @if ($alamats->isEmpty())
-                                            <p class="text-gray-400 italic">Alamat belum ditambahkan.</p>
-                                        @else
-                                            <select name="alamat_id" id="alamat" class="w-full border border-gray-700 p-3 rounded-lg bg-gray-800 text-white">
-                                                <option value="" disabled selected>Pilih Alamat</option>
+                                    <label class="block text-white font-bold mb-2">Alamat Pengiriman</label>
+                                    <div class="relative">
+                                        <!-- Tombol Dropdown -->
+                                        <button id="dropdownButton" type="button"
+                                            class="w-full bg-gray-800 text-white border border-gray-700 p-3 rounded-lg text-left leading-snug">
+                                            <span id="dropdownPlaceholder">Pilih Alamat</span>
+                                        </button>
+
+                                        <!-- Dropdown Menu -->
+                                        <div id="dropdownMenu"
+                                            class="hidden absolute w-full bg-gray-800 border border-gray-700 rounded-lg mt-1 z-10 max-h-48 overflow-y-auto">
+                                            @if ($alamats->isEmpty())
+                                                <div class="p-3 text-gray-400 italic">Alamat belum ditambahkan.</div>
+                                            @else
                                                 @foreach ($alamats as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->nama_penerima }} | {{ $item->no_telp }}
-                                                        {{ $item->alamat }} {{ $item->detail }}
-                                                        {{ strtoupper($item->kecamatan) }},
-                                                        {{ strtoupper($item->kota) }},
-                                                        {{ strtoupper($item->provinsi) }},
-                                                        ID {{ $item->kode_pos }}
-                                                    </option>
+                                                    <div class="p-3 hover:bg-gray-700 cursor-pointer select-address"
+                                                        data-id="{{ $item->id }}"
+                                                        data-nama="{{ $item->nama_penerima }}"
+                                                        data-telp="{{ $item->no_telp }}"
+                                                        data-alamat="{{ $item->alamat }}"
+                                                        data-detail="{{ $item->detail }}"
+                                                        data-kecamatan="{{ strtoupper($item->kecamatan) }}"
+                                                        data-kota="{{ strtoupper($item->kota) }}"
+                                                        data-provinsi="{{ strtoupper($item->provinsi) }}"
+                                                        data-kodepos="{{ $item->kode_pos }}">
+                                                        <h3 class="font-bold">{{ $item->nama_penerima }} |
+                                                            {{ $item->no_telp }}</h3>
+                                                        <p>{{ $item->alamat }} {{ $item->detail }}</p>
+                                                        <p>{{ strtoupper($item->kecamatan) }},
+                                                            {{ strtoupper($item->kota) }},
+                                                            {{ strtoupper($item->provinsi) }}, ID
+                                                            {{ $item->kode_pos }}</p>
+                                                    </div>
                                                 @endforeach
-                                            </select>
-                                        @endif
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dropdownButton = document.getElementById('dropdownButton');
+                                        const dropdownMenu = document.getElementById('dropdownMenu');
+                                        const dropdownPlaceholder = document.getElementById('dropdownPlaceholder');
+                                        const addressOptions = document.querySelectorAll('.select-address');
+
+                                        // Toggle dropdown menu
+                                        dropdownButton.addEventListener('click', () => {
+                                            dropdownMenu.classList.toggle('hidden');
+                                        });
+
+                                        // Pilih alamat
+                                        addressOptions.forEach(option => {
+                                            option.addEventListener('click', () => {
+                                                const nama = option.getAttribute('data-nama');
+                                                const telp = option.getAttribute('data-telp');
+                                                const alamat = option.getAttribute('data-alamat');
+                                                const detail = option.getAttribute('data-detail');
+                                                const kecamatan = option.getAttribute('data-kecamatan');
+                                                const kota = option.getAttribute('data-kota');
+                                                const provinsi = option.getAttribute('data-provinsi');
+                                                const kodepos = option.getAttribute('data-kodepos');
+
+                                                // Format alamat yang terpilih
+                                                const selectedAddress = `
+                    <h3 class="font-bold">${nama} | ${telp}</h3>
+                    <p>${alamat} ${detail}</p>
+                    <p>${kecamatan}, ${kota}, ${provinsi}, ID ${kodepos}</p>
+                `;
+
+                                                // Update tombol dropdown
+                                                dropdownPlaceholder.innerHTML = selectedAddress;
+
+                                                // Tutup dropdown
+                                                dropdownMenu.classList.add('hidden');
+                                            });
+                                        });
+
+                                        // Tutup dropdown jika klik di luar
+                                        document.addEventListener('click', (e) => {
+                                            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                                                dropdownMenu.classList.add('hidden');
+                                            }
+                                        });
+                                    });
+                                </script>
+
                                 <div class="mb-4">
                                     <label class="block font-bold mb-2">Produk</label>
                                     <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
                                         <img alt="Gambar produk dengan deskripsi detail"
                                             class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
-                                            src="{{ Storage::url($product->sisi_depan) }}"
-                                            width="100" />
+                                            src="{{ Storage::url($product->sisi_depan) }}" width="100" />
                                         <div class="flex-1">
                                             <h4 class="text-lg font-bold text-white">{{ $product->nama_produk }}</h4>
                                             <p class="text-gray-300">{{ $product->kondisi_barang }}</p>
@@ -230,7 +293,8 @@
                                     <h3 class="font-bold">Rincian Harga</h3>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Harga Barang</span>
-                                        <span class="text-gray-300" id="hargaBarang" data-harga="{{ $product->harga }}"></span>
+                                        <span class="text-gray-300" id="hargaBarang"
+                                            data-harga="{{ $product->harga }}"></span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Ongkos Kirim</span>
@@ -248,22 +312,22 @@
                                         class="block w-full text-sm text-white  rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                         id="file_input" type="file">
                                 </div>
-                                    <button
-                                        class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
-                                        type="submit">
-                                        Bayar Sekarang
-                                    </button>
-                                    @if(session('error'))
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
-                                    @endif
+                                <button
+                                    class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
+                                    type="submit">
+                                    Bayar Sekarang
+                                </button>
+                                @if (session('error'))
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
 
-                                    @if(session('success'))
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
-                                    @endif
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -308,7 +372,7 @@
                         const totalHargaEl = document.getElementById('totalHarga');
 
                         const hargaBarang = parseFloat(hargaBarangEl.dataset.harga); // Ambil data harga
-                        const ongkir = parseFloat(ongkirEl.dataset.ongkir);         // Ambil data ongkir
+                        const ongkir = parseFloat(ongkirEl.dataset.ongkir); // Ambil data ongkir
 
                         // Hitung total harga
                         const totalHarga = hargaBarang + ongkir;
