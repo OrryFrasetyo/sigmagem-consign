@@ -236,18 +236,11 @@
                                         class="block w-full text-sm text-white  rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                         id="file_input" type="file">
                                 </div>
-                                <div class="flex space-x-4">
-                                    <button
-                                        class="w-full bg-yellow-500 text-white py-2 rounded-lg font-bold hover:bg-yellow-700 transition duration-300"
-                                        type="button">
-                                        Bayar Nanti
-                                    </button>
                                     <button
                                         class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
                                         type="submit">
                                         Bayar Sekarang
                                     </button>
-                                </div>
                             </form>
                         </div>
                     </div>
