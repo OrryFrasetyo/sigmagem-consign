@@ -13,9 +13,7 @@ use App\Http\Controllers\ListCategoryController;
 //     return view('welcome');
 // });
 
-Route::get('/keranjang-produk', function () {
-    return view('keranjangproduk'); // Mengarahkan ke file uploadproduk.blade.php
-});
+
 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/', [ListCategoryController::class, 'index'])->name('home');
@@ -58,6 +56,12 @@ Route::middleware(['auth:customer'])->group(function () {
 
         // Route untuk menghapus item dari keranjang
         Route::delete('/cart/{cartItemId}/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+
+        //dummy route
+        Route::get('/status-produk', function () {
+            return view('statusproduk'); // Mengarahkan ke file uploadproduk.blade.php
+        });
     });
 });
 
