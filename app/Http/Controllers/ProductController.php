@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateProdukRequest;
-
+use App\Models\Customer;
 
 class ProductController extends Controller
 {
@@ -147,8 +147,14 @@ class ProductController extends Controller
             return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
         }
 
+        // Ambil instance customer yang sedang login
+        $customer = Customer::with('alamats')->findOrFail($customerId);
+
         // Ambil produk berdasarkan ID
         $product = Product::findOrFail($productId);
+
+        // Ambil alamat yang berelasi dengan customer
+        $alamats = $customer->alamats;
 
         // Ambil diskusi terkait produk ini, beserta data customer yang membuat diskusi
         $discussions = Discussion::where('product_id', $productId)
@@ -159,10 +165,12 @@ class ProductController extends Controller
         $product->increment('views');
 
         // Cek apakah produk sudah ada di wishlist
-        $isInWishlist = Wishlist::where('customer_id', $customerId)->where('product_id', $productId)->exists();
+        $isInWishlist = Wishlist::where('customer_id', $customerId)
+            ->where('product_id', $productId)
+            ->exists();
 
-        // Kirim data produk, diskusi, dan status wishlist ke view
-        return view('detailproduk', compact('product', 'discussions', 'isInWishlist'));
+        // Kirim data produk, alamat, diskusi, dan status wishlist ke view
+        return view('detailproduk', compact('product', 'alamats', 'discussions', 'isInWishlist'));
     }
 
     public function storeDiscussion(Request $request, $productId)
@@ -192,6 +200,27 @@ class ProductController extends Controller
         // Redirect kembali ke halaman detail produk dengan pesan sukses
         return redirect()->route('product.detail', $productId)->with('success', 'Diskusi berhasil dikirim.');
     }
+
+    public function purchase($productId)
+    {
+        // Ambil data produk
+        $product = Product::findOrFail($productId);
+
+        // Cek apakah user sudah login
+        $customerId = auth()->guard('customer')->id();
+        if (!$customerId) {
+            return redirect()->route('login')->with('error', 'You must log in first.');
+        }
+
+        // Logika untuk memproses pembelian
+        // Misalnya, membuat pesanan atau mengurangi stok produk
+        // Pastikan untuk memperbarui stok produk sesuai pembelian
+        $product->decrement('stok', 1); // Mengurangi stok produk satu unit
+
+        // Redirect atau memberikan feedback bahwa pembelian berhasil
+        return redirect()->route('product.detail', $productId)->with('success', 'Product purchased successfully!');
+    }
+
 
 
 

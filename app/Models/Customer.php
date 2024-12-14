@@ -54,4 +54,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Discussion::class);
     }
+
+    public function alamats()
+    {
+        return $this->hasMany(Alamat::class);
+    }
 }

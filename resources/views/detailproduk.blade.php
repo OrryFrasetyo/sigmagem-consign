@@ -188,43 +188,57 @@
                                         Alamat Pengiriman
                                     </label>
                                     <div class="border border-gray-700 p-3 rounded-lg">
-                                        <h3 class="font-bold">$item->nama_penerima | $item->no_telp </h3>
-                                        <p class="text-gray-400">$item->alamat $item->detail</p>
-                                        <p class="text-gray-400">strtoupper$item->kecamatan,
-                                            strtoupper,strtoupper$item->kota,strtoupper$item->provinsi, ID,
-                                            $item->kode_pos</p>
+                                        @if ($alamats->isEmpty())
+                                            <p class="text-gray-400 italic">Alamat belum ditambahkan.</p>
+                                        @else
+                                            <select name="alamat_id" id="alamat" class="w-full border border-gray-700 p-3 rounded-lg bg-gray-800 text-white">
+                                                <option value="" disabled selected>Pilih Alamat</option>
+                                                @foreach ($alamats as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nama_penerima }} | {{ $item->no_telp }}
+                                                        {{ $item->alamat }} {{ $item->detail }}
+                                                        {{ strtoupper($item->kecamatan) }},
+                                                        {{ strtoupper($item->kota) }},
+                                                        {{ strtoupper($item->provinsi) }},
+                                                        ID {{ $item->kode_pos }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="block text-white font-bold mb-2" for="alamat">
-                                        Pilih Alamat Pengiriman
-                                    </label>
-                                    <select name="alamat_id" id="alamat" class="border border-gray-700 p-3 rounded-lg w-full">
-                                        <option value="" disabled selected>Pilih Alamat</option>
-                                        @foreach ($alamats as $alamat)
-                                            <option value="{{ $alamat->id }}">
-                                                {{ $alamat->nama_penerima }} | {{ $alamat->no_telp }} -
-                                                {{ $alamat->alamat }}, {{ strtoupper($alamat->kecamatan) }},
-                                                {{ strtoupper($alamat->kota) }}, {{ strtoupper($alamat->provinsi) }},
-                                                {{ $alamat->kode_pos }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <label class="block font-bold mb-2">Produk</label>
+                                    <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
+                                        <img alt="Gambar produk dengan deskripsi detail"
+                                            class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
+                                            src="{{ Storage::url($product->sisi_depan) }}"
+                                            width="100" />
+                                        <div class="flex-1">
+                                            <h4 class="text-lg font-bold text-white">{{ $product->nama_produk }}</h4>
+                                            <p class="text-gray-300">{{ $product->kondisi_barang }}</p>
+                                        </div>
+                                        <div class="absolute bottom-4 right-4 text-sm">
+                                            <label class="block text-white mb-1">Jumlah</label>
+                                            <input type="text" pattern="\d*" min="1" value="1"
+                                                class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-4">
                                     <h3 class="font-bold">Rincian Harga</h3>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Harga Barang</span>
-                                        <span class="text-gray-300">Rp 100.000</span>
+                                        <span class="text-gray-300" id="hargaBarang" data-harga="{{ $product->harga }}"></span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Ongkos Kirim</span>
-                                        <span class="text-gray-300">Rp 20.000</span>
+                                        <span class="text-gray-300" id="ongkir" data-ongkir="30000"></span>
                                     </div>
                                     <div class="flex justify-between items-center font-bold text-lg mt-2">
                                         <span>Total Harga</span>
-                                        <span>Rp 120.000</span>
+                                        <span id="totalHarga"></span>
                                     </div>
                                 </div>
                                 <div class="mb-6">
@@ -280,23 +294,30 @@
                     </script>
 
                     <script>
-                        document.getElementById('alamat_id').addEventListener('change', function () {
-                            let selectedOption = this.options[this.selectedIndex];
+                        // Helper untuk memformat angka ke format Rupiah
+                        function formatRupiah(angka) {
+                            return 'Rp ' + angka.toLocaleString('id-ID', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+                        }
 
-                            if (selectedOption.value) {
-                                let namaPenerima = selectedOption.text.split('|')[0].trim();
-                                let alamatDetail = selectedOption.text.split('|')[1].trim();
+                        // Ambil harga barang dan ongkos kirim dari atribut data-harga
+                        const hargaBarangEl = document.getElementById('hargaBarang');
+                        const ongkirEl = document.getElementById('ongkir');
+                        const totalHargaEl = document.getElementById('totalHarga');
 
-                                // Update tampilan detail alamat
-                                document.getElementById('nama_penerima').innerText = namaPenerima;
-                                document.getElementById('alamat_text').innerText = alamatDetail;
-                                document.getElementById('alamat-detail').classList.remove('hidden');
-                            } else {
-                                document.getElementById('alamat-detail').classList.add('hidden');
-                            }
-                        });
+                        const hargaBarang = parseFloat(hargaBarangEl.dataset.harga); // Ambil data harga
+                        const ongkir = parseFloat(ongkirEl.dataset.ongkir);         // Ambil data ongkir
+
+                        // Hitung total harga
+                        const totalHarga = hargaBarang + ongkir;
+
+                        // Tampilkan hasil dengan format Rupiah
+                        hargaBarangEl.textContent = formatRupiah(hargaBarang);
+                        ongkirEl.textContent = formatRupiah(ongkir);
+                        totalHargaEl.textContent = formatRupiah(totalHarga);
                     </script>
-
 
 
 

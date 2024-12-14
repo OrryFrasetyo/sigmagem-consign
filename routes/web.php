@@ -24,6 +24,8 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/products', [ProductController::class, 'listAllProducts'])->name('products.all');
     Route::get('/products/category/{id}', [ProductController::class, 'showByCategory'])->name('products.by-category');
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
+    Route::post('/product/{id}/purchase', [ProductController::class, 'purchase'])->name('product.purchase');
+
     //Wishlist
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');  // Menambah produk ke wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); // Melihat wishlist
