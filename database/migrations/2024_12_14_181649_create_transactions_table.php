@@ -17,9 +17,10 @@ return new class extends Migration
             $table->foreignId('alamat_id')->constrained('alamats')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->string('status_pembayaran')->nullable()->default('pending');
-            $table->string('total_harga');
-            $table->string('bukti_pembayaran')->nullable();
-            $table->string('status_produk')->nullable();
+            $table->integer('quantity')->default(1);
+            $table->decimal('total_harga', 15, 2);
+            $table->string('bukti_pembayaran');
+            $table->string('status_produk')->default('belum_diproses');
             $table->timestamps();
         });
     }

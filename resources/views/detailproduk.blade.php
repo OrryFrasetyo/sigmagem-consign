@@ -196,22 +196,20 @@
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="block font-bold mb-2">Produk</label>
-                                    <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
-                                        <img alt="Gambar produk dengan deskripsi detail"
-                                            class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
-                                            src="https://storage.googleapis.com/a1aa/image/4kJsr4W0W4aQF9YCRLvRkauJeu9efhddbL6fIcrjJ1WfSOWfE.jpg"
-                                            width="100" />
-                                        <div class="flex-1">
-                                            <h4 class="text-lg font-bold text-white">Nama Produk</h4>
-                                            <p class="text-gray-300">Deskripsi singkat produk</p>
-                                        </div>
-                                        <div class="absolute bottom-4 right-4 text-sm">
-                                            <label class="block text-white mb-1">Jumlah</label>
-                                            <input type="text" pattern="\d*" min="1" value="1"
-                                                class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
-                                        </div>
-                                    </div>
+                                    <label class="block text-white font-bold mb-2" for="alamat">
+                                        Pilih Alamat Pengiriman
+                                    </label>
+                                    <select name="alamat_id" id="alamat" class="border border-gray-700 p-3 rounded-lg w-full">
+                                        <option value="" disabled selected>Pilih Alamat</option>
+                                        @foreach ($alamats as $alamat)
+                                            <option value="{{ $alamat->id }}">
+                                                {{ $alamat->nama_penerima }} | {{ $alamat->no_telp }} -
+                                                {{ $alamat->alamat }}, {{ strtoupper($alamat->kecamatan) }},
+                                                {{ strtoupper($alamat->kota) }}, {{ strtoupper($alamat->provinsi) }},
+                                                {{ $alamat->kode_pos }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="mb-4">
@@ -241,6 +239,17 @@
                                         type="submit">
                                         Bayar Sekarang
                                     </button>
+                                    @if(session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+
+                                    @if(session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
                             </form>
                         </div>
                     </div>
@@ -269,6 +278,25 @@
                             }
                         });
                     </script>
+
+                    <script>
+                        document.getElementById('alamat_id').addEventListener('change', function () {
+                            let selectedOption = this.options[this.selectedIndex];
+
+                            if (selectedOption.value) {
+                                let namaPenerima = selectedOption.text.split('|')[0].trim();
+                                let alamatDetail = selectedOption.text.split('|')[1].trim();
+
+                                // Update tampilan detail alamat
+                                document.getElementById('nama_penerima').innerText = namaPenerima;
+                                document.getElementById('alamat_text').innerText = alamatDetail;
+                                document.getElementById('alamat-detail').classList.remove('hidden');
+                            } else {
+                                document.getElementById('alamat-detail').classList.add('hidden');
+                            }
+                        });
+                    </script>
+
 
 
 
