@@ -14,7 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css" rel="stylesheet">
-    <!-- Link ke Animate.css CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
@@ -166,6 +167,96 @@
                 </div>
 
                 <div class="mt-6 flex items-center space-x-4">
+
+                    <!-- Tombol Buy Now -->
+                    <button id="buyNowButton"
+                        class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105 hover:bg-green-600">
+                        Buy Now
+                    </button>
+
+                    <!-- Modal Popup -->
+                    <div id="checkoutModal"
+                        class="fixed inset-0 p-6 bg-black bg-opacity-50 flex items-center justify-center hidden ">
+                        <div class="bg-gray-900 p-6 rounded-lg shadow-lg text-white relative w-full max-w-3xl">
+                            <button id="closeModalButton" class="absolute top-2 right-2 text-gray-400 hover:text-white">
+                                &times;
+                            </button>
+                            <h2 class="text-2xl font-bold mb-4">Checkout</h2>
+                            <form>
+                                <div class="mb-4">
+                                    <label class="block text-gray-300 font-bold mb-2" for="address">
+                                        Alamat Pengiriman
+                                    </label>
+                                    <h3 class="font-bold">$item->nama_penerima | $item->no_telp </h3>
+                                    <p class="text-gray-400">$item->alamat $item->detail</p>
+                                    <p class="text-gray-400">strtoupper$item->kecamatan,
+                                       strtoupper,strtoupper$item->kota,strtoupper$item->provinsi, ID,
+                                        $item->kode_pos</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h3 class="text-xl font-bold mb-2">Produk</h3>
+                                    <div class="flex items-center bg-gray-800 p-4 rounded-lg shadow-md">
+                                        <img alt="Gambar produk dengan deskripsi detail"
+                                            class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
+                                            src="https://storage.googleapis.com/a1aa/image/4kJsr4W0W4aQF9YCRLvRkauJeu9efhddbL6fIcrjJ1WfSOWfE.jpg"
+                                            width="100" />
+                                        <div>
+                                            <h4 class="text-lg font-bold text-white">Nama Produk</h4>
+                                            <p class="text-gray-300">Deskripsi singkat produk</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h3 class="text-xl font-bold mb-2">Rincian Harga</h3>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-gray-300">Harga Barang</span>
+                                        <span class="text-gray-300">Rp 100.000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-gray-300">Ongkos Kirim</span>
+                                        <span class="text-gray-300">Rp 20.000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center font-bold text-lg">
+                                        <span>Total Harga</span>
+                                        <span>Rp 120.000</span>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
+                                    type="submit">
+                                    Bayar Sekarang
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript -->
+                    <script>
+                        // Element references
+                        const buyNowButton = document.getElementById('buyNowButton');
+                        const checkoutModal = document.getElementById('checkoutModal');
+                        const closeModalButton = document.getElementById('closeModalButton');
+
+                        // Show modal on button click
+                        buyNowButton.addEventListener('click', () => {
+                            checkoutModal.classList.remove('hidden');
+                        });
+
+                        // Close modal on close button click
+                        closeModalButton.addEventListener('click', () => {
+                            checkoutModal.classList.add('hidden');
+                        });
+
+                        // Close modal when clicking outside the modal content
+                        window.addEventListener('click', (e) => {
+                            if (e.target === checkoutModal) {
+                                checkoutModal.classList.add('hidden');
+                            }
+                        });
+                    </script>
+
+
+
                     <form action="{{ route('cart.add', $product->id) }}" method="POST">
                         @csrf
 
@@ -175,11 +266,6 @@
                             Add to Cart
                         </button>
                     </form>
-
-                    <button
-                        class="px-6 py-2 bg-gray-600 text-white rounded-lg transition-all hover:scale-105 hover:bg-green-600">
-                        Buy Now
-                    </button>
 
                     <!-- Tombol Wishlist -->
                     <button id="wishlist-toggle"
