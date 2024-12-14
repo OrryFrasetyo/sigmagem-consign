@@ -223,54 +223,6 @@
                                     </div>
                                 </div>
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const dropdownButton = document.getElementById('dropdownButton');
-                                        const dropdownMenu = document.getElementById('dropdownMenu');
-                                        const dropdownPlaceholder = document.getElementById('dropdownPlaceholder');
-                                        const addressOptions = document.querySelectorAll('.select-address');
-
-                                        // Toggle dropdown menu
-                                        dropdownButton.addEventListener('click', () => {
-                                            dropdownMenu.classList.toggle('hidden');
-                                        });
-
-                                        // Pilih alamat
-                                        addressOptions.forEach(option => {
-                                            option.addEventListener('click', () => {
-                                                const nama = option.getAttribute('data-nama');
-                                                const telp = option.getAttribute('data-telp');
-                                                const alamat = option.getAttribute('data-alamat');
-                                                const detail = option.getAttribute('data-detail');
-                                                const kecamatan = option.getAttribute('data-kecamatan');
-                                                const kota = option.getAttribute('data-kota');
-                                                const provinsi = option.getAttribute('data-provinsi');
-                                                const kodepos = option.getAttribute('data-kodepos');
-
-                                                // Format alamat yang terpilih
-                                                const selectedAddress = `
-                    <h3 class="font-bold">${nama} | ${telp}</h3>
-                    <p>${alamat} ${detail}</p>
-                    <p>${kecamatan}, ${kota}, ${provinsi}, ID ${kodepos}</p>
-                `;
-
-                                                // Update tombol dropdown
-                                                dropdownPlaceholder.innerHTML = selectedAddress;
-
-                                                // Tutup dropdown
-                                                dropdownMenu.classList.add('hidden');
-                                            });
-                                        });
-
-                                        // Tutup dropdown jika klik di luar
-                                        document.addEventListener('click', (e) => {
-                                            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                                                dropdownMenu.classList.add('hidden');
-                                            }
-                                        });
-                                    });
-                                </script>
-
                                 <div class="mb-4">
                                     <label class="block font-bold mb-2">Produk</label>
                                     <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
@@ -309,79 +261,21 @@
                                     <h3 class="block mb-2 font-bold text-white" for="file_input">Upload Bukti
                                         Pembayaran</h3>
                                     <input
-                                        class="block w-full text-sm text-white  rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        id="file_input" type="file">
+                                        class="block w-full text-sm text-white rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                        id="file_input" type="file" name="bukti_pembayaran">
                                 </div>
                                 <button
                                     class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
-                                    type="submit">
+                                    type="submit" id="submit_button">
                                     Bayar Sekarang
                                 </button>
-                                @if (session('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session('error') }}
-                                    </div>
-                                @endif
 
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+                                <p id="warning_message" class="text-red-500 mt-2 hidden text-sm">
+                                    Anda belum melakukan upload bukti pembayaran.
+                                </p>
                             </form>
                         </div>
                     </div>
-
-                    <!-- JavaScript -->
-                    <script>
-                        // Element references
-                        const buyNowButton = document.getElementById('buyNowButton');
-                        const checkoutModal = document.getElementById('checkoutModal');
-                        const closeModalButton = document.getElementById('closeModalButton');
-
-                        // Show modal on button click
-                        buyNowButton.addEventListener('click', () => {
-                            checkoutModal.classList.remove('hidden');
-                        });
-
-                        // Close modal on close button click
-                        closeModalButton.addEventListener('click', () => {
-                            checkoutModal.classList.add('hidden');
-                        });
-
-                        // Close modal when clicking outside the modal content
-                        window.addEventListener('click', (e) => {
-                            if (e.target === checkoutModal) {
-                                checkoutModal.classList.add('hidden');
-                            }
-                        });
-                    </script>
-
-                    <script>
-                        // Helper untuk memformat angka ke format Rupiah
-                        function formatRupiah(angka) {
-                            return 'Rp ' + angka.toLocaleString('id-ID', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            });
-                        }
-
-                        // Ambil harga barang dan ongkos kirim dari atribut data-harga
-                        const hargaBarangEl = document.getElementById('hargaBarang');
-                        const ongkirEl = document.getElementById('ongkir');
-                        const totalHargaEl = document.getElementById('totalHarga');
-
-                        const hargaBarang = parseFloat(hargaBarangEl.dataset.harga); // Ambil data harga
-                        const ongkir = parseFloat(ongkirEl.dataset.ongkir); // Ambil data ongkir
-
-                        // Hitung total harga
-                        const totalHarga = hargaBarang + ongkir;
-
-                        // Tampilkan hasil dengan format Rupiah
-                        hargaBarangEl.textContent = formatRupiah(hargaBarang);
-                        ongkirEl.textContent = formatRupiah(ongkir);
-                        totalHargaEl.textContent = formatRupiah(totalHarga);
-                    </script>
 
 
 
@@ -568,6 +462,115 @@
                         });
                     });
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const dropdownPlaceholder = document.getElementById('dropdownPlaceholder');
+            const addressOptions = document.querySelectorAll('.select-address');
+
+            // Toggle dropdown menu
+            dropdownButton.addEventListener('click', () => {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Pilih alamat
+            addressOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const nama = option.getAttribute('data-nama');
+                    const telp = option.getAttribute('data-telp');
+                    const alamat = option.getAttribute('data-alamat');
+                    const detail = option.getAttribute('data-detail');
+                    const kecamatan = option.getAttribute('data-kecamatan');
+                    const kota = option.getAttribute('data-kota');
+                    const provinsi = option.getAttribute('data-provinsi');
+                    const kodepos = option.getAttribute('data-kodepos');
+
+                    // Format alamat yang terpilih
+                    const selectedAddress = `
+                    <h3 class="font-bold">${nama} | ${telp}</h3>
+                    <p>${alamat} ${detail}</p>
+                    <p>${kecamatan}, ${kota}, ${provinsi}, ID ${kodepos}</p>
+                `;
+
+                    // Update tombol dropdown
+                    dropdownPlaceholder.innerHTML = selectedAddress;
+
+                    // Tutup dropdown
+                    dropdownMenu.classList.add('hidden');
+                });
+            });
+
+            // Tutup dropdown jika klik di luar
+            document.addEventListener('click', (e) => {
+                if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Element references
+        const buyNowButton = document.getElementById('buyNowButton');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+
+        // Show modal on button click
+        buyNowButton.addEventListener('click', () => {
+            checkoutModal.classList.remove('hidden');
+        });
+
+        // Close modal on close button click
+        closeModalButton.addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', (e) => {
+            if (e.target === checkoutModal) {
+                checkoutModal.classList.add('hidden');
+            }
+        });
+    </script>
+    <script>
+        // Helper untuk memformat angka ke format Rupiah
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toLocaleString('id-ID', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Ambil harga barang dan ongkos kirim dari atribut data-harga
+        const hargaBarangEl = document.getElementById('hargaBarang');
+        const ongkirEl = document.getElementById('ongkir');
+        const totalHargaEl = document.getElementById('totalHarga');
+
+        const hargaBarang = parseFloat(hargaBarangEl.dataset.harga); // Ambil data harga
+        const ongkir = parseFloat(ongkirEl.dataset.ongkir); // Ambil data ongkir
+
+        // Hitung total harga
+        const totalHarga = hargaBarang + ongkir;
+
+        // Tampilkan hasil dengan format Rupiah
+        hargaBarangEl.textContent = formatRupiah(hargaBarang);
+        ongkirEl.textContent = formatRupiah(ongkir);
+        totalHargaEl.textContent = formatRupiah(totalHarga);
+    </script>
+    <script>
+        document.getElementById('submit_button').addEventListener('click', function(event) {
+            var fileInput = document.getElementById('file_input');
+            var warningMessage = document.getElementById('warning_message');
+
+            // Jika file belum dipilih
+            if (!fileInput.files.length) {
+                // Mencegah form untuk disubmit
+                event.preventDefault();
+                // Menampilkan pesan peringatan
+                warningMessage.classList.remove('hidden');
+            }
         });
     </script>
 
