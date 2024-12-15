@@ -70,6 +70,34 @@ class TransactionResource extends Resource
                     ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.')),
                 ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran'),
+                TextColumn::make('alamat.alamat')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Alamat Jalan'),
+                TextColumn::make('alamat.kecamatan')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Alamat Kecamatan'),
+                TextColumn::make('alamat.kota')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Alamat Kota'),
+                TextColumn::make('alamat.provinsi')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Alamat Provinsi'),
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Tanggal Pembelian')
+                    ->formatStateUsing(function ($state) {
+                        return \Carbon\Carbon::parse($state)->translatedFormat('d-m-Y');
+                    }),
+                TextColumn::make('status_pembayaran')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Status Pembayaran')
+                    ->badge(),
 
             ])
             ->filters([

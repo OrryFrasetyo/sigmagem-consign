@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductPayment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,10 @@ class Transaction extends Model
         'quantity',
         'status_pembayaran',
         'status_produk',
+    ];
+
+    protected $casts = [
+        'status' =>  ProductPayment::class,
     ];
 
     // Relasi ke tabel customer
