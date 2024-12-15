@@ -18,6 +18,24 @@ class TransactionController extends Controller
             ->get();
     }
 
+    public function updateStatusProduk($id)
+    {
+        // Temukan transaksi berdasarkan ID
+        $transaction = Transaction::findOrFail($id);
+
+        // Pastikan status belum "Pesanan Selesai" untuk menghindari perubahan ganda
+        if ($transaction->status_produk != 'Pesanan Selesai') {
+            // Update status produk menjadi "Pesanan Selesai"
+            $transaction->status_produk = 'Pesanan Selesai';
+            $transaction->save();
+        }
+
+        // Redirect ke halaman yang sama dengan pesan sukses
+        return redirect()->back()->with('success', 'Status produk telah diperbarui.');
+    }
+
+
+
     public function showStatusProduk()
     {
         $transactions = Transaction::with('product', 'alamat') // Eager load related data
@@ -69,8 +87,8 @@ class TransactionController extends Controller
                 'harga_ongkir' => $hargaOngkir,
                 'quantity' => $request->quantity,
                 'total_harga' => $totalHarga,
-                'status_pembayaran' => 'Sedang diproses',
-                'status_produk' => 'Belum diproses',
+                'status_pembayaran' => 'Pending',
+                'status_produk' => 'Unprocessed',
             ]);
             Log::info('Transaksi berhasil dibuat: ', $transaction->toArray());
         } catch (\Exception $e) {

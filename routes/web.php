@@ -64,6 +64,8 @@ Route::middleware(['auth:customer'])->group(function () {
         // Route untuk menambahkan produk ke transaksi
         Route::post('/status-produk/add/', [TransactionController::class, 'addToTransaction'])->name('transaction.add');
         Route::get('/status-produk', [TransactionController::class, 'showStatusProduk'])->name('status.produk');
+        Route::put('/transaction/{id}/update-status-produk', [TransactionController::class, 'updateStatusProduk'])->name('transaction.updateStatusProduk');
+        
 
     });
 });

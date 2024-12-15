@@ -31,65 +31,110 @@
         <div class="container mx-auto p-4">
             <div class="bg-gray-900 shadow-md rounded-lg p-6">
                 <h1 class="text-3xl font-bold mb-6 text-center">Status Produk</h1>
-                <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
-                    <thead>
-                        <tr>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Nama Produk</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Jumlah Produk</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Harga Produk</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Harga Ongkos Kirim</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Bukti Pembayaran</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Alamat</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Tanggal Pembelian</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Status Pembayaran</th>
-                            <th
-                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Status Produk</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($transactions as $transaction)
-                            <tr class="hover:bg-gray-700">
-                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->product->nama_produk }}
-                                </td>
-                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->quantity }}
-                                </td>
-                                <td class="py-3 px-4 border-b border-gray-700">Rp
-                                    {{ number_format($transaction->product->harga, 0, ',', '.') }}</td>
-                                <td class="py-3 px-4 border-b border-gray-700">Rp
-                                    {{ number_format($transaction->harga_ongkir, 0, ',', '.') }}</td>
-                                <td class="py-3 px-4 border-b border-gray-700">
-                                    <img alt="Bukti pembayaran" class="w-16 h-16 object-cover rounded cursor-pointer"
-                                        src="{{ asset('storage/' . $transaction->bukti_pembayaran) }}" width="100"
-                                        height="100"
-                                        onclick="openModal('{{ asset('storage/' . $transaction->bukti_pembayaran) }}')" />
-                                </td>
-                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->alamat->alamat }}</td>
-                                <td class="py-3 px-4 border-b border-gray-700">
-                                    {{ $transaction->created_at->format('d-m-Y') }}</td>
-                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->status_pembayaran }}
-                                </td>
-                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->status_produk }}</td>
+                <div class="flex items-center justify-center min-h-screen bg-gray-900">
+                    <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Nama Produk</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Jumlah Produk</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Harga Produk</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Harga Ongkos Kirim</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Bukti Pembayaran</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider w-1/4">
+                                    Alamat</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Tanggal Pembelian</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Status Pembayaran</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Status Produk</th>
+                                <th
+                                    class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                    Keterangan</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($transactions as $transaction)
+                                <tr class="hover:bg-gray-700">
+                                    <td class="py-3 px-4 border-b border-gray-700">
+                                        {{ $transaction->product->nama_produk }}</td>
+                                    <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->quantity }}</td>
+                                    <td class="py-3 px-4 border-b border-gray-700">Rp
+                                        {{ number_format($transaction->product->harga, 0, ',', '.') }}</td>
+                                    <td class="py-3 px-4 border-b border-gray-700">Rp
+                                        {{ number_format($transaction->harga_ongkir, 0, ',', '.') }}</td>
+                                    <td class="py-3 px-4 border-b border-gray-700">
+                                        <img alt="Bukti pembayaran"
+                                            class="w-16 h-16 object-cover rounded cursor-pointer"
+                                            src="{{ asset('storage/' . $transaction->bukti_pembayaran) }}"
+                                            onclick="openModal('{{ asset('storage/' . $transaction->bukti_pembayaran) }}')" />
+                                    </td>
+                                    <td class="py-3 px-4 border-b border-gray-700 w-1/3 whitespace-normal break-words">
+                                        {{ $transaction->alamat->alamat }}<br>
+                                        {{ $transaction->alamat->kecamatan }}<br>
+                                        {{ $transaction->alamat->kota }}<br>
+                                        {{ $transaction->alamat->provinsi }}
+                                    </td>
+
+                                    <td class="py-3 px-4 border-b border-gray-700">
+                                        {{ $transaction->created_at->format('d-m-Y') }}</td>
+                                    <td class="py-3 px-4 border-b border-gray-700 text-center">
+                                        <span
+                                            class="inline-block py-1 px-3 rounded-full text-sm
+                        @if ($transaction->status_pembayaran == 'Tertunda') bg-yellow-300 text-white
+                        @elseif ($transaction->status_pembayaran == 'Menunggu Konfirmasi') bg-blue-500 text-white whitespace-nowrap
+                        @elseif ($transaction->status_pembayaran == 'Sukses') bg-green-500 text-white
+                        @elseif ($transaction->status_pembayaran == 'Gagal') bg-red-500 text-white @endif">
+                                            {{ $transaction->status_pembayaran }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4 border-b border-gray-700 text-center">
+                                        <span
+                                            class="inline-block py-1 px-3 rounded-full text-sm
+                        @if ($transaction->status_produk == 'Belum Diproses') bg-gray-300 text-black
+                        @elseif ($transaction->status_produk == 'Dikemas') bg-blue-500 text-white
+                        @elseif ($transaction->status_produk == 'Diproses') bg-yellow-500 text-white
+                        @elseif ($transaction->status_produk == 'Dikirim') bg-green-500 text-white
+                        @elseif ($transaction->status_produk == 'Diterima') bg-purple-500 text-white
+                        @elseif ($transaction->status_produk == 'Pesanan Selesai') bg-teal-500 text-white whitespace-nowrap @endif">
+                                            {{ $transaction->status_produk }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4 border-b border-gray-700 text-center">
+                                        @if ($transaction->status_produk != 'Pesanan Selesai')
+                                            <form
+                                                action="{{ route('transaction.updateStatusProduk', $transaction->id) }}"
+                                                method="POST" class="inline-block">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-700 text-sm transition duration-300 whitespace-nowrap">
+                                                    Konfirmasi Pesanan
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-gray-500">Selesai</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -97,12 +142,12 @@
     <!-- Modal for Image Preview -->
     <!-- Modal -->
     <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-4 rounded-lg relative" onclick="event.stopPropagation()">
-            <!-- Tombol Close X dihilangkan, cukup klik diluar modal untuk menutup -->
+        <div class="bg-white p-4 rounded-lg relative mt-16" onclick="event.stopPropagation()">
             <img id="previewImage" src="" alt="Bukti Pembayaran"
                 class="max-w-full max-h-[80vh] object-contain" />
         </div>
     </div>
+
 
 
 
