@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use id;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -38,11 +39,19 @@ class TransactionController extends Controller
 
     public function showStatusProduk()
     {
-        $transactions = Transaction::with('product', 'alamat') // Eager load related data
-            ->get();
+        // Ambil ID pelanggan yang sedang login
+        $customerId = auth()->guard('customer')->id();
+
+        // Ambil transaksi berdasarkan pelanggan yang sedang login dan paginasi
+        $transactions = Transaction::with('product', 'alamat')
+        ->where('customer_id', $customerId) // Filter berdasarkan ID pelanggan yang sedang login
+            ->paginate(5); // Paginasi dengan 10 data per halaman
 
         return view('statusproduk', compact('transactions'));
     }
+
+
+
 
     public function addToTransaction(Request $request)
     {
