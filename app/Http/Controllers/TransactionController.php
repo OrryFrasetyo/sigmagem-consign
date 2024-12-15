@@ -87,8 +87,8 @@ class TransactionController extends Controller
                 'harga_ongkir' => $hargaOngkir,
                 'quantity' => $request->quantity,
                 'total_harga' => $totalHarga,
-                'status_pembayaran' => 'Pending',
-                'status_produk' => 'Unprocessed',
+                'status_pembayaran' => 'Tertunda',
+                'status_produk' => 'Belum Diproses',
             ]);
             Log::info('Transaksi berhasil dibuat: ', $transaction->toArray());
         } catch (\Exception $e) {
