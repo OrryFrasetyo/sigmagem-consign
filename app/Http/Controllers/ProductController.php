@@ -49,6 +49,38 @@ class ProductController extends Controller
         return view('listproduk', compact('products', 'category'));
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        // Ambil riwayat pencarian dari session
+        $searchHistory = session()->get('search_history', []);
+
+        // Jika ada kata pencarian yang dikirim
+        if ($searchTerm) {
+            // Menghapus riwayat yang sama jika sudah ada
+            $searchHistory = array_filter($searchHistory, function ($history) use ($searchTerm) {
+                return $history !== $searchTerm;
+            });
+
+            // Menambahkan pencarian terbaru ke awal riwayat
+            array_unshift($searchHistory, $searchTerm);
+
+            // Membatasi jumlah riwayat maksimal (misalnya, 5 riwayat)
+            $searchHistory = array_slice($searchHistory, 0, 5);
+
+            // Menyimpan kembali riwayat pencarian ke session
+            session()->put('search_history', $searchHistory);
+        }
+
+        // Lakukan pencarian produk berdasarkan keyword
+        $products = Product::where('nama_produk', 'like', '%' . $searchTerm . '%')->get();
+
+        // Kembalikan ke view
+        return view('allproduk', compact('products'));
+    }
+
+
 
 
 

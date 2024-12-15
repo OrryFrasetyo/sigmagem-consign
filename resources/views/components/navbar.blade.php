@@ -12,6 +12,39 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SigmaGem Consign</span>
             </a>
 
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <div class="relative">
+                    <!-- Form Pencarian -->
+                    <form action="{{ route('allproduk') }}" method="GET">
+                        <input type="text" name="search" id="search" placeholder="Search"
+                            class="bg-gray-800 text-white px-4 py-2 pl-10 pr-4 rounded-md border border-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 w-96"
+                            value="{{ request()->get('search') }}" autocomplete="off" onfocus="showSearchHistory()"
+                            onblur="hideSearchHistory()">
+                        <button type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white">
+                            <i class="text-gray-700 fa fa-search"></i>
+                        </button>
+                    </form>
+
+                    <!-- Riwayat Pencarian -->
+                    @if (session()->has('search_history') && count(session('search_history')) > 0)
+                        <div id="search-history"
+                            class="absolute left-0 w-full bg-white border border-gray-300 mt-2 rounded-md hidden">
+                            <ul class="max-h-40 overflow-y-auto">
+                                @foreach (session('search_history') as $history)
+                                    <li class="px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer"
+                                        onclick="fillSearchInput('{{ $history }}')">{{ $history }}</li>
+                                @endforeach
+                            </ul>
+                            <div class="text-center mt-2">
+                                <!-- Tombol untuk Clear History -->
+                                <a href="javascript:void(0);" class="text-red-500 text-sm"
+                                    onclick="clearSearchHistory()">Clear History</a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <button type="button"
                     class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -125,26 +158,17 @@
                     class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
                         <a href="/"
-                            class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Service</a>
+                        class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                        aria-current="page">Home</a>
                     </li>
                     <li>
                         <a href="/products"
-                            class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Product</a>
+                        class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Product</a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Article</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About
-                            Us</a>
-                    </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-600 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Service</a>
+                        </li>
                 </ul>
             </div>
         </div>
@@ -181,5 +205,38 @@
             });
         });
     </script>
+
+    <script>
+        // Menampilkan riwayat pencarian saat input mendapatkan fokus
+        function showSearchHistory() {
+            document.getElementById('search-history').classList.remove('hidden');
+        }
+
+        // Menyembunyikan riwayat pencarian saat input kehilangan fokus
+        function hideSearchHistory() {
+            setTimeout(() => {
+                document.getElementById('search-history').classList.add('hidden');
+            }, 200); // Delay sedikit agar klik riwayat tidak segera menyembunyikan
+        }
+
+        // Mengisi input pencarian dengan riwayat yang dipilih
+        function fillSearchInput(history) {
+            document.getElementById('search').value = history;
+            hideSearchHistory(); // Menyembunyikan riwayat setelah klik
+        }
+
+        // Clear search history
+        function clearSearchHistory() {
+            // Menghapus semua riwayat pencarian di session
+            fetch("{{ route('clear.search.history') }}", {
+                method: "GET",
+            }).then(response => {
+                // Setelah berhasil menghapus riwayat, refresh halaman atau perbarui tampilan riwayat
+                location.reload();
+            });
+        }
+    </script>
+
+
 
     @vite('resources/js/app.js')

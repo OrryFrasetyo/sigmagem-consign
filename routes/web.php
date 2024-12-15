@@ -21,6 +21,14 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
     Route::post('/product/{id}/purchase', [ProductController::class, 'purchase'])->name('product.purchase');
 
+    Route::get('/allproduk', [ProductController::class, 'search'])->name('allproduk');
+
+    Route::get('/clear-search-history', function () {
+        session()->forget('search_history'); // Menghapus riwayat pencarian
+        return response()->json(['status' => 'success']);
+    })->name('clear.search.history');
+
+
     //Wishlist
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');  // Menambah produk ke wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); // Melihat wishlist
@@ -65,8 +73,6 @@ Route::middleware(['auth:customer'])->group(function () {
         Route::post('/status-produk/add/', [TransactionController::class, 'addToTransaction'])->name('transaction.add');
         Route::get('/status-produk', [TransactionController::class, 'showStatusProduk'])->name('status.produk');
         Route::put('/transaction/{id}/update-status-produk', [TransactionController::class, 'updateStatusProduk'])->name('transaction.updateStatusProduk');
-        
-
     });
 });
 
