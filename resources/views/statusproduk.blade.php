@@ -27,146 +27,106 @@
     <x-navbar class="x-navbar"></x-navbar>
 
 
-    <div class=" font-roboto text-white mt-20">
-        <div class="container mx-auto p-4 ">
+    <div class="font-roboto text-white mt-20">
+        <div class="container mx-auto p-4">
             <div class="bg-gray-900 shadow-md rounded-lg p-6">
-                <h1 class="text-3xl font-bold mb-6 text-center">
-                    Status Produk
-                </h1>
+                <h1 class="text-3xl font-bold mb-6 text-center">Status Produk</h1>
                 <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
                     <thead>
                         <tr>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Nama Produk
-                            </th>
+                                Nama Produk</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Harga Produk
-                            </th>
+                                Jumlah Produk</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Harga Ongkos Kirim
-                            </th>
+                                Harga Produk</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Bukti Pembayaran
-                            </th>
+                                Harga Ongkos Kirim</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Alamat
-                            </th>
+                                Bukti Pembayaran</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Tanggal Pembelian
-                            </th>
+                                Alamat</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Status Pembayaran
-                            </th>
+                                Tanggal Pembelian</th>
                             <th
                                 class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
-                                Status Produk
-                            </th>
+                                Status Pembayaran</th>
+                            <th
+                                class="py-3 px-4 border-b-2 border-gray-700 bg-gray-700 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                                Status Produk</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-gray-700">
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Produk A
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 100.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 10.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                <img alt="Bukti pembayaran untuk Produk A" class="w-16 h-16 object-cover rounded"
-                                    height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/APJObOEHmaL3ARqIsO4PLek6xYx24KgJ7UPQctyJPFxY5Z9JA.jpg"
-                                    width="100" />
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Jl. Contoh Alamat No. 1
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                01-01-2023
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Sudah Dibayar
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Diproses
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-700">
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Produk B
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 200.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 20.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                <img alt="Bukti pembayaran untuk Produk B" class="w-16 h-16 object-cover rounded"
-                                    height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/7rBmJoqERPKRLtYuRVLu9Sf5WgtROeYudMALimvUvMzzyz6TA.jpg"
-                                    width="100" />
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Jl. Contoh Alamat No. 2
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                02-01-2023
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Belum Dibayar
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Dikirim
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-700">
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Produk C
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 300.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Rp 30.000
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                <img alt="Bukti pembayaran untuk Produk C" class="w-16 h-16 object-cover rounded"
-                                    height="100"
-                                    src="https://storage.googleapis.com/a1aa/image/Du8XsVsBWZoXD1BwZc275OtIRpdAA0QfKfQNbqUzyUiyyz6TA.jpg"
-                                    width="100" />
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Jl. Contoh Alamat No. 3
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                03-01-2023
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Sudah Dibayar
-                            </td>
-                            <td class="py-3 px-4 border-b border-gray-700">
-                                Diterima
-                            </td>
-                        </tr>
+                        @foreach ($transactions as $transaction)
+                            <tr class="hover:bg-gray-700">
+                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->product->nama_produk }}
+                                </td>
+                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->quantity }}
+                                </td>
+                                <td class="py-3 px-4 border-b border-gray-700">Rp
+                                    {{ number_format($transaction->product->harga, 0, ',', '.') }}</td>
+                                <td class="py-3 px-4 border-b border-gray-700">Rp
+                                    {{ number_format($transaction->harga_ongkir, 0, ',', '.') }}</td>
+                                <td class="py-3 px-4 border-b border-gray-700">
+                                    <img alt="Bukti pembayaran" class="w-16 h-16 object-cover rounded cursor-pointer"
+                                        src="{{ asset('storage/' . $transaction->bukti_pembayaran) }}" width="100"
+                                        height="100"
+                                        onclick="openModal('{{ asset('storage/' . $transaction->bukti_pembayaran) }}')" />
+                                </td>
+                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->alamat->alamat }}</td>
+                                <td class="py-3 px-4 border-b border-gray-700">
+                                    {{ $transaction->created_at->format('d-m-Y') }}</td>
+                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->status_pembayaran }}
+                                </td>
+                                <td class="py-3 px-4 border-b border-gray-700">{{ $transaction->status_produk }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- Modal for Image Preview -->
+    <!-- Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-4 rounded-lg relative" onclick="event.stopPropagation()">
+            <!-- Tombol Close X dihilangkan, cukup klik diluar modal untuk menutup -->
+            <img id="previewImage" src="" alt="Bukti Pembayaran"
+                class="max-w-full max-h-[80vh] object-contain" />
+        </div>
+    </div>
+
+
 
     <x-footer />
     @vite('resources/js/app.js')
+
+    <script>
+        // Fungsi untuk membuka modal
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const image = document.getElementById('previewImage');
+            image.src = imageSrc;
+            modal.classList.remove('hidden');
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+        }
+
+        // Event listener untuk menutup modal ketika klik di luar modal
+        document.getElementById('imageModal').addEventListener('click', closeModal);
+    </script>
+
 </body>
 
 </html>

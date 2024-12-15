@@ -184,6 +184,7 @@
                             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
                             <form action="{{ route('transaction.add') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="mb-4">
                                     <label class="block text-white font-bold mb-2">Alamat Pengiriman</label>
                                     <div class="relative">
@@ -238,7 +239,8 @@
                                         </div>
                                         <div class="absolute bottom-4 right-4 text-sm">
                                             <label class="block text-white mb-1">Jumlah</label>
-                                            <input type="number" name="quantity" pattern="\d*" min="1" value="1"
+                                            <input type="number" name="quantity" pattern="\d*" min="1"
+                                                value="1"
                                                 class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
                                         </div>
                                     </div>
@@ -257,7 +259,8 @@
                                     </div>
                                     <div class="flex justify-between items-center font-bold text-lg mt-2">
                                         <span>Total Harga</span>
-                                        <span id="totalHarga">{{ number_format($product->harga + 30000, 0, ',', '.') }}</span>
+                                        <span
+                                            id="totalHarga">{{ number_format($product->harga + 30000, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-6">
@@ -276,6 +279,15 @@
                                 <p id="warning_message" class="text-red-500 mt-2 hidden text-sm">
                                     Anda belum melakukan upload bukti pembayaran.
                                 </p>
+                                @if ($errors->any())
+                                    <div class="text-red-500">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -490,16 +502,20 @@
                     const kota = option.getAttribute('data-kota');
                     const provinsi = option.getAttribute('data-provinsi');
                     const kodepos = option.getAttribute('data-kodepos');
+                    const alamatId = option.getAttribute('data-id'); // Ambil alamat_id
 
                     // Format alamat yang terpilih
                     const selectedAddress = `
-                    <h3 class="font-bold">${nama} | ${telp}</h3>
-                    <p>${alamat} ${detail}</p>
-                    <p>${kecamatan}, ${kota}, ${provinsi}, ID ${kodepos}</p>
-                `;
+                <h3 class="font-bold">${nama} | ${telp}</h3>
+                <p>${alamat} ${detail}</p>
+                <p>${kecamatan}, ${kota}, ${provinsi}, ID ${kodepos}</p>
+            `;
 
                     // Update tombol dropdown
                     dropdownPlaceholder.innerHTML = selectedAddress;
+
+                    // Update nilai input hidden alamat_id dengan ID yang dipilih
+                    document.getElementById('alamat_id').value = alamatId;
 
                     // Tutup dropdown
                     dropdownMenu.classList.add('hidden');

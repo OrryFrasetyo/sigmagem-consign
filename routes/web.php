@@ -57,11 +57,14 @@ Route::middleware(['auth:customer'])->group(function () {
 
 
         //Transaction
-        Route::get('/status-produk', function () {
-            return view('statusproduk'); // Mengarahkan ke file uploadproduk.blade.php
-        });
+        // Route::get('/status-produk', function () {
+        //     return view('statusproduk'); // Mengarahkan ke file uploadproduk.blade.php
+        // });
+        
         // Route untuk menambahkan produk ke transaksi
         Route::post('/status-produk/add/', [TransactionController::class, 'addToTransaction'])->name('transaction.add');
+        Route::get('/status-produk', [TransactionController::class, 'showStatusProduk'])->name('status.produk');
+
     });
 });
 
