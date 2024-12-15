@@ -8,12 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\ListCategoryController;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
+use App\Http\Controllers\TransactionController;
 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/', [ListCategoryController::class, 'index'])->name('home');
@@ -30,6 +25,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');  // Menambah produk ke wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index'); // Melihat wishlist
     Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove'); // Menghapus produk dari wishlist
+
     //alamat
     // Rute untuk menampilkan daftar alamat
     Route::get('/alamat', [AlamatController::class, 'index'])->name('alamat.index');
@@ -60,10 +56,12 @@ Route::middleware(['auth:customer'])->group(function () {
         Route::delete('/cart/{cartItemId}/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 
-        //dummy route
+        //Transaction
         Route::get('/status-produk', function () {
             return view('statusproduk'); // Mengarahkan ke file uploadproduk.blade.php
         });
+        // Route untuk menambahkan produk ke transaksi
+        Route::post('/status-produk/add/', [TransactionController::class, 'addToTransaction'])->name('transaction.add');
     });
 });
 

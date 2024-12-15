@@ -2,76 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alamat;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-    /**
-     * Simpan transaksi setelah validasi stok.
-     */
-    public function store(Request $request)
+    // fungsi menampilkan semua transaksi di status produk (user sedang login)
+    public function getTransaction()
+    {
+        $transactionItems = Transaction::where('customer_id', Auth::id())
+                            ->with('')
+                            ->get();
+    }
+
+    public function showTransaction()
+    {
+
+    }
+
+    public function addToTransaction(Request $request)
     {
         // Validasi input
         $request->validate([
-            'customer_id' => 'required|exists:customers,id',
             'alamat_id' => 'required|exists:alamats,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'bukti_pembayaran' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048'
+            'bukti_pembayaran' => 'required|image|max:2048', // File gambar bukti
         ]);
 
-        // Ambil data produk dari database
+        // Ambil data produk
         $product = Product::findOrFail($request->product_id);
 
-        // Cek ketersediaan stok
-        if ($request->quantity > $product->stok) {
-            return back()->with('error', 'Stok produk tidak mencukupi. Stok saat ini: ' . $product->stok);
+        // Periksa stok produk
+        if ($product->stok < $request->quantity) {
+            return redirect()->back()->with('error', 'Stok produk tidak mencukupi');
         }
+
+        // Upload bukti pembayaran
+        $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
 
         // Hitung total harga
-        $totalHarga = $product->harga * $request->quantity;
+        $hargaOngkir = 30000.00; // Harga ongkir tetap
+        $totalHarga = ($product->harga * $request->quantity) + $hargaOngkir;
 
-        try {
-            DB::beginTransaction();
+        // Buat transaksi baru
+        $transaction = Transaction::create([
+            'customer_id' => Auth::id(), // ID customer yang login
+            'alamat_id' => $request->alamat_id,
+            'product_id' => $product->id,
+            'bukti_pembayaran' => $buktiPath,
+            'harga_ongkir' => $hargaOngkir,
+            'quantity' => $request->quantity,
+            'total_harga' => $totalHarga,
+            'status_pembayaran' => 'Sedang diproses',
+            'status_produk' => 'Belum diproses',
+        ]);
 
-            // Buat transaksi baru
-            $transaction = Transaction::create([
-                'customer_id' => $request->customer_id,
-                'alamat_id' => $request->alamat_id,
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-                'total_harga' => $totalHarga,
-                'status_pembayaran' => 'pending',
-                'bukti_pembayaran' => $request->file('bukti_pembayaran')
-                    ? $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public')
-                    : null
-            ]);
+        // Kurangi stok produk
+        $product->decrement('stok', $request->quantity);
 
-            // Kurangi stok produk
-            $product->stok -= $request->quantity;
-            $product->save();
-
-            DB::commit();
-
-            return redirect()->route('checkout.success')->with('success', 'Transaksi berhasil, stok telah diperbarui.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        }
+        return redirect()->route('statusproduk')->with('success', 'Pembayaran berhasil. Status produk: Belum diproses.');
     }
 
-    public function checkout()
-    {
-        // Misalkan customer_id diambil dari sesi login
-        $customerId = auth('customer')->id();
 
-        // Ambil semua alamat milik customer
-        $alamats = Alamat::where('customer_id', $customerId)->get();
-
-        return view('statusproduk', compact('alamats'));
-    }
 }

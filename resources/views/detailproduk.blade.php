@@ -182,7 +182,8 @@
                                 &times;
                             </button>
                             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
-                            <form>
+                            <form action="{{ route('transaction.add') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="mb-4">
                                     <label class="block text-white font-bold mb-2">Alamat Pengiriman</label>
                                     <div class="relative">
@@ -220,6 +221,8 @@
                                                 @endforeach
                                             @endif
                                         </div>
+                                        <!-- Input hidden untuk menyimpan ID alamat -->
+                                        <input type="hidden" name="alamat_id" id="alamat_id" value="">
                                     </div>
                                 </div>
 
@@ -235,7 +238,7 @@
                                         </div>
                                         <div class="absolute bottom-4 right-4 text-sm">
                                             <label class="block text-white mb-1">Jumlah</label>
-                                            <input type="text" pattern="\d*" min="1" value="1"
+                                            <input type="number" name="quantity" pattern="\d*" min="1" value="1"
                                                 class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
                                         </div>
                                     </div>
@@ -246,15 +249,15 @@
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Harga Barang</span>
                                         <span class="text-gray-300" id="hargaBarang"
-                                            data-harga="{{ $product->harga }}"></span>
+                                            data-harga="{{ $product->harga }}">{{ number_format($product->harga, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-300">Ongkos Kirim</span>
-                                        <span class="text-gray-300" id="ongkir" data-ongkir="30000"></span>
+                                        <span class="text-gray-300" id="ongkir" data-ongkir="30000">30.000</span>
                                     </div>
                                     <div class="flex justify-between items-center font-bold text-lg mt-2">
                                         <span>Total Harga</span>
-                                        <span id="totalHarga"></span>
+                                        <span id="totalHarga">{{ number_format($product->harga + 30000, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-6">
@@ -262,7 +265,7 @@
                                         Pembayaran</h3>
                                     <input
                                         class="block w-full text-sm text-white rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        id="file_input" type="file" name="bukti_pembayaran">
+                                        id="file_input" type="file" name="bukti_pembayaran" required>
                                 </div>
                                 <button
                                     class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"

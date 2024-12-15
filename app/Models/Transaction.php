@@ -16,10 +16,11 @@ class Transaction extends Model
         'customer_id',
         'alamat_id',
         'product_id',
-        'status_pembayaran',
-        'quantity',
-        'total_harga',
         'bukti_pembayaran',
+        'harga_ongkir',
+        'total_harga',
+        'quantity',
+        'status_pembayaran',
         'status_produk',
     ];
 
