@@ -26,25 +26,30 @@
         <div class="max-w-7xl mx-auto py-6 mt-20">
             <h1 class="text-3xl font-bold text-white mb-6">Products in {{ $category->nama_kategori }}</h1>
 
-            <!-- Grid Layout -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
-                @foreach ($products as $product)
-                    <!-- Card -->
-                    <a href="{{ route('product.detail', $product->id) }}"
-                        class="bg-gray-800 shadow-md border border-transparent hover:border-purple-600 rounded-lg overflow-hidden block">
-                        <img src="{{ asset('storage/' . $product->sisi_depan) }}" alt="{{ $product->nama_produk }}"
-                            class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h2 class="text-white font-semibold text-lg">{{ $product->nama_produk }}</h2>
-                            <p class="text-gray-300 font-bold">Rp{{ number_format($product->harga, 0, ',', '.') }}</p>
-                            <span
-                                class="bg-green-600 text-white text-xs font-semibold px-2 py-1 mt-2 inline-block">{{ $product->kondisi_barang }}</span>
-                            <p class="text-sm text-gray-400 mt-2">{{ $product->created_at->diffForHumans() }}</p>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-
+            <!-- Menampilkan pesan jika produk tidak ditemukan -->
+            @if ($products->isEmpty())
+                <p class="text-center text-lg text-gray-400">Maaf, tidak ada produk dalam kategori ini</p>
+            @else
+                <!-- Grid Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach ($products as $product)
+                        <!-- Card -->
+                        <a href="{{ route('product.detail', $product->id) }}"
+                            class="bg-gray-800 shadow-md border border-transparent hover:border-purple-600 rounded-lg overflow-hidden block">
+                            <img src="{{ asset('storage/' . $product->sisi_depan) }}" alt="{{ $product->nama_produk }}"
+                                class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h2 class="text-white font-semibold text-lg">{{ $product->nama_produk }}</h2>
+                                <p class="text-gray-300 font-bold">Rp{{ number_format($product->harga, 0, ',', '.') }}
+                                </p>
+                                <span
+                                    class="bg-green-600 text-white text-xs font-semibold px-2 py-1 mt-2 inline-block">{{ $product->kondisi_barang }}</span>
+                                <p class="text-sm text-gray-400 mt-2">{{ $product->created_at->diffForHumans() }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
 
