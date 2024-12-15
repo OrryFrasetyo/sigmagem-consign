@@ -279,6 +279,9 @@
                                 <p id="warning_message" class="text-red-500 mt-2 hidden text-sm">
                                     Anda belum melakukan upload bukti pembayaran.
                                 </p>
+                                <p id="address_warning" class="text-red-500 hidden text-sm">
+                                    Anda belum menambahkan alamat pengiriman.
+                                </p>
                                 @if ($errors->any())
                                     <div class="text-red-500">
                                         <ul>
@@ -580,15 +583,32 @@
     </script>
     <script>
         document.getElementById('submit_button').addEventListener('click', function(event) {
-            var fileInput = document.getElementById('file_input');
-            var warningMessage = document.getElementById('warning_message');
+            const fileInput = document.getElementById('file_input');
+            const warningMessage = document.getElementById('warning_message');
+            const addressWarning = document.getElementById('address_warning');
+            const alamatId = document.getElementById('alamat_id').value;
 
-            // Jika file belum dipilih
+            let hasError = false;
+
+            // Validasi file bukti pembayaran
             if (!fileInput.files.length) {
-                // Mencegah form untuk disubmit
+                warningMessage.classList.remove('hidden'); // Tampilkan peringatan
+                hasError = true;
+            } else {
+                warningMessage.classList.add('hidden'); // Sembunyikan peringatan jika valid
+            }
+
+            // Validasi alamat pengiriman
+            if (!alamatId) {
+                addressWarning.classList.remove('hidden'); // Tampilkan peringatan
+                hasError = true;
+            } else {
+                addressWarning.classList.add('hidden'); // Sembunyikan peringatan jika valid
+            }
+
+            // Cegah form submit jika ada kesalahan
+            if (hasError) {
                 event.preventDefault();
-                // Menampilkan pesan peringatan
-                warningMessage.classList.remove('hidden');
             }
         });
     </script>

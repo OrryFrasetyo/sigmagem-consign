@@ -83,6 +83,6 @@ class TransactionController extends Controller
         Log::info('Stok produk berhasil dikurangi: ' . $product->stok);
 
         // Redirect ke halaman home dengan pesan sukses
-        return redirect()->route('statusproduk')->with('success', 'Pembayaran berhasil. Status produk: Belum diproses.');
+        return redirect()->route('status.produk')->with('success', 'Pembayaran berhasil. Status produk: Belum diproses.');
     }
 }
