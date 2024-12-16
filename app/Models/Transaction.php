@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Enums\ProductPayment;
+use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Transaction extends Model
 {
@@ -26,7 +28,8 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'status' =>  ProductPayment::class,
+        'status_pembayaran' =>  ProductPayment::class,
+        'status_produk' => ProductStatus::class,
     ];
 
     // Relasi ke tabel customer
@@ -46,4 +49,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    
 }

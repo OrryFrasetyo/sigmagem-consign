@@ -8,10 +8,10 @@ use Filament\Support\Contracts\HasLabel;
 
 enum ProductPayment: string implements HasLabel, HasColor, HasIcon
 {
-    case TERTUNDA = 'tertunda';
-    case MENUNGGU_KONFIRMASI = 'menunggu_konfirmasi';
-    case SUKSES = 'sukses';
-    case GAGAL = 'gagal';
+    case TERTUNDA = 'Tertunda';
+    case MENUNGGU_KONFIRMASI = 'Menunggu Konfirmasi';
+    case SUKSES = 'Sukses';
+    case GAGAL = 'Gagal';
 
     public function getLabel(): ?string
     {

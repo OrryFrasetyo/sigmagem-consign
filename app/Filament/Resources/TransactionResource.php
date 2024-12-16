@@ -2,10 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductPayment;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Filament\Resources\TransactionResource\RelationManagers;
 use App\Models\Transaction;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,7 +32,45 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('product_id')
+                    ->relationship(name: 'product', titleAttribute: 'nama_produk')
+                    ->disabled()
+                    ->label('Nama Produk'),
+                TextInput::make('quantity')
+                    ->disabled()
+                    ->label('Jumlah Produk'),
+                FileUpload::make('bukti_pembayaran')
+                    ->label('Bukti Pembayaran')
+                    ->disk('public')
+                    ->visibility('public')
+                    ->downloadable()
+                    ->previewable()
+                    ->directory('bukti_pembayaran'),
+                
+                Select::make('status_pembayaran')
+                    ->options([
+                        'Tertunda' => 'Tertunda',
+                        'Menunggu Konfirmasi' => 'Menunggu Konfirmasi',
+                        'Sukses' => 'Sukses',
+                        'Gagal' => 'Gagal',
+                    ])
+                    ->required()
+                    ->native(false)
+                    ->label('Status Pembayaran'),
+                Select::make('status_produk')
+                    ->options([
+                        'Belum Diproses' => 'Belum Diproses',
+                        'Dikemas' => 'Dikemas',
+                        'Diproses' => 'Diproses',
+                        'Dikirim' => 'Dikirim',
+                        'Diterima' => 'Diterima',
+                        'Pesanan Selesai' => 'Pesanan Selesai',
+                    ])
+                    ->required()
+                    ->native(false)
+                    ->label('Status Produk'),
+
+
             ]);
     }
 
@@ -98,6 +141,12 @@ class TransactionResource extends Resource
                     ->searchable()
                     ->label('Status Pembayaran')
                     ->badge(),
+                TextColumn::make('status_produk')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Status Produk')
+                    ->badge(),
+
 
             ])
             ->filters([
