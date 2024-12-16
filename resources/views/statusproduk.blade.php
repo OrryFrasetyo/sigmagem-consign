@@ -141,7 +141,7 @@
                                                     {{ $productStatus->value }}
                                                 </span>
                                             </td>
-                                            <td class="py-3 px-4 border-b border-gray-700 text-center">
+                                            <td class="py-3 px-4 border-b border-gray-700 text-center whitespace-nowrap">
                                                 @if ($transaction->status_produk === 'Pesanan Selesai')
                                                     <!-- Jika status produk sudah selesai -->
                                                     <span class="text-gray-500">Selesai</span>
