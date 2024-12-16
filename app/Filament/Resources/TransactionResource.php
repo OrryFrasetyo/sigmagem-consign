@@ -46,7 +46,7 @@ class TransactionResource extends Resource
                     ->downloadable()
                     ->previewable()
                     ->directory('bukti_pembayaran'),
-                
+
                 Select::make('status_pembayaran')
                     ->options([
                         'Tertunda' => 'Tertunda',
@@ -177,5 +177,10 @@ class TransactionResource extends Resource
             'create' => Pages\CreateTransaction::route('/create'),
             'edit' => Pages\EditTransaction::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

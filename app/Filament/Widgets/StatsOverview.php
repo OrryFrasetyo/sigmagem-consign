@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Cart;
 use App\Models\Customer;
+use App\Models\Transaction;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -12,10 +13,10 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         // Menghitung total fee_penjualan
-        $totalFeePenjualan = Cart::join('products', 'carts.product_id', '=', 'products.id')
+        $totalFeePenjualan = Transaction::join('products', 'transactions.product_id', '=', 'products.id')
         ->sum('products.fee_penjualan');
         $activeUser = Customer::count();
-        $activeOrder = Cart::count();
+        $activeOrder = Transaction::count();
         return [
             Stat::make('Total Fee Penjualan', 'Rp ' . number_format($totalFeePenjualan, 2, ',', '.'))
                 ->description('kenaikan')
