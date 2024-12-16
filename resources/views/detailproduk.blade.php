@@ -239,8 +239,8 @@
                                         </div>
                                         <div class="absolute bottom-4 right-4 text-sm">
                                             <label class="block text-white mb-1">Jumlah</label>
-                                            <input type="number" name="quantity" pattern="\d*" min="1"
-                                                value="1"
+                                            <input type="number" name="quantity" id="quantity" pattern="\d*"
+                                                min="1" value="1"
                                                 class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
                                         </div>
                                     </div>
@@ -565,21 +565,32 @@
             });
         }
 
-        // Ambil harga barang dan ongkos kirim dari atribut data-harga
+        // Ambil elemen yang dibutuhkan
         const hargaBarangEl = document.getElementById('hargaBarang');
         const ongkirEl = document.getElementById('ongkir');
         const totalHargaEl = document.getElementById('totalHarga');
+        const quantityInput = document.getElementById('quantity');
 
-        const hargaBarang = parseFloat(hargaBarangEl.dataset.harga); // Ambil data harga
-        const ongkir = parseFloat(ongkirEl.dataset.ongkir); // Ambil data ongkir
+        // Ambil harga barang per unit dan ongkir dari atribut data-harga
+        const hargaPerUnit = parseFloat(hargaBarangEl.dataset.harga);
+        const ongkir = parseFloat(ongkirEl.dataset.ongkir);
 
-        // Hitung total harga
-        const totalHarga = hargaBarang + ongkir;
+        // Fungsi untuk menghitung dan menampilkan harga berdasarkan quantity
+        function updateHarga() {
+            const quantity = parseInt(quantityInput.value, 10) || 1; // Default ke 1 jika input tidak valid
+            const hargaBarang = hargaPerUnit * quantity; // Hitung harga total barang
+            const totalHarga = hargaBarang + ongkir; // Hitung total harga
 
-        // Tampilkan hasil dengan format Rupiah
-        hargaBarangEl.textContent = formatRupiah(hargaBarang);
-        ongkirEl.textContent = formatRupiah(ongkir);
-        totalHargaEl.textContent = formatRupiah(totalHarga);
+            // Tampilkan hasil dengan format Rupiah
+            hargaBarangEl.textContent = formatRupiah(hargaBarang);
+            totalHargaEl.textContent = formatRupiah(totalHarga);
+        }
+
+        // Tambahkan event listener pada input quantity
+        quantityInput.addEventListener('input', updateHarga);
+
+        // Hitung harga awal saat halaman dimuat
+        updateHarga();
     </script>
     <script>
         document.getElementById('submit_button').addEventListener('click', function(event) {
