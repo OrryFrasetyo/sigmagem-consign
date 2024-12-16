@@ -15,7 +15,6 @@ enum ProductStatus: string implements HasLabel, HasColor
     case DITERIMA = 'Diterima';
     case PESANAN_SELESAI = 'Pesanan Selesai';
 
-
     public function getLabel(): ?string
     {
         return match ($this) {
@@ -36,8 +35,7 @@ enum ProductStatus: string implements HasLabel, HasColor
             self::DIPROSES => 'warning',
             self::DIKIRIM => 'primary',
             self::DITERIMA => 'success',
-            self::PESANAN_SELESAI => 'success',
+            self::PESANAN_SELESAI => 'teal', // Ubah warna untuk 'Pesanan Selesai'
         };
     }
-
 }

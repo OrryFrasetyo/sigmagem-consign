@@ -25,14 +25,13 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
 
         // Pastikan status belum "Pesanan Selesai" untuk menghindari perubahan ganda
-        if ($transaction->status_produk != 'Pesanan Selesai') {
-            // Update status produk menjadi "Pesanan Selesai"
+        if ($transaction->status_produk !== 'Pesanan Selesai') {
             $transaction->status_produk = 'Pesanan Selesai';
             $transaction->save();
         }
 
-        // Redirect ke halaman yang sama dengan pesan sukses
-        return redirect()->back()->with('success', 'Status produk telah diperbarui.');
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Status produk berhasil diperbarui.');
     }
 
     public function pembelian()
@@ -42,8 +41,8 @@ class TransactionController extends Controller
 
         // Filter transaksi berdasarkan customer yang login
         $transactions = Transaction::with(['product.customer'])
-        ->where('customer_id', $customerId)
-        ->get();
+            ->where('customer_id', $customerId)
+            ->get();
 
         return view('pembelian', compact('transactions'));
     }
@@ -55,10 +54,10 @@ class TransactionController extends Controller
 
         // Filter transaksi berdasarkan produk yang memiliki customer_id
         $transactions = Transaction::with(['product.customer'])
-        ->whereHas('product.customer', function ($query) use ($customerId) {
-            $query->where('id', $customerId);
-        })
-        ->get();
+            ->whereHas('product.customer', function ($query) use ($customerId) {
+                $query->where('id', $customerId);
+            })
+            ->get();
 
         return view('penjualan', compact('transactions'));
     }
@@ -73,7 +72,7 @@ class TransactionController extends Controller
 
         // Ambil transaksi berdasarkan pelanggan yang sedang login dan paginasi
         $transactions = Transaction::with('product', 'alamat')
-        ->where('customer_id', $customerId) // Filter berdasarkan ID pelanggan yang sedang login
+            ->where('customer_id', $customerId) // Filter berdasarkan ID pelanggan yang sedang login
             ->paginate(5); // Paginasi dengan 10 data per halaman
 
         return view('statusproduk', compact('transactions'));
@@ -147,5 +146,4 @@ class TransactionController extends Controller
         // Redirect ke halaman home dengan pesan sukses
         return redirect()->route('status.produk')->with('success', 'Pembayaran berhasil. Status produk: Belum diproses.');
     }
-
 }

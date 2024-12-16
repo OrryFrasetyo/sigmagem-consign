@@ -23,15 +23,16 @@ enum ProductPayment: string implements HasLabel, HasColor, HasIcon
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): string
     {
         return match ($this) {
-            self::TERTUNDA => 'gray',
-            self::MENUNGGU_KONFIRMASI => 'warning',
-            self::SUKSES => 'success',
-            self::GAGAL => 'danger',
+            self::TERTUNDA => 'bg-yellow-300 text-black',
+            self::MENUNGGU_KONFIRMASI => 'bg-blue-500 text-white',
+            self::SUKSES => 'bg-green-500 text-white',
+            self::GAGAL => 'bg-red-500 text-white',
         };
     }
+
 
     public function getIcon(): ?string
     {
