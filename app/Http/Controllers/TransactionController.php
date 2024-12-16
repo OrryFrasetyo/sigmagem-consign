@@ -35,6 +35,35 @@ class TransactionController extends Controller
         return redirect()->back()->with('success', 'Status produk telah diperbarui.');
     }
 
+    public function pembelian()
+    {
+        // Mendapatkan ID customer yang sedang login
+        $customerId = auth()->guard('customer')->id();
+
+        // Filter transaksi berdasarkan customer yang login
+        $transactions = Transaction::with(['product.customer'])
+        ->where('customer_id', $customerId)
+        ->get();
+
+        return view('pembelian', compact('transactions'));
+    }
+
+    public function penjualan()
+    {
+        // Mendapatkan ID customer yang sedang login
+        $customerId = auth()->guard('customer')->id();
+
+        // Filter transaksi berdasarkan produk yang memiliki customer_id
+        $transactions = Transaction::with(['product.customer'])
+        ->whereHas('product.customer', function ($query) use ($customerId) {
+            $query->where('id', $customerId);
+        })
+        ->get();
+
+        return view('penjualan', compact('transactions'));
+    }
+
+
 
 
     public function showStatusProduk()
@@ -71,6 +100,12 @@ class TransactionController extends Controller
 
         // Ambil data produk dari database
         $product = Product::findOrFail($request->product_id);
+
+        // **Cek apakah customer sedang membeli produk sendiri**
+        if ($product->customer_id === Auth::id()) {
+            Log::warning('Customer mencoba membeli produk sendiri, ID Produk: ' . $product->id);
+            return redirect()->back()->with('error', 'Anda tidak boleh membeli produk sendiri.');
+        }
 
         // Periksa stok produk
         if ($product->stok < $request->quantity) {
@@ -112,4 +147,5 @@ class TransactionController extends Controller
         // Redirect ke halaman home dengan pesan sukses
         return redirect()->route('status.produk')->with('success', 'Pembayaran berhasil. Status produk: Belum diproses.');
     }
+
 }

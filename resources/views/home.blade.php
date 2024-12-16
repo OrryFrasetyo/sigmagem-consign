@@ -54,19 +54,20 @@
         </div>
 
         <a href="status-produk" class="flex flex-col items-center group hover:text-purple-600">
-    <i class="fas fa-exchange-alt text-2xl text-gray-300 group-hover:text-purple-600"></i>
-    <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Status Produk</span>
-</a>
+            <i class="fas fa-exchange-alt text-2xl text-gray-300 group-hover:text-purple-600"></i>
+            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Status Produk</span>
+        </a>
 
-        <div class="flex flex-col items-center group hover:text-purple-600">
-            <i class="fas fa-shopping-cart text-2xl text-gray-300 group-hover:text-purple-600"></i>
-            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Penjualan</span>
-        </div>
-
-        <div class="flex flex-col items-center group hover:text-purple-600">
+        <a href="pembelian" class="flex flex-col items-center group hover:text-purple-600">
             <i class="fas fa-shopping-bag text-2xl text-gray-300 group-hover:text-purple-600"></i>
             <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">Pembelian</span>
-        </div>
+        </a>
+
+        <a href="penjualan" class="flex flex-col items-center group hover:text-purple-600">
+            <i class="fas fa-shopping-cart text-2xl text-gray-300 group-hover:text-purple-600"></i>
+            <span class="mt-2 text-sm text-gray-300 group-hover:text-purple-600">penjualan</span>
+        </a>
+
     </div>
 
     <!-- ListKategori dan Kategor -->

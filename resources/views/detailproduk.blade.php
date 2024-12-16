@@ -182,119 +182,122 @@
                                 &times;
                             </button>
                             <h2 class="text-2xl font-bold mb-4">Checkout</h2>
-                            <form action="{{ route('transaction.add') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <div class="mb-4">
-                                    <label class="block text-white font-bold mb-2">Alamat Pengiriman</label>
-                                    <div class="relative">
-                                        <!-- Tombol Dropdown -->
-                                        <button id="dropdownButton" type="button"
-                                            class="w-full bg-gray-800 text-white border border-gray-700 p-3 rounded-lg text-left leading-snug">
-                                            <span id="dropdownPlaceholder">Pilih Alamat</span>
-                                        </button>
 
-                                        <!-- Dropdown Menu -->
-                                        <div id="dropdownMenu"
-                                            class="hidden absolute w-full bg-gray-800 border border-gray-700 rounded-lg mt-1 z-10 max-h-48 overflow-y-auto">
-                                            @if ($alamats->isEmpty())
-                                                <div class="p-3 text-gray-400 italic">Alamat belum ditambahkan.</div>
-                                            @else
-                                                @foreach ($alamats as $item)
-                                                    <div class="p-3 hover:bg-gray-700 cursor-pointer select-address"
-                                                        data-id="{{ $item->id }}"
-                                                        data-nama="{{ $item->nama_penerima }}"
-                                                        data-telp="{{ $item->no_telp }}"
-                                                        data-alamat="{{ $item->alamat }}"
-                                                        data-detail="{{ $item->detail }}"
-                                                        data-kecamatan="{{ strtoupper($item->kecamatan) }}"
-                                                        data-kota="{{ strtoupper($item->kota) }}"
-                                                        data-provinsi="{{ strtoupper($item->provinsi) }}"
-                                                        data-kodepos="{{ $item->kode_pos }}">
-                                                        <h3 class="font-bold">{{ $item->nama_penerima }} |
-                                                            {{ $item->no_telp }}</h3>
-                                                        <p>{{ $item->alamat }} {{ $item->detail }}</p>
-                                                        <p>{{ strtoupper($item->kecamatan) }},
-                                                            {{ strtoupper($item->kota) }},
-                                                            {{ strtoupper($item->provinsi) }}, ID
-                                                            {{ $item->kode_pos }}</p>
+                            @if (Auth::id() === $product->customer_id)
+                                <!-- Peringatan Tidak Bisa Membeli Produk Sendiri -->
+                                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                                    <strong>Perhatian!</strong> Anda tidak boleh membeli produk sendiri.
+                                </div>
+                            @else
+                                <!-- Form Checkout -->
+                                <form action="{{ route('transaction.add') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="mb-4">
+                                        <label class="block text-white font-bold mb-2">Alamat Pengiriman</label>
+                                        <div class="relative">
+                                            <!-- Tombol Dropdown -->
+                                            <button id="dropdownButton" type="button"
+                                                class="w-full bg-gray-800 text-white border border-gray-700 p-3 rounded-lg text-left leading-snug">
+                                                <span id="dropdownPlaceholder">Pilih Alamat</span>
+                                            </button>
+
+                                            <!-- Dropdown Menu -->
+                                            <div id="dropdownMenu"
+                                                class="hidden absolute w-full bg-gray-800 border border-gray-700 rounded-lg mt-1 z-10 max-h-48 overflow-y-auto">
+                                                @if ($alamats->isEmpty())
+                                                    <div class="p-3 text-gray-400 italic">Alamat belum ditambahkan.
                                                     </div>
-                                                @endforeach
-                                            @endif
+                                                @else
+                                                    @foreach ($alamats as $item)
+                                                        <div class="p-3 hover:bg-gray-700 cursor-pointer select-address"
+                                                            data-id="{{ $item->id }}"
+                                                            data-nama="{{ $item->nama_penerima }}"
+                                                            data-telp="{{ $item->no_telp }}"
+                                                            data-alamat="{{ $item->alamat }}"
+                                                            data-detail="{{ $item->detail }}"
+                                                            data-kecamatan="{{ strtoupper($item->kecamatan) }}"
+                                                            data-kota="{{ strtoupper($item->kota) }}"
+                                                            data-provinsi="{{ strtoupper($item->provinsi) }}"
+                                                            data-kodepos="{{ $item->kode_pos }}">
+                                                            <h3 class="font-bold">{{ $item->nama_penerima }} |
+                                                                {{ $item->no_telp }}</h3>
+                                                            <p>{{ $item->alamat }} {{ $item->detail }}</p>
+                                                            <p>{{ strtoupper($item->kecamatan) }},
+                                                                {{ strtoupper($item->kota) }},
+                                                                {{ strtoupper($item->provinsi) }}, ID
+                                                                {{ $item->kode_pos }}</p>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <!-- Input hidden untuk menyimpan ID alamat -->
+                                            <input type="hidden" name="alamat_id" id="alamat_id" value="">
                                         </div>
-                                        <!-- Input hidden untuk menyimpan ID alamat -->
-                                        <input type="hidden" name="alamat_id" id="alamat_id" value="">
                                     </div>
-                                </div>
 
-                                <div class="mb-4">
-                                    <label class="block font-bold mb-2">Produk</label>
-                                    <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
-                                        <img alt="Gambar produk dengan deskripsi detail"
-                                            class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
-                                            src="{{ Storage::url($product->sisi_depan) }}" width="100" />
-                                        <div class="flex-1">
-                                            <h4 class="text-lg font-bold text-white">{{ $product->nama_produk }}</h4>
-                                            <p class="text-gray-300">{{ $product->kondisi_barang }}</p>
+                                    <div class="mb-4">
+                                        <label class="block font-bold mb-2">Produk</label>
+                                        <div class="flex items-start bg-gray-800 p-4 rounded-lg shadow-md relative">
+                                            <img alt="Gambar produk dengan deskripsi detail"
+                                                class="w-24 h-24 object-cover rounded-lg mr-4" height="100"
+                                                src="{{ Storage::url($product->sisi_depan) }}" width="100" />
+                                            <div class="flex-1">
+                                                <h4 class="text-lg font-bold text-white">{{ $product->nama_produk }}
+                                                </h4>
+                                                <p class="text-gray-300">{{ $product->kondisi_barang }}</p>
+                                            </div>
+                                            <div class="absolute bottom-4 right-4 text-sm">
+                                                <label class="block text-white mb-1">Jumlah</label>
+                                                <input type="number" name="quantity" id="quantity" pattern="\d*"
+                                                    min="1" value="1"
+                                                    class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
+                                            </div>
                                         </div>
-                                        <div class="absolute bottom-4 right-4 text-sm">
-                                            <label class="block text-white mb-1">Jumlah</label>
-                                            <input type="number" name="quantity" id="quantity" pattern="\d*"
-                                                min="1" value="1"
-                                                class="bg-gray-700 text-center text-white rounded-lg p-1 w-12 text-sm" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <h3 class="font-bold">Rincian Harga</h3>
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="text-gray-300">Harga Barang</span>
+                                            <span class="text-gray-300" id="hargaBarang"
+                                                data-harga="{{ $product->harga }}">{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="text-gray-300">Ongkos Kirim</span>
+                                            <span class="text-gray-300" id="ongkir"
+                                                data-ongkir="30000">30.000</span>
+                                        </div>
+                                        <div class="flex justify-between items-center font-bold text-lg mt-2">
+                                            <span>Total Harga</span>
+                                            <span
+                                                id="totalHarga">{{ number_format($product->harga + 30000, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="mb-6">
+                                        <h3 class="block mb-2 font-bold text-white" for="file_input">Upload Bukti
+                                            Pembayaran</h3>
+                                        <input
+                                            class="block w-full text-sm text-white rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            id="file_input" type="file" name="bukti_pembayaran" required>
+                                    </div>
+                                    <button
+                                        class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
+                                        type="submit" id="submit_button">
+                                        Bayar Sekarang
+                                    </button>
 
-                                <div class="mb-4">
-                                    <h3 class="font-bold">Rincian Harga</h3>
-                                    <div class="flex justify-between items-center text-sm">
-                                        <span class="text-gray-300">Harga Barang</span>
-                                        <span class="text-gray-300" id="hargaBarang"
-                                            data-harga="{{ $product->harga }}">{{ number_format($product->harga, 0, ',', '.') }}</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-sm">
-                                        <span class="text-gray-300">Ongkos Kirim</span>
-                                        <span class="text-gray-300" id="ongkir" data-ongkir="30000">30.000</span>
-                                    </div>
-                                    <div class="flex justify-between items-center font-bold text-lg mt-2">
-                                        <span>Total Harga</span>
-                                        <span
-                                            id="totalHarga">{{ number_format($product->harga + 30000, 0, ',', '.') }}</span>
-                                    </div>
-                                </div>
-                                <div class="mb-6">
-                                    <h3 class="block mb-2 font-bold text-white" for="file_input">Upload Bukti
-                                        Pembayaran</h3>
-                                    <input
-                                        class="block w-full text-sm text-white rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        id="file_input" type="file" name="bukti_pembayaran" required>
-                                </div>
-                                <button
-                                    class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"
-                                    type="submit" id="submit_button">
-                                    Bayar Sekarang
-                                </button>
-
-                                <p id="warning_message" class="text-red-500 mt-2 hidden text-sm">
-                                    Anda belum melakukan upload bukti pembayaran.
-                                </p>
-                                <p id="address_warning" class="text-red-500 hidden text-sm">
-                                    Anda belum menambahkan alamat pengiriman.
-                                </p>
-                                @if ($errors->any())
-                                    <div class="text-red-500">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                            </form>
+                                    <p id="warning_message" class="text-red-500 mt-2 hidden text-sm">
+                                        Anda belum melakukan upload bukti pembayaran.
+                                    </p>
+                                    <p id="address_warning" class="text-red-500 hidden text-sm">
+                                        Anda belum menambahkan alamat pengiriman.
+                                    </p>
+                                </form>
+                            @endif
                         </div>
                     </div>
-
 
 
                     <form action="{{ route('cart.add', $product->id) }}" method="POST">

@@ -45,6 +45,8 @@ Route::middleware(['auth:customer'])->group(function () {
     // Route untuk menyimpan diskusi
     Route::post('/product/{id}/diskusi', [ProductController::class, 'storeDiscussion'])->middleware('auth:customer')->name('discussion.store');
 
+    Route::get('/pembelian', [TransactionController::class, 'pembelian'])->name('pembelian');
+    Route::get('/penjualan', [TransactionController::class, 'penjualan'])->name('penjualan');
 
     //Cart
     Route::middleware('auth')->group(function () {

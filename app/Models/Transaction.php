@@ -35,8 +35,9 @@ class Transaction extends Model
     // Relasi ke tabel customer
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
+
 
     // Relasi ke tabel alamat
     public function alamat()
@@ -47,8 +48,9 @@ class Transaction extends Model
     // Relasi ke tabel produk
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
-    
+
+
 }
