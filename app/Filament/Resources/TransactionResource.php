@@ -112,16 +112,29 @@ class TransactionResource extends Resource
                         $feePenjualan = ($totalHarga - $ongkir) * 0.12; // Hitung fee penjualan
                         return 'Rp ' . number_format($feePenjualan, 2, ',', '.'); // Format hasil
                     }),
+                // TextColumn::make('product.dana_diterima')
+                //     ->sortable()
+                //     ->searchable()
+                //     ->label('Dana Diterima')
+                //     // ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.'))
+                //     ->formatStateUsing(function ($record) {
+                //         $totalHarga = $record->total_harga; // Ambil nilai total_harga
+                //         $feePenjualan = ($record->total_harga - $record->ongkir) * 0.12; // Hitung fee penjualan
+                //         $danaDiterima = $totalHarga - $feePenjualan; // Hitung dana diterima
+                //         return 'Rp ' . number_format($danaDiterima, 2, ',', '.'); // Format hasil
+                //     }),
                 TextColumn::make('product.dana_diterima')
                     ->sortable()
-                    ->searchable()
                     ->label('Dana Diterima')
-                    // ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.'))
                     ->formatStateUsing(function ($record) {
-                        $totalHarga = $record->total_harga; // Ambil nilai total_harga
-                        $feePenjualan = ($record->total_harga - $record->ongkir) * 0.12; // Hitung fee penjualan
-                        $danaDiterima = $totalHarga - $feePenjualan; // Hitung dana diterima
-                        return 'Rp ' . number_format($danaDiterima, 2, ',', '.'); // Format hasil
+                        $totalHarga = $record->total_harga;  // Ambil total harga
+                        $hargaOngkir = $record->harga_ongkir; // Ambil harga ongkir
+
+                        // Hitung dana diterima
+                        $danaDiterima = ($totalHarga - $hargaOngkir) - (($totalHarga - $hargaOngkir) * 0.12);
+
+                        // Format hasil ke mata uang Rupiah
+                        return 'Rp ' . number_format($danaDiterima, 2, ',', '.');
                     }),
                 ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran'),
