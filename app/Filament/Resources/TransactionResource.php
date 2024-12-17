@@ -116,7 +116,13 @@ class TransactionResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label('Dana Diterima')
-                    ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.')),
+                    // ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.'))
+                    ->formatStateUsing(function ($record) {
+                        $totalHarga = $record->total_harga; // Ambil nilai total_harga
+                        $feePenjualan = ($record->total_harga - $record->ongkir) * 0.12; // Hitung fee penjualan
+                        $danaDiterima = $totalHarga - $feePenjualan; // Hitung dana diterima
+                        return 'Rp ' . number_format($danaDiterima, 2, ',', '.'); // Format hasil
+                    }),
                 ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran'),
                 TextColumn::make('alamat.alamat')
