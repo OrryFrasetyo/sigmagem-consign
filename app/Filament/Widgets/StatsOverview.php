@@ -7,14 +7,16 @@ use App\Models\Customer;
 use App\Models\Transaction;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\DB;
 
 class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
         // Menghitung total fee_penjualan
-        $totalFeePenjualan = Transaction::join('products', 'transactions.product_id', '=', 'products.id')
-        ->sum('products.fee_penjualan');
+        // $totalFeePenjualan = Transaction::join('products', 'transactions.product_id', '=', 'products.id')
+        // ->sum('products.fee_penjualan');
+        $totalFeePenjualan = Transaction::sum(DB::raw('(total_harga - 30000) * 0.12'));
         $activeUser = Customer::count();
         $activeOrder = Transaction::count();
         return [
