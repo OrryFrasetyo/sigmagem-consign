@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
-    <title>SigmaGem Consign</title>
+    <title>rojeconsign</title>
 </head>
 
 <body class="h-full">
@@ -281,6 +281,8 @@
                                         <input
                                             class="block w-full text-sm text-white rounded-lg cursor-pointer border border-gray-800 bg-gray-900 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                             id="file_input" type="file" name="bukti_pembayaran" required>
+                                        <h4 class="mt-2 mb-2 font-bold text-white" for="file_input">
+                                            Notes : Transfer ke BCA a/n Hanafi Virgi Marselino No Rekening 111-000-327-873.</h4>
                                     </div>
                                     <button
                                         class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition duration-300"

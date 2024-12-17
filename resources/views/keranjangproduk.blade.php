@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>SigmaGem Consign</title>
+    <title>rojeconsign</title>
 </head>
 
 <!-- keranjangproduk.blade.php -->

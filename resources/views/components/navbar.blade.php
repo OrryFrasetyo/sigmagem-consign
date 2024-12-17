@@ -9,7 +9,7 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('img/scz.png') }}" class="h-12 w-12" alt="Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SigmaGem Consign</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">rojeconsign</span>
             </a>
 
             <div class="flex items-center space-x-3 md:space-x-6">

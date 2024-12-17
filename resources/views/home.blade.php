@@ -13,7 +13,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
-    <title>SigmaGem Consign</title>
+    <title>rojeconsign</title>
 </head>
 
 <body class="h-full">
@@ -41,7 +41,7 @@
 
     <div class="ml-12 text-white font-sans">
         <h1 class="text-2xl font-bold">Hai {{ auth()->user()->full_name }}!</h1>
-        <p class="text-gray-400">Selamat datang di SigmaGem Consign.</p>
+        <p class="text-gray-400">Selamat datang di rojeconsign.</p>
     </div>
 
     <div class="mt-6 bg-gray-800 p-6 rounded-xl mx-12 flex justify-around space-x-4 mb-3">

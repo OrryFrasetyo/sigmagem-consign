@@ -18,7 +18,7 @@
             <div class="p-6 md:p-8 space-y-6">
                 <div class="flex items-center justify-center mb-6">
                     <img class="w-8 h-8 mr-2" src="img/scz.png" alt="logo">
-                    <span class="text-2xl font-semibold text-white">SigmaGem</span>
+                    <span class="text-2xl font-semibold text-white">rojeconsign</span>
                 </div>
                 <h1 class="text-xl font-bold text-center text-white md:text-2xl">Sign In</h1>
 

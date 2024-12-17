@@ -17,7 +17,7 @@
     <section class="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow dark:bg-gray-800">
         <a href="#" class="flex items-center justify-center mb-6 text-2xl font-semibold text-white">
             <img class="w-8 h-8 mr-2" src="img/scz.png" alt="logo">
-            SigmaGem
+            rojeconsign
         </a>
 
         <h1 class="text-xl font-bold text-center text-white mb-4">
