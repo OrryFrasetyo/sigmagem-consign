@@ -105,7 +105,13 @@ class TransactionResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label('Fee Penjualan')
-                    ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.')),
+                    // ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 2, ',', '.')),
+                    ->formatStateUsing(function ($record) {
+                        $totalHarga = $record->total_harga; // Ambil nilai total_harga
+                        $ongkir = $record->harga_ongkir;         // Ambil nilai ongkir
+                        $feePenjualan = ($totalHarga - $ongkir) * 0.12; // Hitung fee penjualan
+                        return 'Rp ' . number_format($feePenjualan, 2, ',', '.'); // Format hasil
+                    }),
                 TextColumn::make('product.dana_diterima')
                     ->sortable()
                     ->searchable()
