@@ -71,7 +71,7 @@
 
         <div
             class="container mx-auto mt-8 border-t pt-4 flex flex-col md:flex-row justify-center items-center text-white">
-            <p>&copy; 2024 SigmaGem Consign. All Rights Reserved.</p>
+            <p>&copy; 2024 rojeconsign. All Rights Reserved.</p>
             {{-- <div class="mt-4 md:mt-0 flex space-x-4">
             <img src="pay_logo/paypal.png" alt="PayPal" class="w-8 h-8">
             <img src="pay_logo/visa.png" alt="Visa" class="w-8 h-8">
