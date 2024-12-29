@@ -117,10 +117,6 @@
                 <div id="cart-total" class="font-semibold">
                     Total: Rp 0
                 </div>
-
-                <button class="px-4 py-2 bg-purple-600 text-white rounded">
-                    Beli
-                </button>
             </div>
         </div>
     </div>
