@@ -141,7 +141,8 @@
                                                     {{ $productStatus->value }}
                                                 </span>
                                             </td>
-                                            <td class="py-3 px-4 border-b border-gray-700 text-center whitespace-nowrap">
+                                            <td
+                                                class="py-3 px-4 border-b border-gray-700 text-center whitespace-nowrap">
                                                 @if ($transaction->status_produk === 'Pesanan Selesai')
                                                     <!-- Jika status produk sudah selesai -->
                                                     <span class="text-gray-500">Selesai</span>
@@ -177,14 +178,11 @@
         <!-- Modal for Image Preview -->
         <!-- Modal -->
         <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-white p-4 rounded-lg relative mt-16" onclick="event.stopPropagation()">
+            <div class=" p-4 rounded-lg relative mt-16" onclick="event.stopPropagation()">
                 <img id="previewImage" src="" alt="Bukti Pembayaran"
                     class="max-w-full max-h-[80vh] object-contain" />
             </div>
         </div>
-
-
-
 
         <x-footer />
         @vite('resources/js/app.js')
@@ -195,6 +193,10 @@
                 const modal = document.getElementById('imageModal');
                 const image = document.getElementById('previewImage');
                 image.src = imageSrc;
+
+                // Pastikan modal muncul di atas elemen lain
+                modal.style.zIndex = '9999'; // Atur z-index modal agar lebih tinggi dari elemen lain
+
                 modal.classList.remove('hidden');
             }
 
